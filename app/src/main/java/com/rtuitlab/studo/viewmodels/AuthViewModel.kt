@@ -5,17 +5,16 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.rtuitlab.studo.App
-import com.rtuitlab.studo.R
-import com.rtuitlab.studo.SingleLiveEvent
-import com.rtuitlab.studo.currentUserWithToken
+import com.rtuitlab.studo.*
 import com.rtuitlab.studo.server.Resource
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.auth.AuthRepository
+import com.rtuitlab.studo.server.auth.models.ResetPasswordRequest
 import com.rtuitlab.studo.server.auth.models.UserLoginRequest
 import com.rtuitlab.studo.server.auth.models.UserLoginResponse
 import com.rtuitlab.studo.server.auth.models.UserRegisterRequest
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -48,6 +47,9 @@ class AuthViewModel(
     private val _registerResource = SingleLiveEvent<Resource<Unit>>()
     val registerResource: LiveData<Resource<Unit>> = _registerResource
 
+    private val _resetResource = SingleLiveEvent<Resource<Unit>>()
+    val resetResource: LiveData<Resource<Unit>> = _resetResource
+
     fun login() {
         if (isLoginDataCorrect()) {
             viewModelScope.launch {
@@ -69,18 +71,14 @@ class AuthViewModel(
 
     private fun isLoginDataCorrect(): Boolean {
         var result = true
-        if (email.isEmpty()) {
-            emailError.set(app.getString(R.string.empty_field_error))
+        if (email.isNotEmail()) {
+            emailError.set(app.getString(R.string.wrong_email_error))
             result = false
         } else {
             emailError.set("")
         }
         if (password.length < 6) {
-            if (password.isEmpty()) {
-                passwordError.set(app.getString(R.string.empty_field_error))
-            } else {
-                passwordError.set(app.getString(R.string.small_password_error))
-            }
+            passwordError.set(app.getString(R.string.small_password_error))
             result = false
         } else {
             passwordError.set("")
@@ -127,19 +125,28 @@ class AuthViewModel(
         if (!isLoginDataCorrect()) {
             result = false
         }
-        if (confirmPassword.isEmpty()) {
-            confirmPasswordError.set(app.getString(R.string.empty_field_error))
+        if (password != confirmPassword) {
+            confirmPasswordError.set(app.getString(R.string.not_equal_password_error))
             result = false
         } else {
             confirmPasswordError.set("")
-            if (password != confirmPassword) {
-                confirmPasswordError.set(app.getString(R.string.not_equal_password_error))
-                result = false
-            } else {
-                confirmPasswordError.set("")
-            }
         }
         return result
+    }
+
+    fun resetPassword(email: String): Boolean {
+        return if (email.isEmail()) {
+            viewModelScope.launch {
+                _resetResource.value = Resource.loading(null)
+                val response = withContext(Dispatchers.IO) {
+                    authRepo.resetPassword(ResetPasswordRequest(email))
+                }
+                _resetResource.value = response
+            }
+            true
+        } else {
+            false
+        }
     }
 
     fun clearErrors() {

@@ -1,6 +1,7 @@
 package com.rtuitlab.studo.ui.auth.fragments
 
 import android.os.Bundle
+import android.os.Message
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.transition.ChangeBounds
 import androidx.transition.TransitionInflater
+import com.google.android.material.snackbar.Snackbar
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentRegisterBinding
 import com.rtuitlab.studo.server.Resource
@@ -28,7 +30,7 @@ class RegisterFragment : Fragment() {
         registerBtn.revertAnimation()
         when(it.status) {
             Status.SUCCESS -> {
-                Toast.makeText(requireActivity(), getString(R.string.email_verification), Toast.LENGTH_SHORT).show()
+                Snackbar.make(requireView(), getString(R.string.email_verification), Snackbar.LENGTH_LONG).show()
                 loginLink.performClick()
             }
             Status.ERROR -> {
@@ -67,7 +69,7 @@ class RegisterFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         viewModel.clearErrors()
-
+        registerBtn.dispose()
     }
 
     private fun setListeners() {
