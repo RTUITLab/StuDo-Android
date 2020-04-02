@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="forgot_password">Забыли пароль?</string>
+    <string name="create_account">Создать аккаунт</string>
+    <string name="login">Войти</string>
+    <string name="password">Пароль</string>
+    <string name="name">Имя</string>
+    <string name="surname">Фамилия</string>
+    <string name="confirm_password">Подтвердите пароль</string>
+    <string name="card_number">Номер студенческого</string>
+    <string name="email_verification">Проверьте почту, чтобы активировать аккаунт</string>
+    <string name="empty_field_error">Заполните поле</string>
+    <string name="small_password_error">Пароль должен содержать не менее 6 символов</string>
+    <string name="wrong_email_error">Введите корректную почту</string>
+    <string name="not_equal_password_error">Пароли должны совпадать</string>
+</resources>

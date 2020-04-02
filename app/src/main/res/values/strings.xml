@@ -1,3 +1,18 @@
 <resources>
-    <string name="app_name">StuDo</string>
+    <string name="app_name" translatable="false">StuDo</string>
+    <string name="logo" translatable="false">LOGO</string>
+    <string name="forgot_password">Forgot your password?</string>
+    <string name="create_account">Create account</string>
+    <string name="login">Login</string>
+    <string name="email" translatable="false">Email</string>
+    <string name="password">Password</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="card_number">Card number</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="email_verification">Check your email to activate account</string>
+    <string name="empty_field_error">Fill in the entry field</string>
+    <string name="small_password_error">Password must be at least 6 characters</string>
+    <string name="wrong_email_error">Enter correct email address</string>
+    <string name="not_equal_password_error">Passwords must be the same</string>
 </resources>
