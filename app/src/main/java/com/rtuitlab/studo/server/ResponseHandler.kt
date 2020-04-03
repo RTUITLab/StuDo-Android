@@ -1,8 +1,14 @@
 package com.rtuitlab.studo.server
 
+import android.util.Log
+import org.koin.dsl.module
 import retrofit2.HttpException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+
+val responseHandlerModule = module {
+    factory { ResponseHandler() }
+}
 
 enum class ErrorCodes(val code: Int) {
     SocketTimeOut(-1),
@@ -15,6 +21,7 @@ open class ResponseHandler {
     }
 
     fun <T : Any> handleException(e: Exception): Resource<T> {
+        Log.e(javaClass.name, e.toString())
         return when (e) {
             is HttpException -> Resource.error(getErrorMessage(e.code()), null)
             is SocketTimeoutException -> Resource.error(getErrorMessage(ErrorCodes.SocketTimeOut.code), null)

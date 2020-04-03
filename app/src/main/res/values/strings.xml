@@ -19,4 +19,8 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="check_email_to_reset">Check your email to change password</string>
+    <string name="title_ads">Ads</string>
+    <string name="title_resumes">Resumes</string>
+    <string name="title_other">Other</string>
+    <string name="create">Create</string>
 </resources>

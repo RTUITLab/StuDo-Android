@@ -1,5 +1,6 @@
 package com.rtuitlab.studo
 
-import com.rtuitlab.studo.server.auth.models.UserLoginResponse
+import com.rtuitlab.studo.server.main.models.User
 
-var currentUserWithToken : UserLoginResponse? = null
+var currentUser: User? = null
+var accessToken: String? = null

@@ -1,4 +1,4 @@
-package com.rtuitlab.studo
+package com.rtuitlab.studo.extensions
 
 import android.util.Patterns
 

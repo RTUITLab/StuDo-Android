@@ -10,159 +10,165 @@
             type="com.rtuitlab.studo.viewmodels.AuthViewModel" />
     </data>
 
-    <ScrollView
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.auth.fragments.RegisterFragment">
 
-        <LinearLayout
-            android:orientation="vertical"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="24dp">
-
-            <ImageView
-                android:id="@+id/logoView"
-                android:src="@drawable/ic_logo_with_text"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginBottom="16dp"
-                android:layout_gravity="center_horizontal"
-                android:contentDescription="@string/logo"
-                android:transitionName="registerLogoView"/>
+            android:layout_height="match_parent">
 
             <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="4dp"
-                android:orientation="horizontal">
+                android:padding="24dp">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/nameInput"
+                <ImageView
+                    android:id="@+id/logoView"
+                    android:src="@drawable/ic_logo_with_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_gravity="center_horizontal"
+                    android:contentDescription="@string/logo"
+                    android:transitionName="registerLogoView"/>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="6dp"
-                    android:hint="@string/name"
-                    app:handleErrorFrom="@{viewModel.nameError}"
+                    android:layout_marginVertical="4dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/nameInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="6dp"
+                        android:hint="@string/name"
+                        app:handleErrorFrom="@{viewModel.nameError}"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textCapWords"
+                            android:text="@={viewModel.name}"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/surnameInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="6dp"
+                        android:hint="@string/surname"
+                        app:handleErrorFrom="@{viewModel.surnameError}"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textCapWords"
+                            android:text="@={viewModel.surname}" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/emailInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:hint="@string/email"
+                    app:handleErrorFrom="@{viewModel.emailError}"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textCapWords"
-                        android:text="@={viewModel.name}"/>
+                        android:inputType="textEmailAddress"
+                        android:text="@={viewModel.email}"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/surnameInput"
+                    android:id="@+id/cardNumberInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="6dp"
-                    android:hint="@string/surname"
-                    app:handleErrorFrom="@{viewModel.surnameError}"
+                    android:layout_marginVertical="4dp"
+                    android:hint="@string/card_number"
+                    app:handleErrorFrom="@{viewModel.cardNumberError}"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textCapWords"
-                        android:text="@={viewModel.surname}" />
+                        android:inputType="phone"
+                        android:text="@={viewModel.cardNumber}" />
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/passwordInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:hint="@string/password"
+                    app:handleErrorFrom="@{viewModel.passwordError}"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:text="@={viewModel.password}"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/confirmPasswordInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:hint="@string/confirm_password"
+                    app:handleErrorFrom="@{viewModel.confirmPasswordError}"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:text="@={viewModel.confirmPassword}"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
+                    android:id="@+id/registerBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/button_shape"
+                    android:layout_marginVertical="8dp"
+                    android:text="@string/create_account"
+                    android:textColor="@color/design_default_color_background"
+                    android:onClick="@{(view) -> viewModel.register()}"
+                    android:layout_gravity="center_horizontal"
+                    app:spinning_bar_width="2dp"
+                    app:spinning_bar_color="@color/design_default_color_background"
+                    app:spinning_bar_padding="6dp"/>
+
+                <!--            <Button-->
+                <!--                android:id="@+id/registerBtn"-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:layout_marginVertical="8dp"-->
+                <!--                android:text="@string/create_account"-->
+                <!--                android:onClick="@{(view) -> viewModel.register()}"/>-->
+
+                <TextView android:id="@+id/loginLink"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/login"
+                    android:textSize="16sp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_gravity="center"/>
+
             </LinearLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/emailInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="4dp"
-                android:hint="@string/email"
-                app:handleErrorFrom="@{viewModel.emailError}"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
-                    android:text="@={viewModel.email}"/>
-            </com.google.android.material.textfield.TextInputLayout>
+        </ScrollView>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/cardNumberInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="4dp"
-                android:hint="@string/card_number"
-                app:handleErrorFrom="@{viewModel.cardNumberError}"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="phone"
-                    android:text="@={viewModel.cardNumber}" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/passwordInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="4dp"
-                android:hint="@string/password"
-                app:handleErrorFrom="@{viewModel.passwordError}"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:text="@={viewModel.password}"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/confirmPasswordInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="4dp"
-                android:hint="@string/confirm_password"
-                app:handleErrorFrom="@{viewModel.confirmPasswordError}"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:text="@={viewModel.confirmPassword}"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
-                android:id="@+id/registerBtn"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/button_shape"
-                android:layout_marginVertical="8dp"
-                android:text="@string/create_account"
-                android:textColor="@color/design_default_color_background"
-                android:onClick="@{(view) -> viewModel.register()}"
-                android:layout_gravity="center_horizontal"
-                app:spinning_bar_width="2dp"
-                app:spinning_bar_color="@color/design_default_color_background"
-                app:spinning_bar_padding="6dp"/>
-
-<!--            <Button-->
-<!--                android:id="@+id/registerBtn"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginVertical="8dp"-->
-<!--                android:text="@string/create_account"-->
-<!--                android:onClick="@{(view) -> viewModel.register()}"/>-->
-
-            <TextView android:id="@+id/loginLink"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/login"
-                android:textSize="16sp"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_gravity="center"/>
-
-        </LinearLayout>
-
-    </ScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

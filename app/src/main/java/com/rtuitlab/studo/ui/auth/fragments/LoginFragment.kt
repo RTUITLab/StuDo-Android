@@ -66,13 +66,14 @@ class LoginFragment : Fragment() {
 
     private fun setObservers() {
         viewModel.loginResource.observe(viewLifecycleOwner, Observer {
-            loginBtn.revertAnimation()
             when(it.status) {
                 Status.SUCCESS -> {
+                    loginBtn.revertAnimation()
                     startActivity(Intent(requireActivity(), MainActivity::class.java))
                     requireActivity().finish()
                 }
                 Status.ERROR -> {
+                    loginBtn.revertAnimation()
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
                 Status.LOADING -> loginBtn.startAnimation()
@@ -80,12 +81,13 @@ class LoginFragment : Fragment() {
         })
 
         viewModel.resetResource.observe(viewLifecycleOwner, Observer {
-            loginBtn.revertAnimation()
             when(it.status) {
                 Status.SUCCESS -> {
+                    loginBtn.revertAnimation()
                     Snackbar.make(requireView(), getString(R.string.check_email_to_reset), Snackbar.LENGTH_LONG).show()
                 }
                 Status.ERROR -> {
+                    loginBtn.revertAnimation()
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
                 Status.LOADING -> loginBtn.startAnimation()

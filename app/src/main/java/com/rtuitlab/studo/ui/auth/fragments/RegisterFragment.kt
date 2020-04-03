@@ -26,20 +26,6 @@ class RegisterFragment : Fragment() {
 
     private val viewModel: AuthViewModel by sharedViewModel()
 
-    private val registerObserver = Observer<Resource<Unit>> {
-        registerBtn.revertAnimation()
-        when(it.status) {
-            Status.SUCCESS -> {
-                Snackbar.make(requireView(), getString(R.string.email_verification), Snackbar.LENGTH_LONG).show()
-                loginLink.performClick()
-            }
-            Status.ERROR -> {
-                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-            }
-            Status.LOADING -> registerBtn.startAnimation()
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
@@ -63,7 +49,7 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setListeners()
-        viewModel.registerResource.observe(viewLifecycleOwner, registerObserver)
+        setObservers()
     }
 
     override fun onDestroyView() {
@@ -82,5 +68,22 @@ class RegisterFragment : Fragment() {
                 R.id.action_registerFragment_to_loginFragment, null, null, extras
             )
         }
+    }
+
+    private fun setObservers() {
+        viewModel.registerResource.observe(viewLifecycleOwner, Observer {
+            when(it.status) {
+                Status.SUCCESS -> {
+                    registerBtn.revertAnimation()
+                    Snackbar.make(requireView(), getString(R.string.email_verification), Snackbar.LENGTH_LONG).show()
+                    loginLink.performClick()
+                }
+                Status.ERROR -> {
+                    registerBtn.revertAnimation()
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+                Status.LOADING -> registerBtn.startAnimation()
+            }
+        })
     }
 }

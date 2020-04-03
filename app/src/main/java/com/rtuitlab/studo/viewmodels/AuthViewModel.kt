@@ -6,6 +6,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.rtuitlab.studo.*
+import com.rtuitlab.studo.extensions.isEmail
+import com.rtuitlab.studo.extensions.isNotEmail
 import com.rtuitlab.studo.server.Resource
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.auth.AuthRepository
@@ -14,9 +16,9 @@ import com.rtuitlab.studo.server.auth.models.UserLoginRequest
 import com.rtuitlab.studo.server.auth.models.UserLoginResponse
 import com.rtuitlab.studo.server.auth.models.UserRegisterRequest
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.RuntimeException
 
 class AuthViewModel(
     private val app: Application,
@@ -29,13 +31,13 @@ class AuthViewModel(
     var surname = ""
     var surnameError = ObservableField("")
 
-    var email = ""
+    var email = "test@gmail.com"
     var emailError = ObservableField("")
 
     var cardNumber = ""
     var cardNumberError = ObservableField("")
 
-    var password = ""
+    var password = "123456"
     var passwordError = ObservableField("")
 
     var confirmPassword = ""
@@ -62,7 +64,12 @@ class AuthViewModel(
                     )
                 }
                 if (response.status == Status.SUCCESS) {
-                    currentUserWithToken = response.data
+                    response.data?.let {
+                        currentUser = it.user
+                        accessToken = it.accessToken
+                    } ?:run {
+                        throw RuntimeException("Not enough data in auth response")
+                    }
                 }
                 _loginResource.value = response
             }
@@ -125,11 +132,16 @@ class AuthViewModel(
         if (!isLoginDataCorrect()) {
             result = false
         }
-        if (password != confirmPassword) {
-            confirmPasswordError.set(app.getString(R.string.not_equal_password_error))
+        if (confirmPassword.isEmpty()) {
+            confirmPasswordError.set(app.getString(R.string.empty_field_error))
             result = false
         } else {
-            confirmPasswordError.set("")
+            if (password != confirmPassword) {
+                confirmPasswordError.set(app.getString(R.string.not_equal_password_error))
+                result = false
+            } else {
+                confirmPasswordError.set("")
+            }
         }
         return result
     }

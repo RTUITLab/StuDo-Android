@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/resumes"
+    app:startDestination="@id/resumesListFragment">
+
+    <fragment
+        android:id="@+id/resumesListFragment"
+        android:name="com.rtuitlab.studo.ui.main.fragments.ResumesListFragment"
+        android:label="ResumesListFragment"
+        tools:layout="@layout/fragment_recycler_list"/>
+</navigation>
