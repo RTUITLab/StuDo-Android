@@ -16,11 +16,11 @@ import com.rtuitlab.studo.server.main.models.CompactAd
 import com.rtuitlab.studo.viewmodels.AdsViewModel
 import kotlinx.android.synthetic.main.fragment_recycler_list.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
 
-    val viewModel: AdsViewModel by viewModel()
+    val viewModel: AdsViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
