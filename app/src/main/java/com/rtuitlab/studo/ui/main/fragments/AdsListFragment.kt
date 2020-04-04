@@ -67,7 +67,6 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
     }
 
     private fun initRecyclerView() {
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = AdsRecyclerAdapter(viewModel.adsListResource.value!!.data!!).apply {
             setOnAdClickListener(this@AdsListFragment)
         }

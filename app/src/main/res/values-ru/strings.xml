@@ -19,6 +19,12 @@
     <string name="check_email_to_reset">Проверьте почту для изменения пароля</string>
     <string name="title_ads">Объявления</string>
     <string name="title_resumes">Резюме</string>
-    <string name="title_other">Другое</string>
+    <string name="title_profile">Профиль</string>
     <string name="create">Создать</string>
+    <string name="my_ads">Мои объявления</string>
+    <string name="my_resumes">Мои резюме</string>
+    <string name="bookmarks">Закладки</string>
+    <string name="organizations">Организации</string>
+    <string name="settings">Настройки</string>
+    <string name="about">О приложении</string>
 </resources>

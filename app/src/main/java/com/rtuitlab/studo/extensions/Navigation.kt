@@ -95,7 +95,7 @@ fun BottomNavigationView.setupWithNavController(
                         .attach(selectedFragment)
                         .setPrimaryNavigationFragment(selectedFragment)
                         .apply {
-                            // Detach all other Fragments
+                            // Detach all profile Fragments
                             graphIdToTagMap.forEach { _, fragmentTagIter ->
                                 if (fragmentTagIter != newlySelectedItemTag) {
                                     detach(fragmentManager.findFragmentByTag(firstFragmentTag)!!)

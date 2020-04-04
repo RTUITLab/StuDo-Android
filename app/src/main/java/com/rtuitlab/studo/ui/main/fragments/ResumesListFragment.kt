@@ -67,7 +67,6 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
     }
 
     private fun initRecyclerView() {
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = ResumesRecyclerAdapter(viewModel.resumesListResource.value!!.data!!).apply {
             setOnResumeClickListener(this@ResumesListFragment)
         }

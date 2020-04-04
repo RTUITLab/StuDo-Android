@@ -5,13 +5,7 @@ import android.content.res.Configuration
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.View
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
-import androidx.navigation.NavController
-import androidx.navigation.ui.NavigationUI
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.currentUser
 import com.rtuitlab.studo.extensions.setupWithNavController
@@ -45,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 	private fun setupBottomNavigationBar() {
 
 		val controller = bottomNav.setupWithNavController(
-			navGraphIds = listOf(R.navigation.ads, R.navigation.resumes, R.navigation.other),
+			navGraphIds = listOf(R.navigation.ads, R.navigation.resumes, R.navigation.profile),
 			fragmentManager = supportFragmentManager,
 			containerId = R.id.navHostContainer,
 			intent = intent

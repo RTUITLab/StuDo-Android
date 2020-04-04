@@ -21,6 +21,13 @@
     <string name="check_email_to_reset">Check your email to change password</string>
     <string name="title_ads">Ads</string>
     <string name="title_resumes">Resumes</string>
-    <string name="title_other">Other</string>
+    <string name="title_profile">Profile</string>
     <string name="create">Create</string>
+    <string name="my_ads">My ads</string>
+    <string name="my_resumes">My resumes</string>
+    <string name="bookmarks">Bookmarks</string>
+    <string name="organizations">Organizations</string>
+    <string name="settings">Settings</string>
+    <string name="about">About</string>
+    <string name="fullName" translatable="false">%1$s %2$s</string>
 </resources>
