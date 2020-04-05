@@ -31,8 +31,7 @@
                     android:layout_height="160dp"
                     android:layout_marginBottom="16dp"
                     android:layout_gravity="center_horizontal"
-                    android:contentDescription="@string/logo"
-                    android:transitionName="logoView"/>
+                    android:contentDescription="@string/logo"/>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/emailInput"

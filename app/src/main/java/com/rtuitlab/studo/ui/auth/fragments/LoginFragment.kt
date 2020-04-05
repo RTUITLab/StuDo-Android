@@ -97,12 +97,7 @@ class LoginFragment : Fragment() {
     private fun setListeners() {
         registerLink.setOnClickListener {
             viewModel.clearErrors()
-            val extras = FragmentNavigatorExtras(
-                logoView to "logoView"
-            )
-            findNavController().navigate(
-                R.id.action_loginFragment_to_registerFragment, null, null, extras
-            )
+            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
 
         resetPasswordBtn.setOnClickListener {

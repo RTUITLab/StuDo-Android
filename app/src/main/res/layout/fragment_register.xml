@@ -31,8 +31,7 @@
                     android:layout_height="50dp"
                     android:layout_marginBottom="16dp"
                     android:layout_gravity="center_horizontal"
-                    android:contentDescription="@string/logo"
-                    android:transitionName="logoView"/>
+                    android:contentDescription="@string/logo"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"

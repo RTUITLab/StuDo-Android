@@ -61,12 +61,7 @@ class RegisterFragment : Fragment() {
     private fun setListeners() {
         loginLink.setOnClickListener {
             viewModel.clearErrors()
-            val extras = FragmentNavigatorExtras(
-                logoView to "logoView"
-            )
-            findNavController().navigate(
-                R.id.action_registerFragment_to_loginFragment, null, null, extras
-            )
+            requireActivity().onBackPressed()
         }
     }
 
