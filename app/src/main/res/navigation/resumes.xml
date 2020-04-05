@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/resumesListFragment"
-        android:name="com.rtuitlab.studo.ui.main.fragments.ResumesListFragment"
+        android:name="com.rtuitlab.studo.ui.general.resumes.ResumesListFragment"
         android:label="ResumesListFragment"
         tools:layout="@layout/fragment_recycler_list"/>
 </navigation>

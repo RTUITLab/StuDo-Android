@@ -1,4 +1,4 @@
-package com.rtuitlab.studo.ui.main.fragments
+package com.rtuitlab.studo.ui.general.ads
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,17 +9,17 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.rtuitlab.studo.R
-import com.rtuitlab.studo.adapters.ResumesRecyclerAdapter
+import com.rtuitlab.studo.adapters.AdsRecyclerAdapter
 import com.rtuitlab.studo.server.Status
-import com.rtuitlab.studo.server.general.resumes.models.CompactResume
-import com.rtuitlab.studo.viewmodels.ResumesViewModel
+import com.rtuitlab.studo.server.general.ads.models.CompactAd
+import com.rtuitlab.studo.viewmodels.AdsViewModel
 import kotlinx.android.synthetic.main.fragment_recycler_list.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickListener {
+class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
 
-    private val viewModel: ResumesViewModel by sharedViewModel()
+    val viewModel: AdsViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,9 +31,9 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        collapsingToolbar.title = getString(R.string.title_resumes)
-        if (viewModel.resumesListResource.value == null) {
-            viewModel.loadAllResumes()
+        collapsingToolbar.title = getString(R.string.title_ads)
+        if (viewModel.adsListResource.value == null) {
+            viewModel.loadAdsList()
         } else {
             initRecyclerView()
         }
@@ -43,12 +43,12 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
 
     private fun setListeners() {
         swipeContainer.setOnRefreshListener {
-            viewModel.loadAllResumes()
+            viewModel.loadAdsList()
         }
     }
 
     private fun setObservers() {
-        viewModel.resumesListResource.observe(viewLifecycleOwner, Observer {
+        viewModel.adsListResource.observe(viewLifecycleOwner, Observer {
             when(it.status) {
                 Status.SUCCESS -> {
                     swipeContainer.isRefreshing = false
@@ -66,12 +66,12 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
     }
 
     private fun initRecyclerView() {
-        recyclerView.adapter = ResumesRecyclerAdapter(viewModel.resumesListResource.value!!.data!!).apply {
-            setOnResumeClickListener(this@ResumesListFragment)
+        recyclerView.adapter = AdsRecyclerAdapter(viewModel.adsListResource.value!!.data!!).apply {
+            setOnAdClickListener(this@AdsListFragment)
         }
     }
 
-    override fun onResumeClick(compactResume: CompactResume) {
-        Snackbar.make(requireView(), compactResume.name, Snackbar.LENGTH_SHORT).show()
+    override fun onAdClicked(compactAd: CompactAd) {
+        Snackbar.make(requireView(), compactAd.name, Snackbar.LENGTH_SHORT).show()
     }
 }

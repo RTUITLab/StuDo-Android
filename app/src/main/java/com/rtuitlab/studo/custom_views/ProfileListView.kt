@@ -50,4 +50,8 @@ class ProfileListView @JvmOverloads constructor(
             return view
         }
     }
+
+    enum class MenuItem {
+        ADS, RESUMES, BOOKMARKS, ORGANIZATIONS, SETTINGS, ABOUT
+    }
 }

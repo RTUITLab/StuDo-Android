@@ -1,0 +1,97 @@
+package com.rtuitlab.studo.ui.general.profile
+
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.MaterialSharedAxis
+import com.rtuitlab.studo.R
+import com.rtuitlab.studo.currentUser
+import com.rtuitlab.studo.custom_views.ProfileListView
+import com.rtuitlab.studo.server.Status
+import com.rtuitlab.studo.viewmodels.ProfileViewModel
+import kotlinx.android.synthetic.main.fragment_profile.*
+import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+
+class ProfileFragment : Fragment() {
+
+    private val viewModel: ProfileViewModel by sharedViewModel()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enterTransition = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.Z,false)
+        exitTransition = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.Z,true)
+        viewModel.updateCurrentUser()
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_profile, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        collapsingToolbar.title = getString(R.string.title_profile)
+        fillUserData()
+        setMenuListener()
+        viewModel.currentUserResource.observe(viewLifecycleOwner, Observer {
+            when(it.status) {
+                Status.SUCCESS -> fillUserData()
+                Status.ERROR -> {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+                Status.LOADING -> {}
+            }
+        })
+    }
+
+    private fun fillUserData() {
+        avatarView.text = viewModel.userInitials
+        fullNameTV.text = getString(R.string.fullName, currentUser!!.name, currentUser!!.surname)
+        emailTV.text = currentUser!!.email
+    }
+
+    private fun setMenuListener() {
+        profilePanel.setOnClickListener {
+            val extras = FragmentNavigatorExtras(
+                avatarView to "avatarView"
+            )
+            findNavController().navigate(
+                R.id.action_profileFragment_to_accountSettingsFragment, null, null, extras
+            )
+        }
+        profileList.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+            when(position) {
+                ProfileListView.MenuItem.ADS.ordinal -> {
+                    Snackbar.make(requireView(), "ADS", Snackbar.LENGTH_SHORT).show()
+                }
+                ProfileListView.MenuItem.RESUMES.ordinal -> {
+                    Snackbar.make(requireView(), "RESUMES", Snackbar.LENGTH_SHORT).show()
+                }
+                ProfileListView.MenuItem.BOOKMARKS.ordinal -> {
+                    Snackbar.make(requireView(), "BOOKMARKS", Snackbar.LENGTH_SHORT).show()
+                }
+                ProfileListView.MenuItem.ORGANIZATIONS.ordinal -> {
+                    Snackbar.make(requireView(), "ORGANIZATIONS", Snackbar.LENGTH_SHORT).show()
+                }
+                ProfileListView.MenuItem.SETTINGS.ordinal -> {
+                    Snackbar.make(requireView(), "SETTINGS", Snackbar.LENGTH_SHORT).show()
+                }
+                ProfileListView.MenuItem.ABOUT.ordinal -> {
+                    Snackbar.make(requireView(), "ABOUT", Snackbar.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+}

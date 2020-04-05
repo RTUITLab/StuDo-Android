@@ -1,4 +1,4 @@
-package com.rtuitlab.studo.ui.main
+package com.rtuitlab.studo.ui.general
 
 import android.content.Intent
 import android.content.res.Configuration

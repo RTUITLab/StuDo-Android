@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -21,7 +20,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentLoginBinding
 import com.rtuitlab.studo.server.Status
-import com.rtuitlab.studo.ui.main.MainActivity
+import com.rtuitlab.studo.ui.general.MainActivity
 import com.rtuitlab.studo.viewmodels.AuthViewModel
 import kotlinx.android.synthetic.main.dialog_reset_password.*
 import kotlinx.android.synthetic.main.fragment_login.*
@@ -99,7 +98,7 @@ class LoginFragment : Fragment() {
         registerLink.setOnClickListener {
             viewModel.clearErrors()
             val extras = FragmentNavigatorExtras(
-                logoView to "registerLogoView"
+                logoView to "logoView"
             )
             findNavController().navigate(
                 R.id.action_loginFragment_to_registerFragment, null, null, extras

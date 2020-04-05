@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/adsListFragment"
-        android:name="com.rtuitlab.studo.ui.main.fragments.AdsListFragment"
+        android:name="com.rtuitlab.studo.ui.general.ads.AdsListFragment"
         android:label="AdsListFragment"
         tools:layout="@layout/fragment_recycler_list" />
 </navigation>

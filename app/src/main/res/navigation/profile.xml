@@ -8,7 +8,20 @@
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.rtuitlab.studo.ui.main.fragments.ProfileFragment"
+        android:name="com.rtuitlab.studo.ui.general.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_accountSettingsFragment"
+            app:destination="@id/accountSettingsFragment"/>
+<!--        app:enterAnim="@anim/slide_from_right"-->
+<!--        app:exitAnim="@anim/slide_to_left"-->
+<!--        app:popEnterAnim="@anim/slide_from_left"-->
+<!--        app:popExitAnim="@anim/slide_to_right"-->
+    </fragment>
+    <fragment
+        android:id="@+id/accountSettingsFragment"
+        android:name="com.rtuitlab.studo.ui.general.profile.AccountSettingsFragment"
+        android:label="fragment_account_settings"
+        tools:layout="@layout/fragment_account_settings" />
 </navigation>

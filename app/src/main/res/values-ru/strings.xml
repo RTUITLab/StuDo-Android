@@ -27,4 +27,8 @@
     <string name="organizations">Организации</string>
     <string name="settings">Настройки</string>
     <string name="about">О приложении</string>
+    <string name="change_email">Изменить почту</string>
+    <string name="change_password">Изменить пароль</string>
+    <string name="logout">Выйти</string>
+    <string name="account">Аккаунт</string>
 </resources>
