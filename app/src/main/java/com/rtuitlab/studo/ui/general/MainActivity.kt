@@ -14,13 +14,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-//	private var currentNavController: LiveData<NavController>? = null
-
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		paintStatusBar()
 		setContentView(R.layout.activity_main)
-
 		currentUser?.let {
 			if (savedInstanceState == null) {
 				setupBottomNavigationBar()
@@ -38,17 +35,12 @@ class MainActivity : AppCompatActivity() {
 
 	private fun setupBottomNavigationBar() {
 
-		val controller = bottomNav.setupWithNavController(
+		bottomNav.setupWithNavController(
 			navGraphIds = listOf(R.navigation.ads, R.navigation.resumes, R.navigation.profile),
 			fragmentManager = supportFragmentManager,
 			containerId = R.id.navHostContainer,
 			intent = intent
 		)
-
-//		controller.observe(this, Observer { navController ->
-//			NavigationUI.setupActionBarWithNavController(this, navController)
-//		})
-//		currentNavController = controller
 	}
 
 	private fun paintStatusBar() {
@@ -59,8 +51,4 @@ class MainActivity : AppCompatActivity() {
 			window.statusBarColor = android.R.attr.windowBackground
 		}
 	}
-
-//	override fun onSupportNavigateUp(): Boolean {
-//		return currentNavController?.value?.navigateUp() ?: false
-//	}
 }

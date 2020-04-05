@@ -22,7 +22,8 @@
             android:id="@+id/swipeContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:onRefreshListener="@{() -> viewModel.updateCurrentUser()}">
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
@@ -44,6 +45,7 @@
                             android:layout_width="128dp"
                             android:layout_height="128dp"
                             android:transitionName="avatarView"
+                            app:bindText="@{viewModel.userInitials}"
                             app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/linearLayout" />
@@ -70,7 +72,7 @@
                                     android:layout_height="wrap_content"
                                     android:autofillHints="name"
                                     android:inputType="textCapWords"
-                                    android:text="@{viewModel.currentUserResource.data.name}" />
+                                    android:text="@{viewModel.name}" />
                             </com.google.android.material.textfield.TextInputLayout>
 
                             <com.google.android.material.textfield.TextInputLayout
@@ -85,7 +87,7 @@
                                     android:layout_height="wrap_content"
                                     android:autofillHints="surname"
                                     android:inputType="textCapWords"
-                                    android:text="@{viewModel.currentUserResource.data.surname}" />
+                                    android:text="@{viewModel.surname}" />
                             </com.google.android.material.textfield.TextInputLayout>
 
                             <com.google.android.material.textfield.TextInputLayout
@@ -100,7 +102,7 @@
                                     android:layout_height="wrap_content"
                                     android:autofillHints="card number"
                                     android:inputType="phone"
-                                    android:text="@{viewModel.currentUserResource.data.studentCardNumber}" />
+                                    android:text="@{viewModel.cardNumber}" />
                             </com.google.android.material.textfield.TextInputLayout>
 
                         </LinearLayout>

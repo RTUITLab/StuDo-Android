@@ -31,7 +31,7 @@ class AuthViewModel(
     var surname = ""
     var surnameError = ObservableField("")
 
-    var email = "test@gmail.com"
+    var email = "almostroll@yandex.ru"
     var emailError = ObservableField("")
 
     var cardNumber = ""

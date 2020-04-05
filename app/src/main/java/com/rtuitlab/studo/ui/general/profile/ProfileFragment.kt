@@ -7,14 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
 import com.rtuitlab.studo.R
-import com.rtuitlab.studo.currentUser
 import com.rtuitlab.studo.custom_views.ProfileListView
+import com.rtuitlab.studo.databinding.FragmentProfileBinding
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.viewmodels.ProfileViewModel
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -37,29 +38,29 @@ class ProfileFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        val binding = DataBindingUtil.inflate<FragmentProfileBinding>(
+            inflater,
+            R.layout.
+            fragment_profile,
+            container,
+            false
+        )
+        binding.viewModel = viewModel
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         collapsingToolbar.title = getString(R.string.title_profile)
-        fillUserData()
         setMenuListener()
         viewModel.currentUserResource.observe(viewLifecycleOwner, Observer {
             when(it.status) {
-                Status.SUCCESS -> fillUserData()
                 Status.ERROR -> {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
-                Status.LOADING -> {}
+                else -> {}
             }
         })
-    }
-
-    private fun fillUserData() {
-        avatarView.text = viewModel.userInitials
-        fullNameTV.text = getString(R.string.fullName, currentUser!!.name, currentUser!!.surname)
-        emailTV.text = currentUser!!.email
     }
 
     private fun setMenuListener() {

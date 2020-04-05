@@ -1,5 +1,8 @@
 package com.rtuitlab.studo.ui.general.profile
 
+import android.app.Activity
+import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,10 +18,12 @@ import com.rtuitlab.studo.R
 import com.rtuitlab.studo.currentUser
 import com.rtuitlab.studo.databinding.FragmentAccountSettingsBinding
 import com.rtuitlab.studo.server.Status
+import com.rtuitlab.studo.ui.general.MainActivity
 import com.rtuitlab.studo.viewmodels.ProfileViewModel
 import kotlinx.android.synthetic.main.fragment_account_settings.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+
 
 class AccountSettingsFragment: Fragment() {
 
@@ -53,12 +58,10 @@ class AccountSettingsFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         collapsingToolbar.title = getString(R.string.account)
         setListeners()
-        fillUserData()
         viewModel.currentUserResource.observe(viewLifecycleOwner, Observer {
             when(it.status) {
                 Status.SUCCESS -> {
                     swipeContainer.isRefreshing = false
-                    fillUserData()
                 }
                 Status.ERROR -> {
                     swipeContainer.isRefreshing = false
@@ -72,13 +75,6 @@ class AccountSettingsFragment: Fragment() {
     }
 
     private fun setListeners() {
-        swipeContainer.setOnRefreshListener { viewModel.updateCurrentUser() }
-    }
-
-    private fun fillUserData() {
-        avatarView.text = viewModel.userInitials
-        nameInput.editText!!.setText(currentUser!!.name)
-        surnameInput.editText!!.setText(currentUser!!.surname)
-        cardNumberInput.editText!!.setText(currentUser!!.studentCardNumber)
+        
     }
 }
