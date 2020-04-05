@@ -75,6 +75,13 @@ class AccountSettingsFragment: Fragment() {
     }
 
     private fun setListeners() {
-        
+        logoutBtn.setOnClickListener {
+            currentUser = null
+            val intent = Intent(requireContext(), MainActivity::class.java)
+            intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
+            requireActivity().startActivity(intent)
+            requireActivity().finish()
+            Runtime.getRuntime().exit(0)
+        }
     }
 }
