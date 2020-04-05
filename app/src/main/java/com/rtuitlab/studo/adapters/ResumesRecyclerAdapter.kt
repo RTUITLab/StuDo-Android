@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.rtuitlab.studo.R
-import com.rtuitlab.studo.server.main.models.CompactResume
+import com.rtuitlab.studo.server.general.resumes.models.CompactResume
 import kotlinx.android.synthetic.main.view_recycler_resume.view.*
 
 class ResumesRecyclerAdapter(

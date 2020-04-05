@@ -9,10 +9,6 @@ import com.rtuitlab.studo.server.auth.models.UserRegisterRequest
 import org.koin.dsl.module
 import java.lang.Exception
 
-val authModule = module {
-    single { AuthRepository(get(), get()) }
-}
-
 class AuthRepository(
     private val authApi: AuthApi,
     private val responseHandler: ResponseHandler

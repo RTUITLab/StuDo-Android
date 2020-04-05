@@ -1,4 +1,4 @@
-package com.rtuitlab.studo.server.main.models
+package com.rtuitlab.studo.server.general.user.models
 
 import com.google.gson.annotations.SerializedName
 

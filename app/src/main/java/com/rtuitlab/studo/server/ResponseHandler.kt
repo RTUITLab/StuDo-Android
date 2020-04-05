@@ -10,12 +10,7 @@ val responseHandlerModule = module {
     factory { ResponseHandler() }
 }
 
-enum class ErrorCodes(val code: Int) {
-    SocketTimeOut(-1),
-    UnknownHost(-2)
-}
-
-open class ResponseHandler {
+class ResponseHandler {
     fun <T : Any> handleSuccess(data: T): Resource<T> {
         return Resource.success(data)
     }
@@ -40,5 +35,10 @@ open class ResponseHandler {
             in 500..599 -> "Error with connecting to server. Code: $code"
             else -> "Something went wrong"
         }
+    }
+
+    private enum class ErrorCodes(val code: Int) {
+        SocketTimeOut(-1),
+        UnknownHost(-2)
     }
 }

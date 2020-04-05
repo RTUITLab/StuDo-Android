@@ -5,14 +5,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rtuitlab.studo.SingleLiveEvent
 import com.rtuitlab.studo.server.Resource
-import com.rtuitlab.studo.server.main.ServerRepository
-import com.rtuitlab.studo.server.main.models.CompactResume
+import com.rtuitlab.studo.server.general.resumes.ResumesRepository
+import com.rtuitlab.studo.server.general.resumes.models.CompactResume
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class ResumesViewModel(
-    private val serverRepo: ServerRepository
+    private val resumesRepo: ResumesRepository
 ): ViewModel() {
 
     private val _resumesListResource = SingleLiveEvent<Resource<List<CompactResume>>>()
@@ -22,7 +22,7 @@ class ResumesViewModel(
         viewModelScope.launch {
             _resumesListResource.value = Resource.loading(null)
             val response = withContext(Dispatchers.IO) {
-                serverRepo.getAllResumes()
+                resumesRepo.getAllResumes()
             }
             _resumesListResource.value = response
         }

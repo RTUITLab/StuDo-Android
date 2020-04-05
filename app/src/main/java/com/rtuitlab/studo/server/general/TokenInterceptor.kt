@@ -1,4 +1,4 @@
-package com.rtuitlab.studo.server.main
+package com.rtuitlab.studo.server.general
 
 import com.rtuitlab.studo.accessToken
 import okhttp3.Interceptor

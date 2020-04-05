@@ -1,4 +1,4 @@
-package com.rtuitlab.studo.server.main.models
+package com.rtuitlab.studo.server.general.ads.models
 
 data class CompactAd(
     val id : String,

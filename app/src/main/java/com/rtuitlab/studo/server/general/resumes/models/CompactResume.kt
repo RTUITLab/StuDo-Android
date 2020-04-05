@@ -1,4 +1,4 @@
-package com.rtuitlab.studo.server.main.models
+package com.rtuitlab.studo.server.general.resumes.models
 
 data class CompactResume(
     val id : String,

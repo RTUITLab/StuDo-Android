@@ -1,10 +1,11 @@
 package com.rtuitlab.studo
 
 import android.app.Application
-import com.rtuitlab.studo.server.auth.authModule
-import com.rtuitlab.studo.server.auth.authNetworkModule
-import com.rtuitlab.studo.server.main.networkModule
-import com.rtuitlab.studo.server.main.serverModule
+import com.rtuitlab.studo.server.auth.authApiModule
+import com.rtuitlab.studo.server.general.ads.adsApiModule
+import com.rtuitlab.studo.server.general.generalRetrofitModule
+import com.rtuitlab.studo.server.general.resumes.resumesApiModule
+import com.rtuitlab.studo.server.repositoriesModule
 import com.rtuitlab.studo.server.responseHandlerModule
 import com.rtuitlab.studo.viewmodels.viewModelsModule
 import org.koin.android.ext.koin.androidContext
@@ -18,12 +19,13 @@ class App : Application() {
             androidLogger()
             androidContext(this@App)
             modules(listOf(
-                authNetworkModule,
-                authModule,
-                viewModelsModule,
-                networkModule,
-                serverModule,
-                responseHandlerModule
+                authApiModule,
+                generalRetrofitModule,
+                adsApiModule,
+                resumesApiModule,
+                responseHandlerModule,
+                repositoriesModule,
+                viewModelsModule
             ))
         }
     }

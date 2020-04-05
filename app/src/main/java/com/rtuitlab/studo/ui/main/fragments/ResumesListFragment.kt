@@ -7,12 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.adapters.ResumesRecyclerAdapter
 import com.rtuitlab.studo.server.Status
-import com.rtuitlab.studo.server.main.models.CompactResume
+import com.rtuitlab.studo.server.general.resumes.models.CompactResume
 import com.rtuitlab.studo.viewmodels.ResumesViewModel
 import kotlinx.android.synthetic.main.fragment_recycler_list.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
