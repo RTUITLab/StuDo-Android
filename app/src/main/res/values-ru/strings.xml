@@ -36,4 +36,8 @@
     <string name="new_email">Новый email</string>
     <string name="confirm_new_email">Подтвердите новый email</string>
     <string name="new_email_verification">Проверьте новую почту, что изменить её</string>
+    <string name="old_password">Старый пароль</string>
+    <string name="new_password">Новый пароль</string>
+    <string name="confirm_new_password">Подтвердите новый пароль</string>
+    <string name="password_changed">Пароль изменен</string>
 </resources>

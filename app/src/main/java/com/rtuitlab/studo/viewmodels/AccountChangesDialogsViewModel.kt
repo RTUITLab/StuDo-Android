@@ -32,13 +32,37 @@ class AccountChangesDialogsViewModel(
         }
     }
 
-    fun isDataValid(): Boolean {
-        return old.isEmail() && new.isEmail() && confirm.isEmail() && (new == confirm) && (old != new)
+    private val _changePasswordResource = MutableLiveData<Resource<Unit>>()
+    val changePasswordResource: LiveData<Resource<Unit>> = _changePasswordResource
+
+    fun changePassword() {
+        viewModelScope.launch {
+            _changePasswordResource.value = Resource.loading(null)
+            val response = withContext(Dispatchers.IO) {
+                userRepo.changePassword(old, new)
+            }
+            _changePasswordResource.value = response
+        }
+    }
+
+    fun isDataValid(type: DataType): Boolean {
+        return when(type) {
+            DataType.EMAIL -> {
+                old.isEmail() && new.isEmail() && confirm.isEmail() && (new == confirm) && (old != new)
+            }
+            DataType.PASSWORD -> {
+                old.length > 5 && new.length > 5 && confirm.length > 5 && (new == confirm) && (old != new)
+            }
+        }
     }
 
     fun clearData() {
         old = ""
         new = ""
         confirm = ""
+    }
+
+    enum class DataType{
+        EMAIL, PASSWORD
     }
 }

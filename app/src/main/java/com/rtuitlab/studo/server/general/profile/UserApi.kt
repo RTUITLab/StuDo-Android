@@ -1,6 +1,7 @@
 package com.rtuitlab.studo.server.general.profile
 
 import com.rtuitlab.studo.server.general.profile.models.ChangeEmailRequest
+import com.rtuitlab.studo.server.general.profile.models.ChangePasswordRequest
 import com.rtuitlab.studo.server.general.profile.models.ChangeUserInfoRequest
 import com.rtuitlab.studo.server.general.profile.models.User
 import retrofit2.http.*
@@ -15,6 +16,6 @@ interface UserApi {
     @POST("user/change/email")
     suspend fun changeEmail(@Body body : ChangeEmailRequest)
 
-//    @POST("user/password/change")
-//    suspend fun changePassword(@Body body : ChangePasswordRequest)
+    @POST("user/password/change")
+    suspend fun changePassword(@Body body : ChangePasswordRequest)
 }

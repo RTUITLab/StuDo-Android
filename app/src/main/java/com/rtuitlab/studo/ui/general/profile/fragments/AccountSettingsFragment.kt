@@ -74,6 +74,11 @@ class AccountSettingsFragment: Fragment() {
             findNavController().navigate(R.id.action_accountSettingsFragment_to_changeEmailDialog)
         }
 
+        changePasswordBtn.setOnClickListener {
+            dialogsViewModel.clearData()
+            findNavController().navigate(R.id.action_accountSettingsFragment_to_changePasswordDialog)
+        }
+
         logoutBtn.setOnClickListener {
             currentUser = null
             val intent = Intent(requireContext(), MainActivity::class.java)
@@ -121,6 +126,22 @@ class AccountSettingsFragment: Fragment() {
                 Status.SUCCESS -> {
                     swipeContainer.isRefreshing = false
                     Snackbar.make(requireView(), getString(R.string.new_email_verification), Snackbar.LENGTH_SHORT).show()
+                }
+                Status.ERROR -> {
+                    swipeContainer.isRefreshing = false
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+                Status.LOADING -> {
+                    swipeContainer.isRefreshing = true
+                }
+            }
+        })
+
+        dialogsViewModel.changePasswordResource.observe(viewLifecycleOwner, Observer {
+            when(it.status) {
+                Status.SUCCESS -> {
+                    swipeContainer.isRefreshing = false
+                    Snackbar.make(requireView(), getString(R.string.password_changed), Snackbar.LENGTH_SHORT).show()
                 }
                 Status.ERROR -> {
                     swipeContainer.isRefreshing = false
