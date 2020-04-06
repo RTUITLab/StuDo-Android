@@ -11,9 +11,8 @@ import com.rtuitlab.studo.SingleLiveEvent
 import com.rtuitlab.studo.currentUser
 import com.rtuitlab.studo.server.Resource
 import com.rtuitlab.studo.server.Status
-import com.rtuitlab.studo.server.general.user.UserRepository
-import com.rtuitlab.studo.server.general.user.models.ChangeUserInfoRequest
-import com.rtuitlab.studo.server.general.user.models.User
+import com.rtuitlab.studo.server.general.profile.UserRepository
+import com.rtuitlab.studo.server.general.profile.models.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -22,6 +21,8 @@ class ProfileViewModel(
     private val app: Application,
     private val userRepo: UserRepository
 ): AndroidViewModel(app) {
+
+    var user = currentUser!!
 
     private val _currentUserResource = SingleLiveEvent<Resource<User>>()
     val currentUserResource = _currentUserResource
@@ -89,12 +90,11 @@ class ProfileViewModel(
         viewModelScope.launch {
             _changesSavedResource.value = Resource.loading(null)
             val response = withContext(Dispatchers.IO) {
-                userRepo.changeUserInfo(ChangeUserInfoRequest(
-                    currentUser!!.id,
-                    name.get()!!,
-                    surname.get()!!,
-                    cardNumber.get()!!
-                ))
+                userRepo.changeUserInfo(
+                    name.get()!!.trim(),
+                    surname.get()!!.trim(),
+                    cardNumber.get()!!.trim()
+                )
             }
             if (response.status == Status.SUCCESS) {
                 fillUserData(response.data!!)
@@ -105,11 +105,17 @@ class ProfileViewModel(
     }
 
     private fun fillUserData(user: User) {
+        this.user = user
         currentUser = user
         userInitials.set("${user.name[0]}${user.surname[0]}")
         name.set(user.name)
         surname.set(user.surname)
         email.set(user.email)
         cardNumber.set(user.studentCardNumber)
+    }
+
+    fun clearChanges() {
+        fillUserData(currentUser!!)
+        checkUserData()
     }
 }

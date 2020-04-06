@@ -15,7 +15,7 @@
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.general.profile.AccountSettingsFragment">
+        tools:context=".ui.general.profile.fragments.AccountSettingsFragment">
 
         <include layout="@layout/view_collapsing_toolbar"/>
 

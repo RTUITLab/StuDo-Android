@@ -32,4 +32,8 @@
     <string name="logout">Выйти</string>
     <string name="account">Аккаунт</string>
     <string name="changes_saved">Изменения сохранены</string>
+    <string name="old_email">Старый email</string>
+    <string name="new_email">Новый email</string>
+    <string name="confirm_new_email">Подтвердите новый email</string>
+    <string name="new_email_verification">Проверьте новую почту, что изменить её</string>
 </resources>

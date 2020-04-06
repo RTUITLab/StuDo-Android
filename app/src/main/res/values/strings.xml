@@ -35,4 +35,8 @@
     <string name="logout">Logout</string>
     <string name="account">Account</string>
     <string name="changes_saved">Changes saved</string>
+    <string name="old_email">Old email</string>
+    <string name="new_email">New email</string>
+    <string name="confirm_new_email">Confirm new email</string>
+    <string name="new_email_verification">Check your new email to change it</string>
 </resources>

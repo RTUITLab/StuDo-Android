@@ -1,7 +1,5 @@
 package com.rtuitlab.studo
 
-import android.util.Log
-import android.widget.EditText
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.BindingAdapter

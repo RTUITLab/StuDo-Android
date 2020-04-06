@@ -1,4 +1,4 @@
-package com.rtuitlab.studo.server.general.user
+package com.rtuitlab.studo.server.general.profile
 
 import org.koin.core.qualifier.named
 import org.koin.dsl.module

@@ -14,7 +14,7 @@
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.general.profile.ProfileFragment">
+        tools:context=".ui.general.profile.fragments.ProfileFragment">
 
         <include layout="@layout/view_collapsing_toolbar"/>
 
@@ -65,7 +65,7 @@
                                 android:maxLines="1"
                                 android:textColor="?android:attr/textColorPrimary"
                                 android:textSize="24sp"
-                                android:text="@{viewModel.name + &quot; &quot; + viewModel.surname }"
+                                android:text="@{viewModel.user.name + &quot; &quot; + viewModel.user.surname }"
                                 tools:text="Sample text" />
 
                             <TextView
@@ -74,7 +74,7 @@
                                 android:layout_height="wrap_content"
                                 android:maxLines="1"
                                 android:textSize="16sp"
-                                android:text="@{viewModel.email}"
+                                android:text="@{viewModel.user.email}"
                                 tools:text="Sample text" />
 
                         </LinearLayout>

@@ -1,4 +1,4 @@
-package com.rtuitlab.studo.ui.general.profile
+package com.rtuitlab.studo.ui.general.profile.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -40,8 +40,7 @@ class ProfileFragment : Fragment() {
     ): View? {
         val binding = DataBindingUtil.inflate<FragmentProfileBinding>(
             inflater,
-            R.layout.
-            fragment_profile,
+            R.layout.fragment_profile,
             container,
             false
         )

@@ -12,7 +12,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -118,7 +117,7 @@ class LoginFragment : Fragment() {
                 setOnShowListener {
                     val positiveBtn = getButton(AlertDialog.BUTTON_POSITIVE)
                     positiveBtn.setOnClickListener {
-                        val email = resetEmailInput.editText!!.text.toString()
+                        val email = resetPasswordInput.editText!!.text.toString()
                         if (viewModel.resetPassword(email)) {
                             currentFocus?.let {
                                 val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
@@ -126,8 +125,8 @@ class LoginFragment : Fragment() {
                             }
                             dismiss()
                         } else {
-                            resetEmailInput.isErrorEnabled = true
-                            resetEmailInput.error = getString(R.string.wrong_email_error)
+                            resetPasswordInput.isErrorEnabled = true
+                            resetPasswordInput.error = getString(R.string.wrong_email_error)
                         }
                     }
                 }
