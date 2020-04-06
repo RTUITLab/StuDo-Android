@@ -25,10 +25,7 @@ class UserRepository (
         return try {
             responseHandler.handleSuccess(userApi.changeUserInfo(
                 ChangeUserInfoRequest(
-                    currentUser!!.id,
-                    name,
-                    surname,
-                    cardNumber
+                    currentUser!!.id, name, surname, cardNumber
             )))
         } catch (e: Exception) {
             responseHandler.handleException(e)
@@ -38,9 +35,7 @@ class UserRepository (
     suspend fun changeEmail(oldEmail: String, newEmail: String): Resource<Unit> {
         return try {
             responseHandler.handleSuccess(userApi.changeEmail(ChangeEmailRequest(
-                currentUser!!.id,
-                oldEmail,
-                newEmail
+                currentUser!!.id, oldEmail, newEmail
             )))
         } catch (e: Exception) {
             responseHandler.handleException(e)
@@ -50,9 +45,7 @@ class UserRepository (
     suspend fun changePassword(oldPassword: String, newPassword: String): Resource<Unit> {
         return try {
             responseHandler.handleSuccess(userApi.changePassword(ChangePasswordRequest(
-                currentUser!!.id,
-                oldPassword,
-                newPassword
+                currentUser!!.id, oldPassword, newPassword
             )))
         } catch (e: Exception) {
             responseHandler.handleException(e)

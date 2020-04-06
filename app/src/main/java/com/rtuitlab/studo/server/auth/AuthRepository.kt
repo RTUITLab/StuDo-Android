@@ -13,25 +13,34 @@ class AuthRepository(
     private val authApi: AuthApi,
     private val responseHandler: ResponseHandler
 ) {
-    suspend fun login(userLoginRequest: UserLoginRequest): Resource<UserLoginResponse> {
+    suspend fun login(email: String, password: String): Resource<UserLoginResponse> {
         return try {
-            responseHandler.handleSuccess(authApi.login(userLoginRequest))
+            responseHandler.handleSuccess(authApi.login(UserLoginRequest(email, password)))
         } catch (e: Exception) {
             responseHandler.handleException(e)
         }
     }
 
-    suspend fun register(userRegisterRequest: UserRegisterRequest): Resource<Unit> {
+    suspend fun register(
+        name: String,
+        surname: String,
+        email: String,
+        cardNumber: String,
+        password: String,
+        passwordConfirm: String
+    ): Resource<Unit> {
         return try {
-            responseHandler.handleSuccess(authApi.register(userRegisterRequest))
+            responseHandler.handleSuccess(authApi.register(UserRegisterRequest(
+                name, surname, email, cardNumber, password, passwordConfirm
+            )))
         } catch (e: Exception) {
             responseHandler.handleException(e)
         }
     }
 
-    suspend fun resetPassword(resetPasswordRequest: ResetPasswordRequest): Resource<Unit> {
+    suspend fun resetPassword(email: String): Resource<Unit> {
         return try {
-            responseHandler.handleSuccess(authApi.resetPassword(resetPasswordRequest))
+            responseHandler.handleSuccess(authApi.resetPassword(ResetPasswordRequest(email)))
         } catch (e: Exception) {
             responseHandler.handleException(e)
         }

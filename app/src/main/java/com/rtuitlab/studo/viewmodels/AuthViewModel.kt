@@ -11,10 +11,7 @@ import com.rtuitlab.studo.extensions.isNotEmail
 import com.rtuitlab.studo.server.Resource
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.auth.AuthRepository
-import com.rtuitlab.studo.server.auth.models.ResetPasswordRequest
-import com.rtuitlab.studo.server.auth.models.UserLoginRequest
 import com.rtuitlab.studo.server.auth.models.UserLoginResponse
-import com.rtuitlab.studo.server.auth.models.UserRegisterRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -57,11 +54,7 @@ class AuthViewModel(
             viewModelScope.launch {
                 _loginResource.value = Resource.loading(null)
                 val response = withContext(Dispatchers.IO) {
-                    authRepo.login(
-                        UserLoginRequest(
-                            email, password
-                        )
-                    )
+                    authRepo.login(email, password)
                 }
                 if (response.status == Status.SUCCESS) {
                     response.data?.let {
@@ -98,11 +91,7 @@ class AuthViewModel(
             viewModelScope.launch {
                 _registerResource.value = Resource.loading(null)
                 val response = withContext(Dispatchers.IO) {
-                    authRepo.register(
-                        UserRegisterRequest(
-                            name, surname, email, cardNumber, password, confirmPassword
-                        )
-                    )
+                    authRepo.register(name, surname, email, cardNumber, password, confirmPassword)
                 }
                 _registerResource.value = response
             }
@@ -151,7 +140,7 @@ class AuthViewModel(
             viewModelScope.launch {
                 _resetResource.value = Resource.loading(null)
                 val response = withContext(Dispatchers.IO) {
-                    authRepo.resetPassword(ResetPasswordRequest(email))
+                    authRepo.resetPassword(email)
                 }
                 _resetResource.value = response
             }
