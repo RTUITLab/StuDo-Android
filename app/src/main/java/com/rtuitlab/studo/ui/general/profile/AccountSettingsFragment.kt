@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialSharedAxis
 import com.rtuitlab.studo.R
@@ -58,6 +59,21 @@ class AccountSettingsFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         collapsingToolbar.title = getString(R.string.account)
         setListeners()
+        setObservers()
+    }
+
+    private fun setListeners() {
+        logoutBtn.setOnClickListener {
+            currentUser = null
+            val intent = Intent(requireContext(), MainActivity::class.java)
+            intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
+            requireActivity().startActivity(intent)
+            requireActivity().finish()
+            Runtime.getRuntime().exit(0)
+        }
+    }
+
+    private fun setObservers() {
         viewModel.currentUserResource.observe(viewLifecycleOwner, Observer {
             when(it.status) {
                 Status.SUCCESS -> {
@@ -72,16 +88,21 @@ class AccountSettingsFragment: Fragment() {
                 }
             }
         })
-    }
 
-    private fun setListeners() {
-        logoutBtn.setOnClickListener {
-            currentUser = null
-            val intent = Intent(requireContext(), MainActivity::class.java)
-            intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
-            requireActivity().startActivity(intent)
-            requireActivity().finish()
-            Runtime.getRuntime().exit(0)
-        }
+        viewModel.changesSavedResource.observe(viewLifecycleOwner, Observer {
+            when(it.status) {
+                Status.SUCCESS -> {
+                    swipeContainer.isRefreshing = false
+                    Snackbar.make(requireView(), getString(R.string.changes_saved), Snackbar.LENGTH_SHORT).show()
+                }
+                Status.ERROR -> {
+                    swipeContainer.isRefreshing = false
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+                Status.LOADING -> {
+                    swipeContainer.isRefreshing = true
+                }
+            }
+        })
     }
 }

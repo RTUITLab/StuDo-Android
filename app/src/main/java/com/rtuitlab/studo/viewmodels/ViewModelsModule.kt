@@ -8,5 +8,5 @@ val viewModelsModule = module {
     viewModel { AuthViewModel(androidApplication(), get()) }
     viewModel { AdsViewModel(get()) }
     viewModel { ResumesViewModel(get()) }
-    viewModel { ProfileViewModel(get()) }
+    viewModel { ProfileViewModel(androidApplication(), get()) }
 }

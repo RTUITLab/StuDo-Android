@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.rtuitlab.studo.viewmodels.ProfileViewModel" />
@@ -65,14 +66,16 @@
                                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="@string/name">
+                                android:hint="@string/name"
+                                app:handleErrorFrom="@{viewModel.nameError}">
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:autofillHints="name"
                                     android:inputType="textCapWords"
-                                    android:text="@{viewModel.name}" />
+                                    android:text="@={viewModel.name}"
+                                    app:bindAfterTextChanged="@{viewModel::checkUserData}"/>
                             </com.google.android.material.textfield.TextInputLayout>
 
                             <com.google.android.material.textfield.TextInputLayout
@@ -80,14 +83,17 @@
                                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="@string/surname">
+                                android:layout_marginVertical="2dp"
+                                android:hint="@string/surname"
+                                app:handleErrorFrom="@{viewModel.surnameError}">
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:autofillHints="surname"
                                     android:inputType="textCapWords"
-                                    android:text="@{viewModel.surname}" />
+                                    android:text="@={viewModel.surname}"
+                                    app:bindAfterTextChanged="@{viewModel::checkUserData}"/>
                             </com.google.android.material.textfield.TextInputLayout>
 
                             <com.google.android.material.textfield.TextInputLayout
@@ -95,14 +101,16 @@
                                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="@string/card_number">
+                                android:hint="@string/card_number"
+                                app:handleErrorFrom="@{viewModel.cardNumberError}">
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:autofillHints="card number"
                                     android:inputType="phone"
-                                    android:text="@{viewModel.cardNumber}" />
+                                    android:text="@={viewModel.cardNumber}"
+                                    app:bindAfterTextChanged="@{viewModel::checkUserData}"/>
                             </com.google.android.material.textfield.TextInputLayout>
 
                         </LinearLayout>
@@ -153,8 +161,8 @@
             app:layout_anchor="@id/swipeContainer"
             app:layout_anchorGravity="bottom|end"
             android:src="@drawable/ic_done"
-            android:visibility="gone"
-            tools:visibility="visible"/>
+            android:onClick="@{() -> viewModel.saveUserDataChanges()}"
+            app:isShow="@{viewModel.isUserDataChanged}"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.auth.AuthActivity"/>
-        <activity android:name=".ui.general.MainActivity">
+        <activity
+            android:name=".ui.general.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -31,4 +31,5 @@
     <string name="change_password">Изменить пароль</string>
     <string name="logout">Выйти</string>
     <string name="account">Аккаунт</string>
+    <string name="changes_saved">Изменения сохранены</string>
 </resources>
