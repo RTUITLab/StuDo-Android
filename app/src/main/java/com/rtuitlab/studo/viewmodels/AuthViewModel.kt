@@ -43,12 +43,6 @@ class AuthViewModel(
     private val _loginResource = SingleLiveEvent<Resource<UserLoginResponse>>()
     val loginResource: LiveData<Resource<UserLoginResponse>> = _loginResource
 
-    private val _registerResource = SingleLiveEvent<Resource<Unit>>()
-    val registerResource: LiveData<Resource<Unit>> = _registerResource
-
-    private val _resetResource = SingleLiveEvent<Resource<Unit>>()
-    val resetResource: LiveData<Resource<Unit>> = _resetResource
-
     fun login() {
         if (isLoginDataCorrect()) {
             viewModelScope.launch {
@@ -85,6 +79,9 @@ class AuthViewModel(
         }
         return result
     }
+
+    private val _registerResource = SingleLiveEvent<Resource<Unit>>()
+    val registerResource: LiveData<Resource<Unit>> = _registerResource
 
     fun register() {
         if (isRegisterDataCorrect()) {
@@ -135,19 +132,23 @@ class AuthViewModel(
         return result
     }
 
-    fun resetPassword(email: String): Boolean {
-        return if (email.isEmail()) {
-            viewModelScope.launch {
-                _resetResource.value = Resource.loading(null)
-                val response = withContext(Dispatchers.IO) {
-                    authRepo.resetPassword(email)
-                }
-                _resetResource.value = response
+    var resetEmail = ""
+
+    private val _resetResource = SingleLiveEvent<Resource<Unit>>()
+    val resetResource: LiveData<Resource<Unit>> = _resetResource
+
+    fun resetPassword() {
+        viewModelScope.launch {
+            _resetResource.value = Resource.loading(null)
+            val response = withContext(Dispatchers.IO) {
+                authRepo.resetPassword(email)
             }
-            true
-        } else {
-            false
+            _resetResource.value = response
         }
+    }
+
+    fun isDataValid(): Boolean {
+        return resetEmail.isEmail()
     }
 
     fun clearErrors() {
@@ -157,5 +158,9 @@ class AuthViewModel(
         cardNumberError.set("")
         passwordError.set("")
         confirmPasswordError.set("")
+    }
+
+    fun clearResetEmail() {
+        resetEmail = ""
     }
 }

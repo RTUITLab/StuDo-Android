@@ -20,7 +20,10 @@
             app:exitAnim="@anim/slide_to_top"
             app:popEnterAnim="@anim/slide_from_top"
             app:popExitAnim="@anim/slide_to_bot"/>
-<!--            app:enterAnim="@anim/slide_from_right"-->
+        <action
+            android:id="@+id/action_loginFragment_to_resetPasswordDialog"
+            app:destination="@id/resetPasswordDialog" />
+        <!--            app:enterAnim="@anim/slide_from_right"-->
 <!--            app:exitAnim="@anim/slide_to_left"-->
 <!--            app:popEnterAnim="@anim/slide_from_left"-->
 <!--            app:popExitAnim="@anim/slide_to_right"-->
@@ -30,4 +33,9 @@
         android:name="com.rtuitlab.studo.ui.auth.fragments.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" />
+    <dialog
+        android:id="@+id/resetPasswordDialog"
+        android:name="com.rtuitlab.studo.ui.auth.dialogs.ResetPasswordDialog"
+        android:label="ResetPasswordDialog"
+        tools:layout="@layout/dialog_reset_password"/>
 </navigation>

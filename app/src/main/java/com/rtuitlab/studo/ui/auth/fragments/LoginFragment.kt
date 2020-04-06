@@ -52,14 +52,26 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setObservers()
         setListeners()
+        setObservers()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         viewModel.clearErrors()
         loginBtn.dispose()
+    }
+
+    private fun setListeners() {
+        registerLink.setOnClickListener {
+            viewModel.clearErrors()
+            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+        }
+
+        resetPasswordBtn.setOnClickListener {
+            viewModel.clearResetEmail()
+            findNavController().navigate(R.id.action_loginFragment_to_resetPasswordDialog)
+        }
     }
 
     private fun setObservers() {
@@ -91,45 +103,5 @@ class LoginFragment : Fragment() {
                 Status.LOADING -> loginBtn.startAnimation()
             }
         })
-    }
-
-    private fun setListeners() {
-        registerLink.setOnClickListener {
-            viewModel.clearErrors()
-            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
-        }
-
-        resetPasswordBtn.setOnClickListener {
-            showResetPasswordDialog()
-        }
-    }
-
-    private fun showResetPasswordDialog() {
-        // TODO - Move to a separate class
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(getString(R.string.reset_password))
-            .setView(R.layout.dialog_reset_password)
-            .setCancelable(true)
-            .setNegativeButton(getString(R.string.cancel), null)
-            .setPositiveButton(getString(R.string.ok), null)
-            .create()
-            .apply {
-                setOnShowListener {
-                    val positiveBtn = getButton(AlertDialog.BUTTON_POSITIVE)
-                    positiveBtn.setOnClickListener {
-                        val email = resetPasswordInput.editText!!.text.toString()
-                        if (viewModel.resetPassword(email)) {
-                            currentFocus?.let {
-                                val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-                                imm?.hideSoftInputFromWindow(it.windowToken, 0)
-                            }
-                            dismiss()
-                        } else {
-                            resetPasswordInput.isErrorEnabled = true
-                            resetPasswordInput.error = getString(R.string.wrong_email_error)
-                        }
-                    }
-                }
-            }.show()
     }
 }

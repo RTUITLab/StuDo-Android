@@ -16,7 +16,7 @@
     <string name="reset_password">Сброс пароля</string>
     <string name="ok">Ок</string>
     <string name="cancel">Отмена</string>
-    <string name="check_email_to_reset">Проверьте почту для изменения пароля</string>
+    <string name="check_email_to_reset">Если пользователь с такой почтой существует, то было отправлено письмо для смены пароля</string>
     <string name="title_ads">Объявления</string>
     <string name="title_resumes">Резюме</string>
     <string name="title_profile">Профиль</string>
