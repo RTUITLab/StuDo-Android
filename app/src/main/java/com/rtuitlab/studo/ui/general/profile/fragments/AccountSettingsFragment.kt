@@ -2,6 +2,7 @@ package com.rtuitlab.studo.ui.general.profile.fragments
 
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+import android.content.Intent.FLAG_ACTIVITY_RETAIN_IN_RECENTS
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +17,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialSharedAxis
 import com.rtuitlab.studo.R
-import com.rtuitlab.studo.currentUser
 import com.rtuitlab.studo.databinding.FragmentAccountSettingsBinding
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.ui.general.MainActivity
@@ -65,22 +65,22 @@ class AccountSettingsFragment: Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        profileViewModel.clearChanges()
+        if (!requireActivity().isChangingConfigurations) {
+            profileViewModel.clearChanges()
+        }
     }
 
     private fun setListeners() {
         changeEmailBtn.setOnClickListener {
-            dialogsViewModel.clearData()
             findNavController().navigate(R.id.action_accountSettingsFragment_to_changeEmailDialog)
         }
 
         changePasswordBtn.setOnClickListener {
-            dialogsViewModel.clearData()
             findNavController().navigate(R.id.action_accountSettingsFragment_to_changePasswordDialog)
         }
 
         logoutBtn.setOnClickListener {
-            currentUser = null
+            profileViewModel.logout()
             val intent = Intent(requireContext(), MainActivity::class.java)
             intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
             requireActivity().startActivity(intent)

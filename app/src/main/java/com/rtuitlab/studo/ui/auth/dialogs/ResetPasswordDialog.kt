@@ -48,6 +48,13 @@ class ResetPasswordDialog: DialogFragment() {
             }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        if (!requireActivity().isChangingConfigurations) {
+            viewModel.clearResetEmail()
+        }
+    }
+
     fun checkData() {
         positiveBtn.isEnabled = viewModel.isDataValid()
     }

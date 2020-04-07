@@ -96,5 +96,10 @@ dependencies {
     implementation "org.koin:koin-androidx-ext:$koin_version"
 
     // Progress button
-    implementation 'br.com.simplepass:loading-button-android:2.2.0'
+    def progress_button_version = "2.2.0"
+    implementation "br.com.simplepass:loading-button-android:$progress_button_version"
+
+    // Security crypto
+    def crypto_version = "1.0.0-beta01"
+    implementation "androidx.security:security-crypto:$crypto_version"
 }

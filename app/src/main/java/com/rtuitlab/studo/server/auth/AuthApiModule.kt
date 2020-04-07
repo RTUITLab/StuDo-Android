@@ -1,7 +1,6 @@
 package com.rtuitlab.studo.server.auth
 
 import com.rtuitlab.studo.BuildConfig
-import com.rtuitlab.studo.server.ResponseHandler
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit

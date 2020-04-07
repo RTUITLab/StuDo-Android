@@ -6,7 +6,6 @@ import com.rtuitlab.studo.server.auth.models.ResetPasswordRequest
 import com.rtuitlab.studo.server.auth.models.UserLoginRequest
 import com.rtuitlab.studo.server.auth.models.UserLoginResponse
 import com.rtuitlab.studo.server.auth.models.UserRegisterRequest
-import org.koin.dsl.module
 import java.lang.Exception
 
 class AuthRepository(

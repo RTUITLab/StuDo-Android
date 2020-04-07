@@ -4,7 +4,6 @@ import com.rtuitlab.studo.server.auth.models.ResetPasswordRequest
 import com.rtuitlab.studo.server.auth.models.UserLoginRequest
 import com.rtuitlab.studo.server.auth.models.UserLoginResponse
 import com.rtuitlab.studo.server.auth.models.UserRegisterRequest
-import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
 

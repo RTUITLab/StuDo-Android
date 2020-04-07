@@ -1,6 +1,7 @@
 package com.rtuitlab.studo.viewmodels
 
 import androidx.lifecycle.*
+import com.rtuitlab.studo.SingleLiveEvent
 import com.rtuitlab.studo.extensions.isEmail
 import com.rtuitlab.studo.server.Resource
 import com.rtuitlab.studo.server.general.profile.UserRepository
@@ -19,7 +20,7 @@ class AccountChangesDialogsViewModel(
     var new = ""
     var confirm = ""
 
-    private val _changeEmailResource = MutableLiveData<Resource<Unit>>()
+    private val _changeEmailResource = SingleLiveEvent<Resource<Unit>>()
     val changeEmailResource: LiveData<Resource<Unit>> = _changeEmailResource
 
     fun changeEmail() {
@@ -32,7 +33,7 @@ class AccountChangesDialogsViewModel(
         }
     }
 
-    private val _changePasswordResource = MutableLiveData<Resource<Unit>>()
+    private val _changePasswordResource = SingleLiveEvent<Resource<Unit>>()
     val changePasswordResource: LiveData<Resource<Unit>> = _changePasswordResource
 
     fun changePassword() {

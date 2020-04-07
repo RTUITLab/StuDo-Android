@@ -8,7 +8,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.SingleLiveEvent
-import com.rtuitlab.studo.currentUser
+import com.rtuitlab.studo.account.AccountStore
+import com.rtuitlab.studo.persistence.EncryptedPreferences
 import com.rtuitlab.studo.server.Resource
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.profile.UserRepository
@@ -19,27 +20,29 @@ import kotlinx.coroutines.withContext
 
 class ProfileViewModel(
     private val app: Application,
-    private val userRepo: UserRepository
+    private val userRepo: UserRepository,
+    private val encryptedPrefs: EncryptedPreferences,
+    accStore: AccountStore
 ): AndroidViewModel(app) {
 
-    var user = currentUser!!
+    var user = accStore.user
 
     private val _currentUserResource = SingleLiveEvent<Resource<User>>()
     val currentUserResource = _currentUserResource
 
     var userInitials =
-        ObservableField("${currentUser?.name?.first() ?: ""}${currentUser?.surname?.first() ?: ""}")
+        ObservableField("${user.name.first()}${user.surname.first()}")
 
-    val name = ObservableField(currentUser?.name ?: "")
+    val name = ObservableField(user.name)
     val nameError = ObservableField("")
 
-    val surname = ObservableField(currentUser?.surname ?: "")
+    val surname = ObservableField(user.surname)
     val surnameError = ObservableField("")
 
-    val cardNumber = ObservableField(currentUser!!.studentCardNumber ?: "")
+    val cardNumber = ObservableField(user.studentCardNumber ?: "")
     val cardNumberError = ObservableField("")
 
-    val email = ObservableField(currentUser?.email ?: "")
+    val email = ObservableField(user.email)
 
     val isUserDataChanged = ObservableBoolean(false)
 
@@ -61,9 +64,9 @@ class ProfileViewModel(
 
     fun checkUserData() {
         var result = (
-                name.get() != currentUser!!.name ||
-                        surname.get() != currentUser!!.surname ||
-                        cardNumber.get() != currentUser!!.studentCardNumber
+                name.get() != user.name ||
+                        surname.get() != user.surname ||
+                        cardNumber.get() != user.studentCardNumber
                 )
         if (name.get()!!.isEmpty()) {
             nameError.set(app.getString(R.string.empty_field_error))
@@ -106,7 +109,7 @@ class ProfileViewModel(
 
     private fun fillUserData(user: User) {
         this.user = user
-        currentUser = user
+        encryptedPrefs.storeUser(user)
         userInitials.set("${user.name[0]}${user.surname[0]}")
         name.set(user.name)
         surname.set(user.surname)
@@ -114,8 +117,12 @@ class ProfileViewModel(
         cardNumber.set(user.studentCardNumber)
     }
 
+    fun logout() {
+        encryptedPrefs.removeUserData()
+    }
+
     fun clearChanges() {
-        fillUserData(currentUser!!)
+        fillUserData(user)
         checkUserData()
     }
 }

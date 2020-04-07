@@ -30,7 +30,9 @@ class ProfileFragment : Fragment() {
         super.onCreate(savedInstanceState)
         enterTransition = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.Z,false)
         exitTransition = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.Z,true)
-        viewModel.updateCurrentUser()
+        if (viewModel.currentUserResource.value == null) {
+            viewModel.updateCurrentUser()
+        }
     }
 
     override fun onCreateView(

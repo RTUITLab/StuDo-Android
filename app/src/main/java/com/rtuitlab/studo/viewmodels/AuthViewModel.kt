@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.rtuitlab.studo.*
 import com.rtuitlab.studo.extensions.isEmail
 import com.rtuitlab.studo.extensions.isNotEmail
+import com.rtuitlab.studo.persistence.EncryptedPreferences
 import com.rtuitlab.studo.server.Resource
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.auth.AuthRepository
@@ -19,7 +20,8 @@ import java.lang.RuntimeException
 
 class AuthViewModel(
     private val app: Application,
-    private val authRepo: AuthRepository
+    private val authRepo: AuthRepository,
+    private val encryptedPrefs: EncryptedPreferences
 ) : AndroidViewModel(app) {
 
     var name = ""
@@ -52,8 +54,8 @@ class AuthViewModel(
                 }
                 if (response.status == Status.SUCCESS) {
                     response.data?.let {
-                        currentUser = it.user
-                        accessToken = it.accessToken
+                        encryptedPrefs.storeUser(it.user)
+                        encryptedPrefs.storeAccessToken(it.accessToken)
                     } ?:run {
                         throw RuntimeException("Not enough data in auth response")
                     }

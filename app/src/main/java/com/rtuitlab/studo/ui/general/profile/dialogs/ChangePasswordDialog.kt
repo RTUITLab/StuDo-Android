@@ -49,6 +49,13 @@ class ChangePasswordDialog: DialogFragment() {
             }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        if (!requireActivity().isChangingConfigurations) {
+            viewModel.clearData()
+        }
+    }
+
     fun checkData() {
         positiveBtn.isEnabled = viewModel.isDataValid(AccountChangesDialogsViewModel.DataType.PASSWORD)
     }

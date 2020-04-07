@@ -10,5 +10,5 @@ val repositoriesModule = module {
     single { AuthRepository(get(), get()) }
     single { AdsRepository(get(), get()) }
     single { ResumesRepository(get(), get()) }
-    single { UserRepository(get(), get()) }
+    single { UserRepository(get(), get(), get()) }
 }

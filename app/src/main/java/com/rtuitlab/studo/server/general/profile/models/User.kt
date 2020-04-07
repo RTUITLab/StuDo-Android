@@ -1,6 +1,7 @@
 package com.rtuitlab.studo.server.general.profile.models
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class User(
     val id: String,
@@ -8,4 +9,4 @@ data class User(
     val surname: String,
     val email: String,
     val studentCardNumber: String?
-)
+) : Serializable

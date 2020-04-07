@@ -54,13 +54,14 @@ class RegisterFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        viewModel.clearErrors()
+        if (!requireActivity().isChangingConfigurations) {
+            viewModel.clearErrors()
+        }
         registerBtn.dispose()
     }
 
     private fun setListeners() {
         loginLink.setOnClickListener {
-            viewModel.clearErrors()
             requireActivity().onBackPressed()
         }
     }

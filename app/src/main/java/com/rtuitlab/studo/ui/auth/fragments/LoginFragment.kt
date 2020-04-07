@@ -58,18 +58,18 @@ class LoginFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        viewModel.clearErrors()
+        if (!requireActivity().isChangingConfigurations) {
+            viewModel.clearErrors()
+        }
         loginBtn.dispose()
     }
 
     private fun setListeners() {
         registerLink.setOnClickListener {
-            viewModel.clearErrors()
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
 
         resetPasswordBtn.setOnClickListener {
-            viewModel.clearResetEmail()
             findNavController().navigate(R.id.action_loginFragment_to_resetPasswordDialog)
         }
     }

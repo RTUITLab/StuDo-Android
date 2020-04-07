@@ -7,22 +7,25 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.rtuitlab.studo.R
-import com.rtuitlab.studo.currentUser
+import com.rtuitlab.studo.account.AccountStore
 import com.rtuitlab.studo.extensions.setupWithNavController
 import com.rtuitlab.studo.ui.auth.AuthActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
+
+	private val accStore: AccountStore by inject()
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		paintStatusBar()
 		setContentView(R.layout.activity_main)
-		currentUser?.let {
+		if (accStore.isLogged()) {
 			if (savedInstanceState == null) {
 				setupBottomNavigationBar()
 			}
-		} ?:run {
+		} else {
 			startActivity(Intent(this, AuthActivity::class.java))
 			finish()
 		}
