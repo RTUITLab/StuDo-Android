@@ -18,6 +18,7 @@ import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.viewmodels.AdsType
 import com.rtuitlab.studo.viewmodels.BookmarkedAds
 import com.rtuitlab.studo.viewmodels.ProfileViewModel
+import com.rtuitlab.studo.viewmodels.UserAds
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -28,8 +29,6 @@ class ProfileFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enterTransition = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.Z,false)
-        exitTransition = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.Z,true)
         if (viewModel.currentUserResource.value == null) {
             viewModel.updateCurrentUser()
         }
@@ -75,7 +74,10 @@ class ProfileFragment : Fragment() {
         }
         profileList.setOnMenuItemClickListener (
             onAds = {
-                Snackbar.make(requireView(), "ADS", Snackbar.LENGTH_SHORT).show()
+                val bundle = Bundle().apply {
+                    putSerializable(AdsType::class.java.simpleName, UserAds(viewModel.user.id))
+                }
+                findNavController().navigate(R.id.action_profileFragment_to_adsListFragment2, bundle)
             },
             onResumes = {
                 Snackbar.make(requireView(), "RESUMES", Snackbar.LENGTH_SHORT).show()

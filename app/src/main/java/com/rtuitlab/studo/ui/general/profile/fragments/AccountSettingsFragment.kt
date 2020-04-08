@@ -33,8 +33,8 @@ class AccountSettingsFragment: Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enterTransition = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.Z,true)
-        exitTransition = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.Z,false)
+//        enterTransition = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.Z, false)
+//        exitTransition = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.Z, true)
         sharedElementEnterTransition = MaterialContainerTransform(requireContext()).apply {
             scrimColor = ContextCompat.getColor(requireContext(), android.R.color.transparent)
         }

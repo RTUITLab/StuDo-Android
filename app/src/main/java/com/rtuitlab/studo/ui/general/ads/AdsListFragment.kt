@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.MaterialSharedAxis
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.adapters.AdsRecyclerAdapter
 import com.rtuitlab.studo.server.Status
@@ -15,6 +16,7 @@ import com.rtuitlab.studo.server.general.ads.models.CompactAdWithBookmark
 import com.rtuitlab.studo.viewmodels.AdsType
 import com.rtuitlab.studo.viewmodels.AdsViewModel
 import com.rtuitlab.studo.viewmodels.AllAds
+import com.rtuitlab.studo.viewmodels.BookmarkedAds
 import kotlinx.android.synthetic.main.fragment_recycler_list.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -46,8 +48,10 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
     }
 
     private fun loadAds() {
-//        ac461c9f-4440-4ddb-9484-ee16d2b5ffb7
         val adsType = arguments?.getSerializable("AdsType") as? AdsType ?: AllAds
+        if (adsType == BookmarkedAds) {
+            createBtn.hide()
+        }
         viewModel.loadAdsList(adsType)
     }
 

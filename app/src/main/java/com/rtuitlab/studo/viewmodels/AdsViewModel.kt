@@ -32,15 +32,15 @@ class AdsViewModel(
                     is UserAds -> {
                         adsRepo.getUserAds(adsType.userId)
                     }
-                    is AllAds -> {
+                    AllAds -> {
                         adsRepo.getAllAds()
                     }
-                    is BookmarkedAds -> {
+                    BookmarkedAds -> {
                         bookmarkedAdsList
                     }
                 }
                 if (adsList.status == Status.SUCCESS && bookmarkedAdsList.status == Status.SUCCESS) {
-                    if (adsType is BookmarkedAds) {
+                    if (adsType == BookmarkedAds) {
                         Resource.success(adsList.data!!.map {
                             CompactAdWithBookmark(it, true)
                         })
