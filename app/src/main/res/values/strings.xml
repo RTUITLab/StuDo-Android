@@ -18,7 +18,7 @@
     <string name="reset_password">Reset password</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
-    <string name="check_email_to_reset">If a user with such email exists, a mail has been sent to change the password</string>
+    <string name="check_email_to_reset">Check your email to change password</string>
     <string name="title_ads">Ads</string>
     <string name="title_resumes">Resumes</string>
     <string name="title_profile">Profile</string>
@@ -43,4 +43,6 @@
     <string name="new_password">New password</string>
     <string name="confirm_new_password">Confirm new password</string>
     <string name="password_changed">Password changed</string>
+    <string name="added_bookmarks">Added to bookmarks</string>
+    <string name="removed_bookmarks">Removed from bookmarks</string>
 </resources>

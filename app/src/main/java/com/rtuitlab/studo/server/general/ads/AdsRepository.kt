@@ -16,4 +16,28 @@ class AdsRepository(
             responseHandler.handleException(e)
         }
     }
+
+    suspend fun getBookmarkedAds(): Resource<List<CompactAd>> {
+        return try {
+            responseHandler.handleSuccess(adsApi.getBookmarkedAds())
+        } catch (e: Exception) {
+            responseHandler.handleException(e)
+        }
+    }
+
+    suspend fun addToBookmarks(adId: String): Resource<Unit> {
+        return try {
+            responseHandler.handleSuccess(adsApi.addToBookmarks(adId))
+        } catch (e: Exception) {
+            responseHandler.handleException(e)
+        }
+    }
+
+    suspend fun removeFromBookmarks(adId: String): Resource<Unit> {
+        return try {
+            responseHandler.handleSuccess(adsApi.removeFromBookmarks(adId))
+        } catch (e: Exception) {
+            responseHandler.handleException(e)
+        }
+    }
 }

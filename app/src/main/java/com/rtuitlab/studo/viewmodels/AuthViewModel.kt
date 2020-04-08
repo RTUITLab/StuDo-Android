@@ -143,7 +143,7 @@ class AuthViewModel(
         viewModelScope.launch {
             _resetResource.value = Resource.loading(null)
             val response = withContext(Dispatchers.IO) {
-                authRepo.resetPassword(email)
+                authRepo.resetPassword(resetEmail)
             }
             _resetResource.value = response
         }

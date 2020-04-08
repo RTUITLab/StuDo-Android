@@ -26,7 +26,7 @@ class ResumesRecyclerAdapter(
     override fun onBindViewHolder(holder: ResumeHolder, position: Int) = holder.bind(position)
 
     inner class ResumeHolder internal constructor(view: View):
-        RecyclerView.ViewHolder(view), View.OnClickListener {
+        RecyclerView.ViewHolder(view) {
         val name: TextView = view.name
 
         fun bind(position: Int) {
@@ -34,11 +34,9 @@ class ResumesRecyclerAdapter(
         }
 
         init {
-            view.setOnClickListener(this)
-        }
-
-        override fun onClick(v: View?) {
-            clickListener?.onResumeClick(data[adapterPosition])
+            view.setOnClickListener {
+                clickListener?.onResumeClick(data[adapterPosition])
+            }
         }
     }
 
