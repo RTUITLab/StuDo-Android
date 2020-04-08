@@ -17,6 +17,14 @@ class AdsRepository(
         }
     }
 
+    suspend fun getUserAds(userId: String): Resource<List<CompactAd>> {
+        return try {
+            responseHandler.handleSuccess(adsApi.getUserAds(userId))
+        } catch (e: Exception) {
+            responseHandler.handleException(e)
+        }
+    }
+
     suspend fun getBookmarkedAds(): Resource<List<CompactAd>> {
         return try {
             responseHandler.handleSuccess(adsApi.getBookmarkedAds())

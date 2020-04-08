@@ -15,11 +15,11 @@ import com.rtuitlab.studo.server.general.resumes.models.CompactResume
 import com.rtuitlab.studo.viewmodels.ResumesViewModel
 import kotlinx.android.synthetic.main.fragment_recycler_list.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickListener {
 
-    private val viewModel: ResumesViewModel by sharedViewModel()
+    private val viewModel: ResumesViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,

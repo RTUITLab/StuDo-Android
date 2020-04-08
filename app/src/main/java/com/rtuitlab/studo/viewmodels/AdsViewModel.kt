@@ -9,6 +9,12 @@ import com.rtuitlab.studo.server.general.ads.models.CompactAdWithBookmark
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.Serializable
+
+sealed class AdsType : Serializable
+data class UserAds(val userId: String): AdsType()
+object BookmarkedAds : AdsType()
+object AllAds: AdsType()
 
 class AdsViewModel(
     private val adsRepo: AdsRepository
@@ -17,16 +23,34 @@ class AdsViewModel(
     private val _adsListResource = SingleLiveEvent<Resource<List<CompactAdWithBookmark>>>()
     val adsListResource: LiveData<Resource<List<CompactAdWithBookmark>>> = _adsListResource
 
-    fun loadAdsList() {
+    fun loadAdsList(adsType: AdsType) {
         viewModelScope.launch {
             _adsListResource.value = Resource.loading(null)
             val response = withContext(Dispatchers.IO) {
-                val ads = adsRepo.getAllAds()
-                val bookmarkedAds = adsRepo.getBookmarkedAds()
-                if (ads.status == Status.SUCCESS && bookmarkedAds.status == Status.SUCCESS) {
-                    Resource.success(ads.data!!.map { CompactAdWithBookmark(it, bookmarkedAds.data!!.contains(it)) })
+                val bookmarkedAdsList = adsRepo.getBookmarkedAds()
+                val adsList = when(adsType) {
+                    is UserAds -> {
+                        adsRepo.getUserAds(adsType.userId)
+                    }
+                    is AllAds -> {
+                        adsRepo.getAllAds()
+                    }
+                    is BookmarkedAds -> {
+                        bookmarkedAdsList
+                    }
+                }
+                if (adsList.status == Status.SUCCESS && bookmarkedAdsList.status == Status.SUCCESS) {
+                    if (adsType is BookmarkedAds) {
+                        Resource.success(adsList.data!!.map {
+                            CompactAdWithBookmark(it, true)
+                        })
+                    } else {
+                        Resource.success(adsList.data!!.map {
+                            CompactAdWithBookmark(it, bookmarkedAdsList.data!!.contains(it))
+                        })
+                    }
                 } else {
-                    Resource.error(ads.message?: bookmarkedAds.message!!, null)
+                    Resource.error(adsList.message?: bookmarkedAdsList.message!!, null)
                 }
             }
             _adsListResource.value = response

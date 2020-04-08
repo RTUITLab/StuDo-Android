@@ -10,6 +10,9 @@ interface AdsApi {
     @GET("ad")
     suspend fun getAllAds(): List<CompactAd>
 
+    @GET("ad/user/{userId}")
+    suspend fun getUserAds(@Path("userId") userId : String): List<CompactAd>
+
     @GET("ad/bookmarks")
     suspend fun getBookmarkedAds(): List<CompactAd>
 

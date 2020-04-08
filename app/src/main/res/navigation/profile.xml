@@ -14,7 +14,10 @@
         <action
             android:id="@+id/action_profileFragment_to_accountSettingsFragment"
             app:destination="@id/accountSettingsFragment"/>
-<!--        app:enterAnim="@anim/slide_from_right"-->
+        <action
+            android:id="@+id/action_profileFragment_to_adsListFragment2"
+            app:destination="@id/adsListFragment2" />
+        <!--        app:enterAnim="@anim/slide_from_right"-->
 <!--        app:exitAnim="@anim/slide_to_left"-->
 <!--        app:popEnterAnim="@anim/slide_from_left"-->
 <!--        app:popExitAnim="@anim/slide_to_right"-->
@@ -41,4 +44,9 @@
         android:name="com.rtuitlab.studo.ui.general.profile.dialogs.ChangePasswordDialog"
         android:label="ChangePasswordDialog"
         tools:layout="@layout/dialog_change_password"/>
+    <fragment
+        android:id="@+id/adsListFragment2"
+        android:name="com.rtuitlab.studo.ui.general.ads.AdsListFragment"
+        android:label="AdsListFragment"
+        tools:layout="@layout/fragment_recycler_list"/>
 </navigation>

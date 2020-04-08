@@ -12,14 +12,16 @@ import com.rtuitlab.studo.R
 import com.rtuitlab.studo.adapters.AdsRecyclerAdapter
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.ads.models.CompactAdWithBookmark
+import com.rtuitlab.studo.viewmodels.AdsType
 import com.rtuitlab.studo.viewmodels.AdsViewModel
+import com.rtuitlab.studo.viewmodels.AllAds
 import kotlinx.android.synthetic.main.fragment_recycler_list.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
 
-    val viewModel: AdsViewModel by sharedViewModel()
+    val viewModel: AdsViewModel by viewModel()
 
     private var recyclerAdapter: AdsRecyclerAdapter? = null
 
@@ -35,7 +37,7 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
         super.onViewCreated(view, savedInstanceState)
         collapsingToolbar.title = getString(R.string.title_ads)
         if (viewModel.adsListResource.value == null) {
-            viewModel.loadAdsList()
+            loadAds()
         } else {
             initRecyclerView()
         }
@@ -43,9 +45,15 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
         setObservers()
     }
 
+    private fun loadAds() {
+//        ac461c9f-4440-4ddb-9484-ee16d2b5ffb7
+        val adsType = arguments?.getSerializable("AdsType") as? AdsType ?: AllAds
+        viewModel.loadAdsList(adsType)
+    }
+
     private fun setListeners() {
         swipeContainer.setOnRefreshListener {
-            viewModel.loadAdsList()
+            loadAds()
         }
     }
 

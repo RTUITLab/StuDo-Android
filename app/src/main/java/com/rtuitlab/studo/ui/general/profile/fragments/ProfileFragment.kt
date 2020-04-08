@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -14,9 +13,10 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
 import com.rtuitlab.studo.R
-import com.rtuitlab.studo.custom_views.ProfileListView
 import com.rtuitlab.studo.databinding.FragmentProfileBinding
 import com.rtuitlab.studo.server.Status
+import com.rtuitlab.studo.viewmodels.AdsType
+import com.rtuitlab.studo.viewmodels.BookmarkedAds
 import com.rtuitlab.studo.viewmodels.ProfileViewModel
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
@@ -81,7 +81,10 @@ class ProfileFragment : Fragment() {
                 Snackbar.make(requireView(), "RESUMES", Snackbar.LENGTH_SHORT).show()
             },
             onBookmarks = {
-                Snackbar.make(requireView(), "BOOKMARKS", Snackbar.LENGTH_SHORT).show()
+                val bundle = Bundle().apply {
+                    putSerializable(AdsType::class.java.simpleName, BookmarkedAds)
+                }
+                findNavController().navigate(R.id.action_profileFragment_to_adsListFragment2, bundle)
             },
             onOrganizations = {
                 Snackbar.make(requireView(), "ORGANIZATIONS", Snackbar.LENGTH_SHORT).show()
