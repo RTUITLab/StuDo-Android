@@ -42,4 +42,6 @@
     <string name="password_changed">Пароль изменен</string>
     <string name="added_bookmarks">Добавлено в закладки</string>
     <string name="removed_bookmarks">Удалено из закладок</string>
+    <string name="registration">Регистрация</string>
+    <string name="authorization">Авторизация</string>
 </resources>

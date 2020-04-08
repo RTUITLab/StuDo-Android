@@ -9,4 +9,8 @@
         <item name="colorOnPrimary">@android:color/white</item>
     </style>
 
+    <style name="AuthTitleTextColor" parent="AppTheme">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
 </resources>

@@ -11,7 +11,7 @@ class AuthActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        paintStatusBar()
+//        paintStatusBar()
         setContentView(R.layout.activity_auth)
     }
 

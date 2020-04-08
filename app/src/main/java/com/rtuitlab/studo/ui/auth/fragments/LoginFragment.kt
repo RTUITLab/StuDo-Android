@@ -61,7 +61,7 @@ class LoginFragment : Fragment() {
         if (!requireActivity().isChangingConfigurations) {
             viewModel.clearErrors()
         }
-        loginBtn.dispose()
+//        loginBtn.dispose()
     }
 
     private fun setListeners() {
@@ -78,29 +78,33 @@ class LoginFragment : Fragment() {
         viewModel.loginResource.observe(viewLifecycleOwner, Observer {
             when(it.status) {
                 Status.SUCCESS -> {
-                    loginBtn.revertAnimation()
+//                    loginBtn.revertAnimation()
                     startActivity(Intent(requireActivity(), MainActivity::class.java))
                     requireActivity().finish()
                 }
                 Status.ERROR -> {
-                    loginBtn.revertAnimation()
+//                    loginBtn.revertAnimation()
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
-                Status.LOADING -> loginBtn.startAnimation()
+                Status.LOADING -> {
+//                    loginBtn.startAnimation()
+                }
             }
         })
 
         viewModel.resetResource.observe(viewLifecycleOwner, Observer {
             when(it.status) {
                 Status.SUCCESS -> {
-                    loginBtn.revertAnimation()
+//                    loginBtn.revertAnimation()
                     Snackbar.make(requireView(), getString(R.string.check_email_to_reset), Snackbar.LENGTH_LONG).show()
                 }
                 Status.ERROR -> {
-                    loginBtn.revertAnimation()
+//                    loginBtn.revertAnimation()
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
-                Status.LOADING -> loginBtn.startAnimation()
+                Status.LOADING -> {
+//                    loginBtn.startAnimation()
+                }
             }
         })
     }

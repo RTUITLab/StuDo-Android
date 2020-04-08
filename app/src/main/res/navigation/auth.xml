@@ -15,18 +15,10 @@
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment"
             app:popUpTo="@id/registerFragment"
-            app:popUpToInclusive="true"
-            app:enterAnim="@anim/slide_from_bot"
-            app:exitAnim="@anim/slide_to_top"
-            app:popEnterAnim="@anim/slide_from_top"
-            app:popExitAnim="@anim/slide_to_bot"/>
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_loginFragment_to_resetPasswordDialog"
             app:destination="@id/resetPasswordDialog" />
-        <!--            app:enterAnim="@anim/slide_from_right"-->
-<!--            app:exitAnim="@anim/slide_to_left"-->
-<!--            app:popEnterAnim="@anim/slide_from_left"-->
-<!--            app:popExitAnim="@anim/slide_to_right"-->
     </fragment>
     <fragment
         android:id="@+id/registerFragment"

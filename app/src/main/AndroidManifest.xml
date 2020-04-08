@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.rtuitlab.studo"
     android:hardwareAccelerated="true">
 
@@ -14,7 +15,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.auth.AuthActivity"/>
+        <activity
+            android:name=".ui.auth.AuthActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation"
+            tools:ignore="LockedOrientationActivity" />
         <activity android:name=".ui.general.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

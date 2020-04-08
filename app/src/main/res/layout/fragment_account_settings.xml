@@ -108,7 +108,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:autofillHints="card number"
-                                    android:inputType="phone"
+                                    android:inputType="textCapCharacters"
                                     android:text="@={viewModel.cardNumber}"
                                     app:bindAfterTextChanged="@{viewModel::checkUserData}"/>
                             </com.google.android.material.textfield.TextInputLayout>

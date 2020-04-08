@@ -57,7 +57,7 @@ class RegisterFragment : Fragment() {
         if (!requireActivity().isChangingConfigurations) {
             viewModel.clearErrors()
         }
-        registerBtn.dispose()
+//        registerBtn.dispose()
     }
 
     private fun setListeners() {
@@ -70,15 +70,17 @@ class RegisterFragment : Fragment() {
         viewModel.registerResource.observe(viewLifecycleOwner, Observer {
             when(it.status) {
                 Status.SUCCESS -> {
-                    registerBtn.revertAnimation()
+//                    registerBtn.revertAnimation()
                     Snackbar.make(requireView(), getString(R.string.email_verification), Snackbar.LENGTH_LONG).show()
                     loginLink.performClick()
                 }
                 Status.ERROR -> {
-                    registerBtn.revertAnimation()
+//                    registerBtn.revertAnimation()
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
-                Status.LOADING -> registerBtn.startAnimation()
+                Status.LOADING -> {
+//                    registerBtn.startAnimation()
+                }
             }
         })
     }
