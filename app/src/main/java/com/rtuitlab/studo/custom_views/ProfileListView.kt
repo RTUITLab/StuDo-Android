@@ -1,10 +1,12 @@
 package com.rtuitlab.studo.custom_views
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import com.rtuitlab.studo.R
@@ -15,6 +17,8 @@ class ProfileListView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : ListView(context, attrs, defStyleAttr) {
+
+    private val funcStub: () -> Unit = {}
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val expandSpec = MeasureSpec.makeMeasureSpec(
@@ -39,6 +43,7 @@ class ProfileListView @JvmOverloads constructor(
 
     class ListViewAdapter(ctx : Context, private var resource : Int, private var items : List<Pair<Int, String>>)
         : ArrayAdapter<Pair<Int, String>>(ctx , resource , items){
+        @SuppressLint("ViewHolder")
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             val view : View = LayoutInflater.from(context).inflate(resource , null )
 
@@ -51,7 +56,27 @@ class ProfileListView @JvmOverloads constructor(
         }
     }
 
-    enum class MenuItem {
+    private enum class MenuItem {
         ADS, RESUMES, BOOKMARKS, ORGANIZATIONS, SETTINGS, ABOUT
+    }
+
+    fun setOnMenuItemClickListener(
+        onAds: () -> Unit = funcStub,
+        onResumes: () -> Unit = funcStub,
+        onBookmarks: () -> Unit = funcStub,
+        onOrganizations: () -> Unit = funcStub,
+        onSettings: () -> Unit = funcStub,
+        onAbout: () -> Unit = funcStub
+    ) {
+        this.onItemClickListener = OnItemClickListener { _, _, position, _ ->
+            when(position) {
+                MenuItem.ADS.ordinal -> { onAds.invoke() }
+                MenuItem.RESUMES.ordinal -> { onResumes.invoke() }
+                MenuItem.BOOKMARKS.ordinal -> { onBookmarks.invoke() }
+                MenuItem.ORGANIZATIONS.ordinal -> { onOrganizations.invoke() }
+                MenuItem.SETTINGS.ordinal -> { onSettings.invoke() }
+                MenuItem.ABOUT.ordinal -> { onAbout.invoke() }
+            }
+        }
     }
 }

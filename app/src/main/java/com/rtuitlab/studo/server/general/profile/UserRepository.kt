@@ -1,6 +1,6 @@
 package com.rtuitlab.studo.server.general.profile
 
-import com.rtuitlab.studo.account.AccountStore
+import com.rtuitlab.studo.account.AccountStorage
 import com.rtuitlab.studo.server.Resource
 import com.rtuitlab.studo.server.ResponseHandler
 import com.rtuitlab.studo.server.general.profile.models.ChangeEmailRequest
@@ -12,11 +12,11 @@ import java.lang.Exception
 class UserRepository (
     private val userApi: UserApi,
     private val responseHandler: ResponseHandler,
-    private val accStore: AccountStore
+    private val accStorage: AccountStorage
 ) {
     suspend fun loadCurrentUser(): Resource<User> {
         return try {
-            responseHandler.handleSuccess(userApi.getUser(accStore.user.id))
+            responseHandler.handleSuccess(userApi.getUser(accStorage.user.id))
         } catch (e: Exception) {
             responseHandler.handleException(e)
         }
@@ -26,7 +26,7 @@ class UserRepository (
         return try {
             responseHandler.handleSuccess(userApi.changeUserInfo(
                 ChangeUserInfoRequest(
-                    accStore.user.id, name, surname, cardNumber
+                    accStorage.user.id, name, surname, cardNumber
             )))
         } catch (e: Exception) {
             responseHandler.handleException(e)
@@ -36,7 +36,7 @@ class UserRepository (
     suspend fun changeEmail(oldEmail: String, newEmail: String): Resource<Unit> {
         return try {
             responseHandler.handleSuccess(userApi.changeEmail(ChangeEmailRequest(
-                accStore.user.id, oldEmail, newEmail
+                accStorage.user.id, oldEmail, newEmail
             )))
         } catch (e: Exception) {
             responseHandler.handleException(e)
@@ -46,7 +46,7 @@ class UserRepository (
     suspend fun changePassword(oldPassword: String, newPassword: String): Resource<Unit> {
         return try {
             responseHandler.handleSuccess(userApi.changePassword(ChangePasswordRequest(
-                accStore.user.id, oldPassword, newPassword
+                accStorage.user.id, oldPassword, newPassword
             )))
         } catch (e: Exception) {
             responseHandler.handleException(e)

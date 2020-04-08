@@ -6,9 +6,10 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import com.rtuitlab.studo.App
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.SingleLiveEvent
-import com.rtuitlab.studo.account.AccountStore
+import com.rtuitlab.studo.account.AccountStorage
 import com.rtuitlab.studo.persistence.EncryptedPreferences
 import com.rtuitlab.studo.server.Resource
 import com.rtuitlab.studo.server.Status
@@ -19,13 +20,13 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class ProfileViewModel(
-    private val app: Application,
+    app: Application,
     private val userRepo: UserRepository,
     private val encryptedPrefs: EncryptedPreferences,
-    accStore: AccountStore
+    accStorage: AccountStorage
 ): AndroidViewModel(app) {
 
-    var user = accStore.user
+    var user = accStorage.user
 
     private val _currentUserResource = SingleLiveEvent<Resource<User>>()
     val currentUserResource = _currentUserResource
@@ -69,19 +70,19 @@ class ProfileViewModel(
                         cardNumber.get() != user.studentCardNumber
                 )
         if (name.get()!!.isEmpty()) {
-            nameError.set(app.getString(R.string.empty_field_error))
+            nameError.set(getApplication<App>().getString(R.string.empty_field_error))
             result = false
         } else {
             nameError.set("")
         }
         if (surname.get()!!.isEmpty()) {
-            surnameError.set(app.getString(R.string.empty_field_error))
+            surnameError.set(getApplication<App>().getString(R.string.empty_field_error))
             result = false
         } else {
             surnameError.set("")
         }
         if (cardNumber.get()!!.isEmpty()) {
-            cardNumberError.set(app.getString(R.string.empty_field_error))
+            cardNumberError.set(getApplication<App>().getString(R.string.empty_field_error))
             result = false
         } else {
             cardNumberError.set("")

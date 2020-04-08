@@ -19,7 +19,7 @@ import kotlinx.coroutines.withContext
 import java.lang.RuntimeException
 
 class AuthViewModel(
-    private val app: Application,
+    app: Application,
     private val authRepo: AuthRepository,
     private val encryptedPrefs: EncryptedPreferences
 ) : AndroidViewModel(app) {
@@ -68,13 +68,13 @@ class AuthViewModel(
     private fun isLoginDataCorrect(): Boolean {
         var result = true
         if (email.isNotEmail()) {
-            emailError.set(app.getString(R.string.wrong_email_error))
+            emailError.set(getApplication<App>().getString(R.string.wrong_email_error))
             result = false
         } else {
             emailError.set("")
         }
         if (password.length < 6) {
-            passwordError.set(app.getString(R.string.small_password_error))
+            passwordError.set(getApplication<App>().getString(R.string.small_password_error))
             result = false
         } else {
             passwordError.set("")
@@ -100,19 +100,19 @@ class AuthViewModel(
     private fun isRegisterDataCorrect(): Boolean {
         var result = true
         if (name.isEmpty()) {
-            nameError.set(app.getString(R.string.empty_field_error))
+            nameError.set(getApplication<App>().getString(R.string.empty_field_error))
             result = false
         } else {
             nameError.set("")
         }
         if (surname.isEmpty()) {
-            surnameError.set(app.getString(R.string.empty_field_error))
+            surnameError.set(getApplication<App>().getString(R.string.empty_field_error))
             result = false
         } else {
             surnameError.set("")
         }
         if (cardNumber.isEmpty()) {
-            cardNumberError.set(app.getString(R.string.empty_field_error))
+            cardNumberError.set(getApplication<App>().getString(R.string.empty_field_error))
             result = false
         } else {
             cardNumberError.set("")
@@ -121,11 +121,11 @@ class AuthViewModel(
             result = false
         }
         if (confirmPassword.isEmpty()) {
-            confirmPasswordError.set(app.getString(R.string.empty_field_error))
+            confirmPasswordError.set(getApplication<App>().getString(R.string.empty_field_error))
             result = false
         } else {
             if (password != confirmPassword) {
-                confirmPasswordError.set(app.getString(R.string.not_equal_password_error))
+                confirmPasswordError.set(getApplication<App>().getString(R.string.not_equal_password_error))
                 result = false
             } else {
                 confirmPasswordError.set("")

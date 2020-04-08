@@ -2,7 +2,6 @@ package com.rtuitlab.studo.ui.general.profile.fragments
 
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-import android.content.Intent.FLAG_ACTIVITY_RETAIN_IN_RECENTS
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

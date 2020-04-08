@@ -73,27 +73,25 @@ class ProfileFragment : Fragment() {
                 R.id.action_profileFragment_to_accountSettingsFragment, null, null, extras
             )
         }
-        profileList.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-            when(position) {
-                ProfileListView.MenuItem.ADS.ordinal -> {
-                    Snackbar.make(requireView(), "ADS", Snackbar.LENGTH_SHORT).show()
-                }
-                ProfileListView.MenuItem.RESUMES.ordinal -> {
-                    Snackbar.make(requireView(), "RESUMES", Snackbar.LENGTH_SHORT).show()
-                }
-                ProfileListView.MenuItem.BOOKMARKS.ordinal -> {
-                    Snackbar.make(requireView(), "BOOKMARKS", Snackbar.LENGTH_SHORT).show()
-                }
-                ProfileListView.MenuItem.ORGANIZATIONS.ordinal -> {
-                    Snackbar.make(requireView(), "ORGANIZATIONS", Snackbar.LENGTH_SHORT).show()
-                }
-                ProfileListView.MenuItem.SETTINGS.ordinal -> {
-                    Snackbar.make(requireView(), "SETTINGS", Snackbar.LENGTH_SHORT).show()
-                }
-                ProfileListView.MenuItem.ABOUT.ordinal -> {
-                    Snackbar.make(requireView(), "ABOUT", Snackbar.LENGTH_SHORT).show()
-                }
+        profileList.setOnMenuItemClickListener (
+            onAds = {
+                Snackbar.make(requireView(), "ADS", Snackbar.LENGTH_SHORT).show()
+            },
+            onResumes = {
+                Snackbar.make(requireView(), "RESUMES", Snackbar.LENGTH_SHORT).show()
+            },
+            onBookmarks = {
+                Snackbar.make(requireView(), "BOOKMARKS", Snackbar.LENGTH_SHORT).show()
+            },
+            onOrganizations = {
+                Snackbar.make(requireView(), "ORGANIZATIONS", Snackbar.LENGTH_SHORT).show()
+            },
+            onSettings = {
+                Snackbar.make(requireView(), "SETTINGS", Snackbar.LENGTH_SHORT).show()
+            },
+            onAbout = {
+                Snackbar.make(requireView(), "ABOUT", Snackbar.LENGTH_SHORT).show()
             }
-        }
+        )
     }
 }

@@ -5,10 +5,10 @@ import com.rtuitlab.studo.server.general.profile.models.User
 import org.koin.dsl.module
 
 val accountStoreModule = module {
-    single { AccountStore(get()) }
+    single { AccountStorage(get()) }
 }
 
-class AccountStore(
+class AccountStorage(
     private val preferences: EncryptedPreferences
 ) {
     lateinit var user: User
