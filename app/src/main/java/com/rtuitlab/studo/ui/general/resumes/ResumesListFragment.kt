@@ -12,38 +12,63 @@ import com.rtuitlab.studo.R
 import com.rtuitlab.studo.adapters.ResumesRecyclerAdapter
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.resumes.models.CompactResume
-import com.rtuitlab.studo.viewmodels.ResumesViewModel
+import com.rtuitlab.studo.viewmodels.*
 import kotlinx.android.synthetic.main.fragment_recycler_list.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickListener {
 
     private val viewModel: ResumesViewModel by viewModel()
 
+    private var resumesType: ResumesType = AllResumes
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        (arguments?.getSerializable(ResumesType::class.java.simpleName) as? ResumesType)?.let {
+            resumesType = it
+        }
         return inflater.inflate(R.layout.fragment_recycler_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        collapsingToolbar.title = getString(R.string.title_resumes)
+
+        when(resumesType) {
+            AllResumes -> {
+                collapsingToolbar.title = getString(R.string.title_resumes)
+            }
+            is UserResumes -> {
+                if ((resumesType as UserResumes).userId == getViewModel<MainViewModel>().accStorage.user.id) {
+                    collapsingToolbar.title = getString(R.string.my_resumes)
+                } else {
+                    // TODO - add title in toolbar
+                    createBtn.hide()
+                }
+            }
+        }
+
         if (viewModel.resumesListResource.value == null) {
-            viewModel.loadAllResumes()
+            loadResumes()
         } else {
             initRecyclerView()
         }
+
         setListeners()
         setObservers()
     }
 
+    private fun loadResumes() {
+        viewModel.loadResumesList(resumesType)
+    }
+
     private fun setListeners() {
         swipeContainer.setOnRefreshListener {
-            viewModel.loadAllResumes()
+            loadResumes()
         }
     }
 

@@ -7,19 +7,16 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.adapters.AdsRecyclerAdapter
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.ads.models.CompactAdWithBookmark
-import com.rtuitlab.studo.viewmodels.AdsType
-import com.rtuitlab.studo.viewmodels.AdsViewModel
-import com.rtuitlab.studo.viewmodels.AllAds
-import com.rtuitlab.studo.viewmodels.BookmarkedAds
+import com.rtuitlab.studo.viewmodels.*
 import kotlinx.android.synthetic.main.fragment_recycler_list.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
+import org.koin.android.ext.android.get
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
@@ -28,31 +25,51 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
 
     private var recyclerAdapter: AdsRecyclerAdapter? = null
 
+    private var adsType: AdsType = AllAds
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        (arguments?.getSerializable(AdsType::class.java.simpleName) as? AdsType)?.let {
+            adsType = it
+        }
         return inflater.inflate(R.layout.fragment_recycler_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        collapsingToolbar.title = getString(R.string.title_ads)
+
+        when(adsType) {
+            AllAds -> {
+                collapsingToolbar.title = getString(R.string.title_ads)
+            }
+            BookmarkedAds -> {
+                collapsingToolbar.title = getString(R.string.bookmarks)
+                createBtn.hide()
+            }
+            is UserAds -> {
+                if ((adsType as UserAds).userId == getViewModel<MainViewModel>().accStorage.user.id) {
+                    collapsingToolbar.title = getString(R.string.my_ads)
+                } else {
+                    // TODO - add title in toolbar
+                    createBtn.hide()
+                }
+            }
+        }
+
         if (viewModel.adsListResource.value == null) {
             loadAds()
         } else {
             initRecyclerView()
         }
+
         setListeners()
         setObservers()
     }
 
     private fun loadAds() {
-        val adsType = arguments?.getSerializable("AdsType") as? AdsType ?: AllAds
-        if (adsType == BookmarkedAds) {
-            createBtn.hide()
-        }
         viewModel.loadAdsList(adsType)
     }
 

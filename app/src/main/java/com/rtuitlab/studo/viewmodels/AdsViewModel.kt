@@ -12,9 +12,9 @@ import kotlinx.coroutines.withContext
 import java.io.Serializable
 
 sealed class AdsType : Serializable
-data class UserAds(val userId: String): AdsType()
-object BookmarkedAds : AdsType()
 object AllAds: AdsType()
+object BookmarkedAds : AdsType()
+data class UserAds(val userId: String): AdsType()
 
 class AdsViewModel(
     private val adsRepo: AdsRepository
@@ -29,15 +29,9 @@ class AdsViewModel(
             val response = withContext(Dispatchers.IO) {
                 val bookmarkedAdsList = adsRepo.getBookmarkedAds()
                 val adsList = when(adsType) {
-                    is UserAds -> {
-                        adsRepo.getUserAds(adsType.userId)
-                    }
-                    AllAds -> {
-                        adsRepo.getAllAds()
-                    }
-                    BookmarkedAds -> {
-                        bookmarkedAdsList
-                    }
+                    AllAds -> adsRepo.getAllAds()
+                    BookmarkedAds -> bookmarkedAdsList
+                    is UserAds -> adsRepo.getUserAds(adsType.userId)
                 }
                 if (adsList.status == Status.SUCCESS && bookmarkedAdsList.status == Status.SUCCESS) {
                     if (adsType == BookmarkedAds) {

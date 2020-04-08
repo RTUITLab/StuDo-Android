@@ -16,4 +16,12 @@ class ResumesRepository (
             responseHandler.handleException(e)
         }
     }
+
+    suspend fun getUserResumes(userId: String): Resource<List<CompactResume>> {
+        return try {
+            responseHandler.handleSuccess(resumesApi.getUserResumes(userId))
+        } catch (e: Exception) {
+            responseHandler.handleException(e)
+        }
+    }
 }

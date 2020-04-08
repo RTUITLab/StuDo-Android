@@ -15,10 +15,7 @@ import com.google.android.material.transition.MaterialSharedAxis
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentProfileBinding
 import com.rtuitlab.studo.server.Status
-import com.rtuitlab.studo.viewmodels.AdsType
-import com.rtuitlab.studo.viewmodels.BookmarkedAds
-import com.rtuitlab.studo.viewmodels.ProfileViewModel
-import com.rtuitlab.studo.viewmodels.UserAds
+import com.rtuitlab.studo.viewmodels.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -80,7 +77,10 @@ class ProfileFragment : Fragment() {
                 findNavController().navigate(R.id.action_profileFragment_to_adsListFragment2, bundle)
             },
             onResumes = {
-                Snackbar.make(requireView(), "RESUMES", Snackbar.LENGTH_SHORT).show()
+                val bundle = Bundle().apply {
+                    putSerializable(ResumesType::class.java.simpleName, UserResumes(viewModel.user.id))
+                }
+                findNavController().navigate(R.id.action_profileFragment_to_resumesListFragment2, bundle)
             },
             onBookmarks = {
                 val bundle = Bundle().apply {
@@ -89,7 +89,7 @@ class ProfileFragment : Fragment() {
                 findNavController().navigate(R.id.action_profileFragment_to_adsListFragment2, bundle)
             },
             onOrganizations = {
-                Snackbar.make(requireView(), "ORGANIZATIONS", Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(requireView(), "WORK IN PROGRESS", Snackbar.LENGTH_SHORT).show()
             },
             onSettings = {
                 Snackbar.make(requireView(), "SETTINGS", Snackbar.LENGTH_SHORT).show()
