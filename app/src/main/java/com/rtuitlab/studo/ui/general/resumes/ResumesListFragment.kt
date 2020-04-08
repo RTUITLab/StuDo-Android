@@ -42,13 +42,12 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
             AllResumes -> {
                 collapsingToolbar.title = getString(R.string.title_resumes)
             }
+            is MyResumes -> {
+                collapsingToolbar.title = getString(R.string.my_resumes)
+            }
             is UserResumes -> {
-                if ((resumesType as UserResumes).userId == getViewModel<MainViewModel>().accStorage.user.id) {
-                    collapsingToolbar.title = getString(R.string.my_resumes)
-                } else {
-                    // TODO - add title in toolbar
-                    createBtn.hide()
-                }
+                // TODO - add title in toolbar
+                createBtn.hide()
             }
         }
 

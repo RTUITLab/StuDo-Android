@@ -2,6 +2,7 @@ package com.rtuitlab.studo.viewmodels
 
 import androidx.lifecycle.*
 import com.rtuitlab.studo.SingleLiveEvent
+import com.rtuitlab.studo.account.AccountStorage
 import com.rtuitlab.studo.server.Resource
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.ads.AdsRepository
@@ -14,10 +15,12 @@ import java.io.Serializable
 sealed class AdsType : Serializable
 object AllAds: AdsType()
 object BookmarkedAds : AdsType()
+object MyAds: AdsType()
 data class UserAds(val userId: String): AdsType()
 
 class AdsViewModel(
-    private val adsRepo: AdsRepository
+    private val adsRepo: AdsRepository,
+    private val accStorage: AccountStorage
 ): ViewModel() {
 
     private val _adsListResource = SingleLiveEvent<Resource<List<CompactAdWithBookmark>>>()
@@ -31,6 +34,7 @@ class AdsViewModel(
                 val adsList = when(adsType) {
                     AllAds -> adsRepo.getAllAds()
                     BookmarkedAds -> bookmarkedAdsList
+                    is MyAds -> adsRepo.getUserAds(accStorage.user.id)
                     is UserAds -> adsRepo.getUserAds(adsType.userId)
                 }
                 if (adsList.status == Status.SUCCESS && bookmarkedAdsList.status == Status.SUCCESS) {

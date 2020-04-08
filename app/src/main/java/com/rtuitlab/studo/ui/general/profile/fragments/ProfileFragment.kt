@@ -72,13 +72,13 @@ class ProfileFragment : Fragment() {
         profileList.setOnMenuItemClickListener (
             onAds = {
                 val bundle = Bundle().apply {
-                    putSerializable(AdsType::class.java.simpleName, UserAds(viewModel.user.id))
+                    putSerializable(AdsType::class.java.simpleName, MyAds)
                 }
                 findNavController().navigate(R.id.action_profileFragment_to_adsListFragment2, bundle)
             },
             onResumes = {
                 val bundle = Bundle().apply {
-                    putSerializable(ResumesType::class.java.simpleName, UserResumes(viewModel.user.id))
+                    putSerializable(ResumesType::class.java.simpleName, MyResumes)
                 }
                 findNavController().navigate(R.id.action_profileFragment_to_resumesListFragment2, bundle)
             },

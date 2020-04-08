@@ -49,13 +49,12 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
                 collapsingToolbar.title = getString(R.string.bookmarks)
                 createBtn.hide()
             }
+            is MyAds -> {
+                collapsingToolbar.title = getString(R.string.my_ads)
+            }
             is UserAds -> {
-                if ((adsType as UserAds).userId == getViewModel<MainViewModel>().accStorage.user.id) {
-                    collapsingToolbar.title = getString(R.string.my_ads)
-                } else {
-                    // TODO - add title in toolbar
-                    createBtn.hide()
-                }
+                // TODO - add title in toolbar
+                createBtn.hide()
             }
         }
 
