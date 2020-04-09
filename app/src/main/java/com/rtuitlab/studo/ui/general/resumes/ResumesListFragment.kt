@@ -15,7 +15,6 @@ import com.rtuitlab.studo.server.general.resumes.models.CompactResume
 import com.rtuitlab.studo.viewmodels.*
 import kotlinx.android.synthetic.main.fragment_recycler_list.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
-import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickListener {

@@ -1,27 +1,22 @@
 package com.rtuitlab.studo.ui.auth.fragments
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.transition.TransitionInflater
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.MaterialSharedAxis
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentLoginBinding
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.ui.general.MainActivity
 import com.rtuitlab.studo.viewmodels.AuthViewModel
-import kotlinx.android.synthetic.main.dialog_reset_password.*
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -31,7 +26,8 @@ class LoginFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+        enterTransition = MaterialSharedAxis.create(requireContext(),  MaterialSharedAxis.Z,  true)
+        exitTransition = MaterialSharedAxis.create(requireContext(),  MaterialSharedAxis.Z,  false)
     }
 
     override fun onCreateView(

@@ -20,7 +20,8 @@
             android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation"
             tools:ignore="LockedOrientationActivity" />
-        <activity android:name=".ui.general.MainActivity">
+        <activity android:name=".ui.general.MainActivity"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

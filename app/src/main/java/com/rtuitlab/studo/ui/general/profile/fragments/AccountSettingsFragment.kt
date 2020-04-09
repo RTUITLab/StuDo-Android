@@ -14,7 +14,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialContainerTransform
-import com.google.android.material.transition.MaterialSharedAxis
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentAccountSettingsBinding
 import com.rtuitlab.studo.server.Status

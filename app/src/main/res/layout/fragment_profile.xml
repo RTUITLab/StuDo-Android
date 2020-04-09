@@ -21,12 +21,12 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginHorizontal="16dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="0dp"
                 app:cardElevation="2dp">
 
                 <LinearLayout
