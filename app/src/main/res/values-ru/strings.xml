@@ -23,7 +23,7 @@
     <string name="create">Создать</string>
     <string name="my_ads">Мои объявления</string>
     <string name="my_resumes">Мои резюме</string>
-    <string name="bookmarks">Закладки</string>
+    <string name="favourites">Закладки</string>
     <string name="organizations">Организации (WIP)</string>
     <string name="settings">Настройки</string>
     <string name="about">О приложении</string>
@@ -40,8 +40,8 @@
     <string name="new_password">Новый пароль</string>
     <string name="confirm_new_password">Подтвердите новый пароль</string>
     <string name="password_changed">Пароль изменен</string>
-    <string name="added_bookmarks">Добавлено в закладки</string>
-    <string name="removed_bookmarks">Удалено из закладок</string>
+    <string name="added_favourites">Добавлено в закладки</string>
+    <string name="removed_favourites">Удалено из закладок</string>
     <string name="registration">Регистрация</string>
     <string name="authorization">Авторизация</string>
 </resources>

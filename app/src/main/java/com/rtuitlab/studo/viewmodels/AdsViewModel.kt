@@ -6,7 +6,7 @@ import com.rtuitlab.studo.account.AccountStorage
 import com.rtuitlab.studo.server.Resource
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.ads.AdsRepository
-import com.rtuitlab.studo.server.general.ads.models.CompactAdWithBookmark
+import com.rtuitlab.studo.server.general.ads.models.CompactAd
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -23,57 +23,43 @@ class AdsViewModel(
     private val accStorage: AccountStorage
 ): ViewModel() {
 
-    private val _adsListResource = SingleLiveEvent<Resource<List<CompactAdWithBookmark>>>()
-    val adsListResource: LiveData<Resource<List<CompactAdWithBookmark>>> = _adsListResource
+    private val _adsListResource = SingleLiveEvent<Resource<List<CompactAd>>>()
+    val adsListResource: LiveData<Resource<List<CompactAd>>> = _adsListResource
 
     fun loadAdsList(adsType: AdsType) {
         viewModelScope.launch {
             _adsListResource.value = Resource.loading(null)
             val response = withContext(Dispatchers.IO) {
-                val bookmarkedAdsList = adsRepo.getBookmarkedAds()
-                val adsList = when(adsType) {
+                when(adsType) {
                     AllAds -> adsRepo.getAllAds()
-                    BookmarkedAds -> bookmarkedAdsList
+                    BookmarkedAds -> adsRepo.getBookmarkedAds()
                     is MyAds -> adsRepo.getUserAds(accStorage.user.id)
                     is UserAds -> adsRepo.getUserAds(adsType.userId)
-                }
-                if (adsList.status == Status.SUCCESS && bookmarkedAdsList.status == Status.SUCCESS) {
-                    if (adsType == BookmarkedAds) {
-                        Resource.success(adsList.data!!.map {
-                            CompactAdWithBookmark(it, true)
-                        })
-                    } else {
-                        Resource.success(adsList.data!!.map {
-                            CompactAdWithBookmark(it, bookmarkedAdsList.data!!.contains(it))
-                        })
-                    }
-                } else {
-                    Resource.error(adsList.message?: bookmarkedAdsList.message!!, null)
                 }
             }
             _adsListResource.value = response
         }
     }
 
-    private val _bookmarksResource = SingleLiveEvent<Resource<CompactAdWithBookmark>>()
-    val bookmarksResource: LiveData<Resource<CompactAdWithBookmark>> = _bookmarksResource
+    private val _favouritesResource = SingleLiveEvent<Resource<CompactAd>>()
+    val favouritesResource: LiveData<Resource<CompactAd>> = _favouritesResource
 
-    fun toggleBookmark(compactAdWithBookmark: CompactAdWithBookmark) {
+    fun toggleFavourite(compactAd: CompactAd) {
         viewModelScope.launch {
-            _bookmarksResource.value = Resource.loading(null)
+            _favouritesResource.value = Resource.loading(null)
             val response = withContext(Dispatchers.IO) {
-                if (compactAdWithBookmark.isBookmarked) {
-                    adsRepo.addToBookmarks(compactAdWithBookmark.ad.id)
+                if (compactAd.isFavorite) {
+                    adsRepo.addToBookmarks(compactAd.id)
                 } else {
-                    adsRepo.removeFromBookmarks(compactAdWithBookmark.ad.id)
+                    adsRepo.removeFromBookmarks(compactAd.id)
                 }
             }
             if (response.status == Status.SUCCESS) {
-                _bookmarksResource.value = Resource.success(compactAdWithBookmark)
+                _favouritesResource.value = Resource.success(compactAd)
             } else {
-                _bookmarksResource.value = Resource.error(
+                _favouritesResource.value = Resource.error(
                     response.message!!,
-                    compactAdWithBookmark.apply { isBookmarked = !isBookmarked }
+                    compactAd.apply { isFavorite = !isFavorite }
                 )
             }
         }

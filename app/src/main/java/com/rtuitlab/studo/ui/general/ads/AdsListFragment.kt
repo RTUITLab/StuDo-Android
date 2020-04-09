@@ -11,7 +11,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.adapters.AdsRecyclerAdapter
 import com.rtuitlab.studo.server.Status
-import com.rtuitlab.studo.server.general.ads.models.CompactAdWithBookmark
+import com.rtuitlab.studo.server.general.ads.models.CompactAd
 import com.rtuitlab.studo.viewmodels.*
 import kotlinx.android.synthetic.main.fragment_recycler_list.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
@@ -44,7 +44,7 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
                 collapsingToolbar.title = getString(R.string.title_ads)
             }
             BookmarkedAds -> {
-                collapsingToolbar.title = getString(R.string.bookmarks)
+                collapsingToolbar.title = getString(R.string.favourites)
                 createBtn.hide()
             }
             is MyAds -> {
@@ -93,17 +93,17 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
             }
         })
 
-        viewModel.bookmarksResource.observe(viewLifecycleOwner, Observer {
+        viewModel.favouritesResource.observe(viewLifecycleOwner, Observer {
             when(it.status) {
                 Status.SUCCESS -> {
-                    if (it.data!!.isBookmarked) {
-                        Snackbar.make(requireView(), getString(R.string.added_bookmarks), Snackbar.LENGTH_SHORT).show()
+                    if (it.data!!.isFavorite) {
+                        Snackbar.make(requireView(), getString(R.string.added_favourites), Snackbar.LENGTH_SHORT).show()
                     } else {
-                        Snackbar.make(requireView(), getString(R.string.removed_bookmarks), Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(requireView(), getString(R.string.removed_favourites), Snackbar.LENGTH_SHORT).show()
                     }
                 }
                 Status.ERROR -> {
-                    recyclerAdapter?.handleBookmarkError(it.data!!)
+                    recyclerAdapter?.handleFavouriteError(it.data!!)
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
                 Status.LOADING -> {}
@@ -118,11 +118,11 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
         recyclerView.adapter = recyclerAdapter
     }
 
-    override fun onAdClicked(compactAdWithBookmark: CompactAdWithBookmark) {
-        Snackbar.make(requireView(), compactAdWithBookmark.ad.name, Snackbar.LENGTH_SHORT).show()
+    override fun onAdClicked(compactAd: CompactAd) {
+        Snackbar.make(requireView(), compactAd.name, Snackbar.LENGTH_SHORT).show()
     }
 
-    override fun onBookmarkToggle(compactAdWithBookmark: CompactAdWithBookmark) {
-        viewModel.toggleBookmark(compactAdWithBookmark)
+    override fun onFavouriteToggle(compactAd: CompactAd) {
+        viewModel.toggleFavourite(compactAd)
     }
 }

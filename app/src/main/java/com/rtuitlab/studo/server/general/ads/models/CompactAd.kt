@@ -9,5 +9,6 @@ data class CompactAd(
     val userId: String,
     val userName : String,
     val organizationId: String,
-    val organizationName : String?
+    val organizationName : String?,
+    var isFavorite: Boolean
 )

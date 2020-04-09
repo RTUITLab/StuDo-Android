@@ -25,7 +25,7 @@
     <string name="create">Create</string>
     <string name="my_ads">My ads</string>
     <string name="my_resumes">My resumes</string>
-    <string name="bookmarks">Bookmarks</string>
+    <string name="favourites">Favourites</string>
     <string name="organizations">Organizations (WIP)</string>
     <string name="settings">Settings</string>
     <string name="about">About</string>
@@ -43,8 +43,8 @@
     <string name="new_password">New password</string>
     <string name="confirm_new_password">Confirm new password</string>
     <string name="password_changed">Password changed</string>
-    <string name="added_bookmarks">Added to bookmarks</string>
-    <string name="removed_bookmarks">Removed from bookmarks</string>
+    <string name="added_favourites">Added to favourites</string>
+    <string name="removed_favourites">Removed from favourites</string>
     <string name="registration">Registration</string>
     <string name="authorization">Authorization</string>
 </resources>
