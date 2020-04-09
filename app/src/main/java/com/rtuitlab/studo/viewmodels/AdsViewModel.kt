@@ -57,10 +57,18 @@ class AdsViewModel(
             if (response.status == Status.SUCCESS) {
                 _favouritesResource.value = Resource.success(compactAd)
             } else {
-                _favouritesResource.value = Resource.error(
-                    response.message!!,
-                    compactAd.apply { isFavorite = !isFavorite }
-                )
+                val checkResponse =  withContext(Dispatchers.IO) {
+                    adsRepo.getAd(compactAd.id)
+                }
+                if (checkResponse.status == Status.SUCCESS &&
+                    checkResponse.data!!.isFavourite == compactAd.isFavorite) {
+                    _favouritesResource.value = Resource.success(compactAd)
+                } else {
+                    _favouritesResource.value = Resource.error(
+                        response.message!!,
+                        compactAd.apply { isFavorite = !isFavorite }
+                    )
+                }
             }
         }
     }
