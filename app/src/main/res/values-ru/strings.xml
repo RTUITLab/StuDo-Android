@@ -44,4 +44,7 @@
     <string name="removed_favourites">Удалено из закладок</string>
     <string name="registration">Регистрация</string>
     <string name="authorization">Авторизация</string>
+    <string name="comments">Комментарии</string>
+    <string name="date">Дата</string>
+    <string name="ad">Объявление</string>
 </resources>

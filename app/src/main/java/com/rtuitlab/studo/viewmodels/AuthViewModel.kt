@@ -49,9 +49,11 @@ class AuthViewModel(
         if (isLoginDataCorrect()) {
             viewModelScope.launch {
                 _loginResource.value = Resource.loading(null)
+
                 val response = withContext(Dispatchers.IO) {
                     authRepo.login(email, password)
                 }
+
                 if (response.status == Status.SUCCESS) {
                     response.data?.let {
                         encryptedPrefs.storeUser(it.user)
@@ -60,6 +62,7 @@ class AuthViewModel(
                         throw RuntimeException("Not enough data in auth response")
                     }
                 }
+
                 _loginResource.value = response
             }
         }
@@ -89,9 +92,11 @@ class AuthViewModel(
         if (isRegisterDataCorrect()) {
             viewModelScope.launch {
                 _registerResource.value = Resource.loading(null)
+
                 val response = withContext(Dispatchers.IO) {
                     authRepo.register(name, surname, email, cardNumber, password, confirmPassword)
                 }
+
                 _registerResource.value = response
             }
         }
@@ -142,9 +147,11 @@ class AuthViewModel(
     fun resetPassword() {
         viewModelScope.launch {
             _resetResource.value = Resource.loading(null)
+
             val response = withContext(Dispatchers.IO) {
                 authRepo.resetPassword(resetEmail)
             }
+
             _resetResource.value = response
         }
     }

@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.transition.MaterialSharedAxis
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentRegisterBinding
 import com.rtuitlab.studo.server.Status
@@ -20,12 +19,6 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class RegisterFragment : Fragment() {
 
     private val viewModel: AuthViewModel by sharedViewModel()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enterTransition = MaterialSharedAxis.create(requireContext(),  MaterialSharedAxis.Z,  false)
-        exitTransition = MaterialSharedAxis.create(requireContext(),  MaterialSharedAxis.Z,  true)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

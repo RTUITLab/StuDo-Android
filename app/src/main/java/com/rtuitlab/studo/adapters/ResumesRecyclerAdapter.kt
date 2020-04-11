@@ -27,7 +27,7 @@ class ResumesRecyclerAdapter(
 
     inner class ResumeHolder internal constructor(view: View):
         RecyclerView.ViewHolder(view) {
-        private val name: TextView = view.name
+        private val name: TextView = view.title
         private val description: TextView = view.desc
 
         fun bind(position: Int) {

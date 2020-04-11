@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.rtuitlab.studo.R
+import com.rtuitlab.studo.server.general.ads.models.AdIdWithIsFavourite
 import com.rtuitlab.studo.server.general.ads.models.CompactAd
 import kotlinx.android.synthetic.main.view_recycler_ad.view.*
 
@@ -16,10 +17,10 @@ class AdsRecyclerAdapter(
 
     private var clickListener: OnAdClickListener? = null
 
-    fun handleFavouriteError(compactAd: CompactAd) {
+    fun handleFavouriteError(adIdWithIsFavourite: AdIdWithIsFavourite) {
         data.forEach {
-            if (it.id == compactAd.id) {
-                it.isFavorite = compactAd.isFavorite
+            if (it.id == adIdWithIsFavourite.id) {
+                it.isFavourite = adIdWithIsFavourite.isFavourite
                 notifyItemChanged(data.indexOf(it))
                 return@forEach
             }
@@ -39,12 +40,12 @@ class AdsRecyclerAdapter(
     inner class AdHolder internal constructor(view: View): RecyclerView.ViewHolder(view){
         private val nameTV: TextView = view.title
         private val descTV: TextView = view.desc
-        private val favouriteIV: ImageView = view.favourite
+        private val favouriteIV: ImageView = view.favouriteBtn
 
         fun bind(position: Int) {
             nameTV.text = data[position].name
             descTV.text = data[position].shortDescription
-            if (data[position].isFavorite) {
+            if (data[position].isFavourite) {
                 favouriteIV.setImageResource(R.drawable.ic_star)
             } else {
                 favouriteIV.setImageResource(R.drawable.ic_star_border)
@@ -56,7 +57,7 @@ class AdsRecyclerAdapter(
                 clickListener?.onAdClicked(data[adapterPosition])
             }
             favouriteIV.setOnClickListener {
-                data[adapterPosition].isFavorite = !data[adapterPosition].isFavorite
+                data[adapterPosition].isFavourite = !data[adapterPosition].isFavourite
                 this.bind(adapterPosition)
                 clickListener?.onFavouriteToggle(data[adapterPosition])
             }

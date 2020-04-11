@@ -19,7 +19,7 @@
         android:layout_marginVertical="8dp"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="20sp"
-        android:paddingHorizontal="16dp"
+        android:layout_marginHorizontal="16dp"
         tools:drawableStart="@drawable/ic_about"
         android:drawablePadding="?android:attr/listPreferredItemPaddingStart"
         tools:text="Sample text" />

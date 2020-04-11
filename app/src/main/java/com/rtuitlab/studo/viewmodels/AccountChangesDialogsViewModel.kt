@@ -4,7 +4,7 @@ import androidx.lifecycle.*
 import com.rtuitlab.studo.SingleLiveEvent
 import com.rtuitlab.studo.extensions.isEmail
 import com.rtuitlab.studo.server.Resource
-import com.rtuitlab.studo.server.general.profile.UserRepository
+import com.rtuitlab.studo.server.general.users.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -26,9 +26,11 @@ class AccountChangesDialogsViewModel(
     fun changeEmail() {
         viewModelScope.launch {
             _changeEmailResource.value = Resource.loading(null)
+
             val response = withContext(Dispatchers.IO) {
                 userRepo.changeEmail(old, new)
             }
+
             _changeEmailResource.value = response
         }
     }
@@ -39,9 +41,11 @@ class AccountChangesDialogsViewModel(
     fun changePassword() {
         viewModelScope.launch {
             _changePasswordResource.value = Resource.loading(null)
+
             val response = withContext(Dispatchers.IO) {
                 userRepo.changePassword(old, new)
             }
+
             _changePasswordResource.value = response
         }
     }

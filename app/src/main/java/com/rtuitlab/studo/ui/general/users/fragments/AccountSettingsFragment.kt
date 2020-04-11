@@ -1,4 +1,4 @@
-package com.rtuitlab.studo.ui.general.profile.fragments
+package com.rtuitlab.studo.ui.general.users.fragments
 
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK

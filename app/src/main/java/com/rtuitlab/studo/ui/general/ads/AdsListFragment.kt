@@ -1,16 +1,19 @@
 package com.rtuitlab.studo.ui.general.ads
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.adapters.AdsRecyclerAdapter
 import com.rtuitlab.studo.server.Status
+import com.rtuitlab.studo.server.general.ads.models.AdIdWithIsFavourite
 import com.rtuitlab.studo.server.general.ads.models.CompactAd
 import com.rtuitlab.studo.viewmodels.*
 import kotlinx.android.synthetic.main.fragment_recycler_list.*
@@ -19,7 +22,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
 
-    val viewModel: AdsViewModel by viewModel()
+    private val viewModel: AdsListViewModel by viewModel()
 
     private var recyclerAdapter: AdsRecyclerAdapter? = null
 
@@ -96,7 +99,7 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
         viewModel.favouritesResource.observe(viewLifecycleOwner, Observer {
             when(it.status) {
                 Status.SUCCESS -> {
-                    if (it.data!!.isFavorite) {
+                    if (it.data!!.isFavourite) {
                         Snackbar.make(requireView(), getString(R.string.added_favourites), Snackbar.LENGTH_SHORT).show()
                     } else {
                         Snackbar.make(requireView(), getString(R.string.removed_favourites), Snackbar.LENGTH_SHORT).show()
@@ -119,10 +122,15 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
     }
 
     override fun onAdClicked(compactAd: CompactAd) {
-        Snackbar.make(requireView(), compactAd.name, Snackbar.LENGTH_SHORT).show()
+        val bundle = Bundle().apply {
+            putString("adId", compactAd.id)
+        }
+        findNavController().navigate(R.id.action_adsListFragment_to_adFragment, bundle)
     }
 
     override fun onFavouriteToggle(compactAd: CompactAd) {
-        viewModel.toggleFavourite(compactAd)
+        viewModel.toggleFavourite(AdIdWithIsFavourite(
+            compactAd.id, compactAd.isFavourite
+        ))
     }
 }

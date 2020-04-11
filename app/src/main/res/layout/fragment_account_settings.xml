@@ -15,7 +15,7 @@
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.general.profile.fragments.AccountSettingsFragment">
+        tools:context=".ui.general.users.fragments.AccountSettingsFragment">
 
         <include layout="@layout/view_collapsing_toolbar"/>
 
@@ -23,7 +23,6 @@
             android:id="@+id/swipeContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="16dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:onRefreshListener="@{() -> viewModel.updateCurrentUser()}">
 
@@ -34,6 +33,8 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:layout_marginHorizontal="16dp"
                     app:cardElevation="2dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout

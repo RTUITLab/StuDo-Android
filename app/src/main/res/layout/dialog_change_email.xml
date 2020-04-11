@@ -9,7 +9,7 @@
             type="com.rtuitlab.studo.viewmodels.AccountChangesDialogsViewModel" />
         <variable
             name="dialog"
-            type="com.rtuitlab.studo.ui.general.profile.dialogs.ChangeEmailDialog" />
+            type="com.rtuitlab.studo.ui.general.users.dialogs.ChangeEmailDialog" />
     </data>
 
     <LinearLayout

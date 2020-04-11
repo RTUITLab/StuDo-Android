@@ -1,12 +1,12 @@
-package com.rtuitlab.studo.server.general.profile
+package com.rtuitlab.studo.server.general.users
 
 import com.rtuitlab.studo.account.AccountStorage
 import com.rtuitlab.studo.server.Resource
 import com.rtuitlab.studo.server.ResponseHandler
-import com.rtuitlab.studo.server.general.profile.models.ChangeEmailRequest
-import com.rtuitlab.studo.server.general.profile.models.ChangePasswordRequest
-import com.rtuitlab.studo.server.general.profile.models.ChangeUserInfoRequest
-import com.rtuitlab.studo.server.general.profile.models.User
+import com.rtuitlab.studo.server.general.users.models.ChangeEmailRequest
+import com.rtuitlab.studo.server.general.users.models.ChangePasswordRequest
+import com.rtuitlab.studo.server.general.users.models.ChangeUserInfoRequest
+import com.rtuitlab.studo.server.general.users.models.User
 import java.lang.Exception
 
 class UserRepository (

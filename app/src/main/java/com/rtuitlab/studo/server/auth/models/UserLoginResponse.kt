@@ -1,6 +1,6 @@
 package com.rtuitlab.studo.server.auth.models
 
-import com.rtuitlab.studo.server.general.profile.models.User
+import com.rtuitlab.studo.server.general.users.models.User
 
 data class UserLoginResponse (
     val user : User,

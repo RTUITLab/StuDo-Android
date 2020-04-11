@@ -30,6 +30,7 @@ class ResumesViewModel(
     fun loadResumesList(resumesType: ResumesType) {
         viewModelScope.launch {
             _resumesListResource.value = Resource.loading(null)
+
             val response = withContext(Dispatchers.IO) {
                 when(resumesType) {
                     AllResumes -> resumesRepo.getAllResumes()
@@ -37,6 +38,7 @@ class ResumesViewModel(
                     is UserResumes -> resumesRepo.getUserResumes(resumesType.userId)
                 }
             }
+
             _resumesListResource.value = response
         }
     }

@@ -1,4 +1,4 @@
-package com.rtuitlab.studo.ui.general.profile.fragments
+package com.rtuitlab.studo.ui.general.users.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

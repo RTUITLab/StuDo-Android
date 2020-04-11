@@ -1,9 +1,9 @@
-package com.rtuitlab.studo.server.general.profile
+package com.rtuitlab.studo.server.general.users
 
-import com.rtuitlab.studo.server.general.profile.models.ChangeEmailRequest
-import com.rtuitlab.studo.server.general.profile.models.ChangePasswordRequest
-import com.rtuitlab.studo.server.general.profile.models.ChangeUserInfoRequest
-import com.rtuitlab.studo.server.general.profile.models.User
+import com.rtuitlab.studo.server.general.users.models.ChangeEmailRequest
+import com.rtuitlab.studo.server.general.users.models.ChangePasswordRequest
+import com.rtuitlab.studo.server.general.users.models.ChangeUserInfoRequest
+import com.rtuitlab.studo.server.general.users.models.User
 import retrofit2.http.*
 
 interface UserApi {

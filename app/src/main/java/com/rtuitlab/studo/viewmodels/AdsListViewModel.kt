@@ -6,6 +6,7 @@ import com.rtuitlab.studo.account.AccountStorage
 import com.rtuitlab.studo.server.Resource
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.ads.AdsRepository
+import com.rtuitlab.studo.server.general.ads.models.AdIdWithIsFavourite
 import com.rtuitlab.studo.server.general.ads.models.CompactAd
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,7 +19,7 @@ object BookmarkedAds : AdsType()
 object MyAds: AdsType()
 data class UserAds(val userId: String): AdsType()
 
-class AdsViewModel(
+class AdsListViewModel(
     private val adsRepo: AdsRepository,
     private val accStorage: AccountStorage
 ): ViewModel() {
@@ -41,32 +42,35 @@ class AdsViewModel(
         }
     }
 
-    private val _favouritesResource = SingleLiveEvent<Resource<CompactAd>>()
-    val favouritesResource: LiveData<Resource<CompactAd>> = _favouritesResource
+    private val _favouritesResource = SingleLiveEvent<Resource<AdIdWithIsFavourite>>()
+    val favouritesResource: LiveData<Resource<AdIdWithIsFavourite>> = _favouritesResource
 
-    fun toggleFavourite(compactAd: CompactAd) {
+    fun toggleFavourite(adIdWithIsFavourite: AdIdWithIsFavourite) {
         viewModelScope.launch {
             _favouritesResource.value = Resource.loading(null)
+
             val response = withContext(Dispatchers.IO) {
-                if (compactAd.isFavorite) {
-                    adsRepo.addToBookmarks(compactAd.id)
+                if (adIdWithIsFavourite.isFavourite) {
+                    adsRepo.addToBookmarks(adIdWithIsFavourite.id)
                 } else {
-                    adsRepo.removeFromBookmarks(compactAd.id)
+                    adsRepo.removeFromBookmarks(adIdWithIsFavourite.id)
                 }
             }
+
             if (response.status == Status.SUCCESS) {
-                _favouritesResource.value = Resource.success(compactAd)
+                _favouritesResource.value = Resource.success(adIdWithIsFavourite)
             } else {
                 val checkResponse =  withContext(Dispatchers.IO) {
-                    adsRepo.getAd(compactAd.id)
+                    adsRepo.getAd(adIdWithIsFavourite.id)
                 }
+
                 if (checkResponse.status == Status.SUCCESS &&
-                    checkResponse.data!!.isFavourite == compactAd.isFavorite) {
-                    _favouritesResource.value = Resource.success(compactAd)
+                    checkResponse.data!!.isFavourite == adIdWithIsFavourite.isFavourite) {
+                    _favouritesResource.value = Resource.success(adIdWithIsFavourite)
                 } else {
                     _favouritesResource.value = Resource.error(
                         response.message!!,
-                        compactAd.apply { isFavorite = !isFavorite }
+                        adIdWithIsFavourite.apply { isFavourite = !isFavourite }
                     )
                 }
             }

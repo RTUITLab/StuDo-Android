@@ -13,8 +13,8 @@ import com.rtuitlab.studo.account.AccountStorage
 import com.rtuitlab.studo.persistence.EncryptedPreferences
 import com.rtuitlab.studo.server.Resource
 import com.rtuitlab.studo.server.Status
-import com.rtuitlab.studo.server.general.profile.UserRepository
-import com.rtuitlab.studo.server.general.profile.models.User
+import com.rtuitlab.studo.server.general.users.UserRepository
+import com.rtuitlab.studo.server.general.users.models.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -53,12 +53,15 @@ class ProfileViewModel(
     fun updateCurrentUser() {
         viewModelScope.launch {
             _currentUserResource.value = Resource.loading(null)
+
             val response = withContext(Dispatchers.IO) {
                 userRepo.loadCurrentUser()
             }
+
             if (response.status == Status.SUCCESS) {
                 fillUserData(response.data!!)
             }
+
             _currentUserResource.value = response
         }
     }
@@ -93,6 +96,7 @@ class ProfileViewModel(
     fun saveUserDataChanges() {
         viewModelScope.launch {
             _changesSavedResource.value = Resource.loading(null)
+
             val response = withContext(Dispatchers.IO) {
                 userRepo.changeUserInfo(
                     name.get()!!.trim(),
@@ -100,10 +104,12 @@ class ProfileViewModel(
                     cardNumber.get()!!.trim()
                 )
             }
+
             if (response.status == Status.SUCCESS) {
                 fillUserData(response.data!!)
                 isUserDataChanged.set(false)
             }
+
             _changesSavedResource.value = response
         }
     }

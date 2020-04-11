@@ -1,8 +1,7 @@
-package com.rtuitlab.studo.ui.general.profile.dialogs
+package com.rtuitlab.studo.ui.general.users.dialogs
 
 import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button

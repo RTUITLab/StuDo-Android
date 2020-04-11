@@ -11,7 +11,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.transition.MaterialSharedAxis
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentLoginBinding
 import com.rtuitlab.studo.server.Status
@@ -23,12 +22,6 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class LoginFragment : Fragment() {
 
     private val viewModel: AuthViewModel by sharedViewModel()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enterTransition = MaterialSharedAxis.create(requireContext(),  MaterialSharedAxis.Z,  true)
-        exitTransition = MaterialSharedAxis.create(requireContext(),  MaterialSharedAxis.Z,  false)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -34,6 +34,8 @@ class AdsRepository(
         }
     }
 
+
+
     suspend fun getBookmarkedAds(): Resource<List<CompactAd>> {
         return try {
             responseHandler.handleSuccess(adsApi.getBookmarkedAds())

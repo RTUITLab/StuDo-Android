@@ -14,8 +14,11 @@
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment"
+            app:enterAnim="@anim/fade_in_delayed"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in_delayed"
             app:popUpTo="@id/registerFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_loginFragment_to_resetPasswordDialog"
             app:destination="@id/resetPasswordDialog" />

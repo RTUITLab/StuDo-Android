@@ -10,5 +10,14 @@
         android:id="@+id/adsListFragment"
         android:name="com.rtuitlab.studo.ui.general.ads.AdsListFragment"
         android:label="AdsListFragment"
-        tools:layout="@layout/fragment_recycler_list" />
+        tools:layout="@layout/fragment_recycler_list" >
+        <action
+            android:id="@+id/action_adsListFragment_to_adFragment"
+            app:destination="@id/adFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/adFragment"
+        android:name="com.rtuitlab.studo.ui.general.ads.AdFragment"
+        android:label="AdFragment"
+        tools:layout="@layout/fragment_ad"/>
 </navigation>

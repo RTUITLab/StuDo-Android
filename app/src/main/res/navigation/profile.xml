@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.rtuitlab.studo.ui.general.profile.fragments.ProfileFragment"
+        android:name="com.rtuitlab.studo.ui.general.users.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/accountSettingsFragment"
-        android:name="com.rtuitlab.studo.ui.general.profile.fragments.AccountSettingsFragment"
+        android:name="com.rtuitlab.studo.ui.general.users.fragments.AccountSettingsFragment"
         android:label="fragment_account_settings"
         tools:layout="@layout/fragment_account_settings" >
         <action
@@ -39,12 +39,12 @@
     </fragment>
     <dialog
         android:id="@+id/changeEmailDialog"
-        android:name="com.rtuitlab.studo.ui.general.profile.dialogs.ChangeEmailDialog"
+        android:name="com.rtuitlab.studo.ui.general.users.dialogs.ChangeEmailDialog"
         android:label="ChangeEmailDialog"
         tools:layout="@layout/dialog_change_email"/>
     <dialog
         android:id="@+id/changePasswordDialog"
-        android:name="com.rtuitlab.studo.ui.general.profile.dialogs.ChangePasswordDialog"
+        android:name="com.rtuitlab.studo.ui.general.users.dialogs.ChangePasswordDialog"
         android:label="ChangePasswordDialog"
         tools:layout="@layout/dialog_change_password"/>
     <fragment

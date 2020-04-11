@@ -5,9 +5,7 @@ import android.content.Context
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import com.google.gson.Gson
-import com.rtuitlab.studo.server.general.profile.models.User
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.rtuitlab.studo.server.general.users.models.User
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 

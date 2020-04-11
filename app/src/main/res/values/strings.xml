@@ -47,4 +47,7 @@
     <string name="removed_favourites">Removed from favourites</string>
     <string name="registration">Registration</string>
     <string name="authorization">Authorization</string>
+    <string name="comments">Comments</string>
+    <string name="date">Date</string>
+    <string name="ad">Ad</string>
 </resources>

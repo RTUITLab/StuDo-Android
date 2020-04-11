@@ -7,7 +7,7 @@ import com.rtuitlab.studo.server.auth.authApiModule
 import com.rtuitlab.studo.server.general.ads.adsApiModule
 import com.rtuitlab.studo.server.general.generalRetrofitModule
 import com.rtuitlab.studo.server.general.resumes.resumesApiModule
-import com.rtuitlab.studo.server.general.profile.userApiModule
+import com.rtuitlab.studo.server.general.users.userApiModule
 import com.rtuitlab.studo.server.repositoriesModule
 import com.rtuitlab.studo.server.responseHandlerModule
 import com.rtuitlab.studo.viewmodels.viewModelsModule
@@ -31,7 +31,8 @@ class App : Application() {
                 repositoriesModule,
                 encryptedPrefModule,
                 accountStoreModule,
-                viewModelsModule
+                viewModelsModule,
+                timeFormatterModule
             ))
         }
     }

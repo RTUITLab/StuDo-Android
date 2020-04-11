@@ -1,4 +1,4 @@
-package com.rtuitlab.studo.ui.general.profile.dialogs
+package com.rtuitlab.studo.ui.general.users.dialogs
 
 import android.app.Dialog
 import android.content.Context
