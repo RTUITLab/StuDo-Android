@@ -25,7 +25,7 @@ class ProfileFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (viewModel.currentUserResource.value == null) {
+        if (viewModel.currentUserResource.value?.status != Status.SUCCESS) {
             viewModel.updateCurrentUser()
         }
     }

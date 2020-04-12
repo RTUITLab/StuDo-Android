@@ -4,16 +4,36 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.rtuitlab.studo.R
+import com.rtuitlab.studo.diff_util.ResumesListDiffUtilCallback
 import com.rtuitlab.studo.server.general.resumes.models.CompactResume
 import kotlinx.android.synthetic.main.view_recycler_resume.view.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class ResumesRecyclerAdapter(
-    private val data: List<CompactResume>
-): RecyclerView.Adapter<ResumesRecyclerAdapter.ResumeHolder>() {
+class ResumesRecyclerAdapter: RecyclerView.Adapter<ResumesRecyclerAdapter.ResumeHolder>() {
 
     private var clickListener: OnResumeClickListener? = null
+
+    var data: List<CompactResume> = listOf()
+    set(value) {
+        GlobalScope.launch(Dispatchers.Main) {
+            val resumesDiffResult = withContext(Dispatchers.Default) {
+                val diffUtilCallback =
+                    ResumesListDiffUtilCallback(
+                        data,
+                        value
+                    )
+                DiffUtil.calculateDiff(diffUtilCallback)
+            }
+            field = value
+            resumesDiffResult.dispatchUpdatesTo(this@ResumesRecyclerAdapter)
+        }
+    }
 
     override fun getItemCount() = data.size
 

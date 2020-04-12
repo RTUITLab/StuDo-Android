@@ -5,17 +5,37 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.rtuitlab.studo.diff_util.AdsListDiffUtilCallback
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.server.general.ads.models.AdIdWithIsFavourite
 import com.rtuitlab.studo.server.general.ads.models.CompactAd
 import kotlinx.android.synthetic.main.view_recycler_ad.view.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class AdsRecyclerAdapter(
-    private val data: List<CompactAd>
-): RecyclerView.Adapter<AdsRecyclerAdapter.AdHolder>() {
+class AdsRecyclerAdapter: RecyclerView.Adapter<AdsRecyclerAdapter.AdHolder>() {
 
     private var clickListener: OnAdClickListener? = null
+
+    var data: List<CompactAd> = listOf()
+    set(value) {
+        GlobalScope.launch(Dispatchers.Main) {
+            val adsDiffResult = withContext(Dispatchers.Default) {
+                val diffUtilCallback =
+                    AdsListDiffUtilCallback(
+                        data,
+                        value
+                    )
+                DiffUtil.calculateDiff(diffUtilCallback)
+            }
+            field = value
+            adsDiffResult.dispatchUpdatesTo(this@AdsRecyclerAdapter)
+        }
+    }
 
     fun handleFavouriteError(adIdWithIsFavourite: AdIdWithIsFavourite) {
         data.forEach {

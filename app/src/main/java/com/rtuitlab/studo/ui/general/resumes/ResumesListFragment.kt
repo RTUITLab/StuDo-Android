@@ -21,6 +21,8 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
 
     private val resumesListViewModel: ResumesListViewModel by viewModel()
 
+    private var recyclerAdapter: ResumesRecyclerAdapter? = null
+
     private var resumesType: ResumesType = AllResumes
 
     override fun onCreateView(
@@ -50,10 +52,12 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
             }
         }
 
-        if (resumesListViewModel.resumesListResource.value == null) {
+        initRecyclerView()
+
+        if (resumesListViewModel.resumesListResource.value?.status != Status.SUCCESS) {
             loadResumes()
         } else {
-            initRecyclerView()
+            recyclerAdapter?.data = resumesListViewModel.resumesListResource.value!!.data!!
         }
 
         setListeners()
@@ -75,7 +79,7 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
             when(it.status) {
                 Status.SUCCESS -> {
                     swipeContainer.isRefreshing = false
-                    initRecyclerView()
+                    recyclerAdapter?.data = it.data!!
                 }
                 Status.ERROR -> {
                     swipeContainer.isRefreshing = false
@@ -89,9 +93,12 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
     }
 
     private fun initRecyclerView() {
-        recyclerView.adapter = ResumesRecyclerAdapter(resumesListViewModel.resumesListResource.value!!.data!!).apply {
-            setOnResumeClickListener(this@ResumesListFragment)
+        if (recyclerAdapter == null) {
+            recyclerAdapter = ResumesRecyclerAdapter().apply {
+                setOnResumeClickListener(this@ResumesListFragment)
+            }
         }
+        recyclerView.adapter = recyclerAdapter
     }
 
     override fun onResumeClick(compactResume: CompactResume) {

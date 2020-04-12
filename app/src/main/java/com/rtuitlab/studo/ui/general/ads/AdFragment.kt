@@ -46,7 +46,7 @@ class AdFragment: Fragment() {
         collapsingToolbar.title = getString(R.string.ad)
         (requireActivity() as MainActivity).enableNavigateButton(collapsingToolbar.toolbar)
 
-        if (adViewModel.currentAdResource.value == null) {
+        if (adViewModel.currentAdResource.value?.status != Status.SUCCESS) {
             adViewModel.adId = requireArguments().getString("adId")!!
             loadAd()
         } else {

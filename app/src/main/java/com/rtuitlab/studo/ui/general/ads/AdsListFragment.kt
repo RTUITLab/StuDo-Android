@@ -59,10 +59,13 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
             }
         }
 
-        if (viewModel.adsListResource.value == null) {
+
+        initRecyclerView()
+
+        if (viewModel.adsListResource.value?.status != Status.SUCCESS) {
             loadAds()
         } else {
-            initRecyclerView()
+            recyclerAdapter?.data = viewModel.adsListResource.value!!.data!!
         }
 
         setListeners()
@@ -84,7 +87,7 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
             when(it.status) {
                 Status.SUCCESS -> {
                     swipeContainer.isRefreshing = false
-                    initRecyclerView()
+                    recyclerAdapter?.data = it.data!!
                 }
                 Status.ERROR -> {
                     swipeContainer.isRefreshing = false
@@ -115,8 +118,10 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
     }
 
     private fun initRecyclerView() {
-        recyclerAdapter = AdsRecyclerAdapter(viewModel.adsListResource.value!!.data!!).apply {
-            setOnAdClickListener(this@AdsListFragment)
+        if (recyclerAdapter == null) {
+            recyclerAdapter = AdsRecyclerAdapter().apply {
+                setOnAdClickListener(this@AdsListFragment)
+            }
         }
         recyclerView.adapter = recyclerAdapter
     }
