@@ -7,10 +7,15 @@
         <item name="colorSecondary">@color/colorAccent</item>
         <item name="colorOnSecondary">@android:color/white</item>
         <item name="colorOnPrimary">@android:color/white</item>
+        <item name="preferenceTheme">@style/AppTheme.SettingsTheme</item>
     </style>
 
     <style name="AuthTitleTextColor" parent="AppTheme">
         <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="AppTheme.SettingsTheme" parent="@style/PreferenceThemeOverlay">
+        <item name="android:layout">@layout/fragment_settings</item>
     </style>
 
 </resources>

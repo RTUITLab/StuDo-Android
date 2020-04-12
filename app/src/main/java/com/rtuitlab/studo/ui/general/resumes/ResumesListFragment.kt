@@ -19,7 +19,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickListener {
 
-    private val viewModel: ResumesViewModel by viewModel()
+    private val resumesListViewModel: ResumesListViewModel by viewModel()
 
     private var resumesType: ResumesType = AllResumes
 
@@ -50,7 +50,7 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
             }
         }
 
-        if (viewModel.resumesListResource.value == null) {
+        if (resumesListViewModel.resumesListResource.value == null) {
             loadResumes()
         } else {
             initRecyclerView()
@@ -61,7 +61,7 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
     }
 
     private fun loadResumes() {
-        viewModel.loadResumesList(resumesType)
+        resumesListViewModel.loadResumesList(resumesType)
     }
 
     private fun setListeners() {
@@ -71,7 +71,7 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
     }
 
     private fun setObservers() {
-        viewModel.resumesListResource.observe(viewLifecycleOwner, Observer {
+        resumesListViewModel.resumesListResource.observe(viewLifecycleOwner, Observer {
             when(it.status) {
                 Status.SUCCESS -> {
                     swipeContainer.isRefreshing = false
@@ -89,7 +89,7 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
     }
 
     private fun initRecyclerView() {
-        recyclerView.adapter = ResumesRecyclerAdapter(viewModel.resumesListResource.value!!.data!!).apply {
+        recyclerView.adapter = ResumesRecyclerAdapter(resumesListViewModel.resumesListResource.value!!.data!!).apply {
             setOnResumeClickListener(this@ResumesListFragment)
         }
     }

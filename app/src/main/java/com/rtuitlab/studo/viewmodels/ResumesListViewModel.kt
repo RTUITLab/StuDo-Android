@@ -19,7 +19,7 @@ object AllResumes: ResumesType()
 object MyResumes: ResumesType()
 data class UserResumes(val userId: String): ResumesType()
 
-class ResumesViewModel(
+class ResumesListViewModel(
     private val resumesRepo: ResumesRepository,
     private val accStorage: AccountStorage
 ): ViewModel() {

@@ -35,17 +35,17 @@ class AdsRecyclerAdapter(
                 .inflate(R.layout.view_recycler_ad, parent, false)
         )
 
-    override fun onBindViewHolder(holder: AdHolder, position: Int) = holder.bind(position)
+    override fun onBindViewHolder(holder: AdHolder, position: Int) = holder.bind(data[position])
 
     inner class AdHolder internal constructor(view: View): RecyclerView.ViewHolder(view){
         private val nameTV: TextView = view.title
         private val descTV: TextView = view.desc
         private val favouriteIV: ImageView = view.favouriteBtn
 
-        fun bind(position: Int) {
-            nameTV.text = data[position].name
-            descTV.text = data[position].shortDescription
-            if (data[position].isFavourite) {
+        fun bind(compactAd: CompactAd) {
+            nameTV.text = compactAd.name
+            descTV.text = compactAd.shortDescription
+            if (compactAd.isFavourite) {
                 favouriteIV.setImageResource(R.drawable.ic_star)
             } else {
                 favouriteIV.setImageResource(R.drawable.ic_star_border)
@@ -57,9 +57,10 @@ class AdsRecyclerAdapter(
                 clickListener?.onAdClicked(data[adapterPosition])
             }
             favouriteIV.setOnClickListener {
-                data[adapterPosition].isFavourite = !data[adapterPosition].isFavourite
-                this.bind(adapterPosition)
-                clickListener?.onFavouriteToggle(data[adapterPosition])
+                val compactAd = data[adapterPosition]
+                compactAd.isFavourite = !compactAd.isFavourite
+                this.bind(compactAd)
+                clickListener?.onFavouriteToggle(compactAd)
             }
         }
     }

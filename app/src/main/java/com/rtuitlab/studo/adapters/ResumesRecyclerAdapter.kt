@@ -23,16 +23,16 @@ class ResumesRecyclerAdapter(
                 .inflate(R.layout.view_recycler_resume, parent, false)
         )
 
-    override fun onBindViewHolder(holder: ResumeHolder, position: Int) = holder.bind(position)
+    override fun onBindViewHolder(holder: ResumeHolder, position: Int) = holder.bind(data[position])
 
     inner class ResumeHolder internal constructor(view: View):
         RecyclerView.ViewHolder(view) {
         private val name: TextView = view.title
         private val description: TextView = view.desc
 
-        fun bind(position: Int) {
-            this.name.text = data[position].name
-            this.description.text = data[position].description
+        fun bind(compactResume: CompactResume) {
+            this.name.text = compactResume.name
+            this.description.text = compactResume.description
         }
 
         init {

@@ -91,7 +91,7 @@ class ProfileFragment : Fragment() {
                 Snackbar.make(requireView(), "WORK IN PROGRESS", Snackbar.LENGTH_SHORT).show()
             },
             onSettings = {
-                Snackbar.make(requireView(), "SETTINGS", Snackbar.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)
             },
             onAbout = {
                 Snackbar.make(requireView(), "ABOUT", Snackbar.LENGTH_SHORT).show()

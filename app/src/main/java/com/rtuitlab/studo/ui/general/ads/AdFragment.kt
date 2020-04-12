@@ -58,12 +58,20 @@ class AdFragment: Fragment() {
     }
 
     private fun setListeners() {
-        swipeContainer.setOnRefreshListener {
-            loadAd()
+        profilePanel.setOnClickListener {
+            if (adViewModel.currentAd.get()?.organizationId == null) { // User`s ad
+
+            } else { // Organization`s ad
+                Snackbar.make(requireView(), "Organizations in progress", Snackbar.LENGTH_SHORT).show()
+            }
         }
 
         commentBtn.setOnClickListener {
             requireActivity().onBackPressed()
+        }
+
+        swipeContainer.setOnRefreshListener {
+            loadAd()
         }
 
         favouriteBtn.setOnClickListener {

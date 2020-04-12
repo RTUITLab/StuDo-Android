@@ -6,9 +6,9 @@ import org.koin.dsl.module
 
 val viewModelsModule = module {
     viewModel { AuthViewModel(androidApplication(), get(), get()) }
-    viewModel { MainViewModel(get()) }
+    viewModel { MainViewModel(get(), get()) }
     viewModel { AdsListViewModel(get(), get()) }
-    viewModel { ResumesViewModel(get(), get()) }
+    viewModel { ResumesListViewModel(get(), get()) }
     viewModel { ProfileViewModel(androidApplication(), get(), get(), get()) }
     viewModel { AccountChangesDialogsViewModel(get()) }
     viewModel { AdViewModel(get(), get()) }

@@ -50,4 +50,8 @@
     <string name="comments">Comments</string>
     <string name="date">Date</string>
     <string name="ad">Ad</string>
+    <string name="dark_theme">Dark theme</string>
+    <string name="language">Language</string>
+    <string name="russian">Russian</string>
+    <string name="english">English</string>
 </resources>

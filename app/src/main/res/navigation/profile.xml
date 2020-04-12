@@ -20,10 +20,9 @@
         <action
             android:id="@+id/action_profileFragment_to_resumesListFragment2"
             app:destination="@id/resumesListFragment2" />
-        <!--        app:enterAnim="@anim/slide_from_right"-->
-<!--        app:exitAnim="@anim/slide_to_left"-->
-<!--        app:popEnterAnim="@anim/slide_from_left"-->
-<!--        app:popExitAnim="@anim/slide_to_right"-->
+        <action
+            android:id="@+id/action_profileFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/accountSettingsFragment"
@@ -57,4 +56,8 @@
         android:name="com.rtuitlab.studo.ui.general.resumes.ResumesListFragment"
         android:label="ResumesListFragment"
         tools:layout="@layout/fragment_recycler_list"/>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.rtuitlab.studo.ui.general.users.fragments.SettingsFragment"
+        android:label="SettingsFragment"/>
 </navigation>

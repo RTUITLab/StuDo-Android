@@ -8,6 +8,7 @@
         <item>@drawable/ic_settings</item>
         <item>@drawable/ic_about</item>
     </integer-array>
+
     <string-array name="profile_titles">
         <item>@string/my_ads</item>
         <item>@string/my_resumes</item>
@@ -15,5 +16,15 @@
         <item>@string/organizations</item>
         <item>@string/settings</item>
         <item>@string/about</item>
+    </string-array>
+
+    <string-array name="languages">
+        <item>@string/russian</item>
+        <item>@string/english</item>
+    </string-array>
+
+    <string-array name="entry_languages">
+        <item>ru</item>
+        <item>en</item>
     </string-array>
 </resources>

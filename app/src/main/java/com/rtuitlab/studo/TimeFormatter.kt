@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.graphics.Typeface
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
-import android.text.Spanned
 import android.text.style.StyleSpan
 import androidx.core.text.set
 import org.koin.dsl.module

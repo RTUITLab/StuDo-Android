@@ -30,6 +30,7 @@ class AdsListViewModel(
     fun loadAdsList(adsType: AdsType) {
         viewModelScope.launch {
             _adsListResource.value = Resource.loading(null)
+
             val response = withContext(Dispatchers.IO) {
                 when(adsType) {
                     AllAds -> adsRepo.getAllAds()
@@ -38,6 +39,7 @@ class AdsListViewModel(
                     is UserAds -> adsRepo.getUserAds(adsType.userId)
                 }
             }
+
             _adsListResource.value = response
         }
     }
