@@ -22,6 +22,7 @@ import com.rtuitlab.studo.viewmodels.AccountChangesDialogsViewModel
 import com.rtuitlab.studo.viewmodels.ProfileViewModel
 import kotlinx.android.synthetic.main.fragment_account_settings.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
+import kotlinx.android.synthetic.main.view_collapsing_toolbar.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
@@ -32,8 +33,6 @@ class AccountSettingsFragment: Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        enterTransition = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.Z, false)
-//        exitTransition = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.Z, true)
         sharedElementEnterTransition = MaterialContainerTransform(requireContext()).apply {
             scrimColor = ContextCompat.getColor(requireContext(), android.R.color.transparent)
         }
@@ -57,6 +56,8 @@ class AccountSettingsFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         collapsingToolbar.title = getString(R.string.account)
+        (requireActivity() as MainActivity).enableNavigateButton(collapsingToolbar.toolbar)
+
         setListeners()
         setObservers()
     }

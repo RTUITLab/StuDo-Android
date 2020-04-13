@@ -15,9 +15,11 @@ import com.rtuitlab.studo.adapters.AdsRecyclerAdapter
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.ads.models.AdIdWithIsFavourite
 import com.rtuitlab.studo.server.general.ads.models.CompactAd
+import com.rtuitlab.studo.ui.general.MainActivity
 import com.rtuitlab.studo.viewmodels.*
 import kotlinx.android.synthetic.main.fragment_recycler_list.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
+import kotlinx.android.synthetic.main.view_collapsing_toolbar.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
@@ -48,13 +50,16 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
             }
             BookmarkedAds -> {
                 collapsingToolbar.title = getString(R.string.favourites)
+                (requireActivity() as MainActivity).enableNavigateButton(collapsingToolbar.toolbar)
                 createBtn.hide()
             }
             is MyAds -> {
                 collapsingToolbar.title = getString(R.string.my_ads)
+                (requireActivity() as MainActivity).enableNavigateButton(collapsingToolbar.toolbar)
             }
             is UserAds -> {
                 // TODO - add title in toolbar
+                (requireActivity() as MainActivity).enableNavigateButton(collapsingToolbar.toolbar)
                 createBtn.hide()
             }
         }
