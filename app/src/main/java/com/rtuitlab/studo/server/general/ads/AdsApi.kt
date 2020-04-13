@@ -2,10 +2,8 @@ package com.rtuitlab.studo.server.general.ads
 
 import com.rtuitlab.studo.server.general.ads.models.Ad
 import com.rtuitlab.studo.server.general.ads.models.CompactAd
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import com.rtuitlab.studo.server.general.ads.models.CreateAdRequest
+import retrofit2.http.*
 
 interface AdsApi {
     @GET("ad")
@@ -16,6 +14,11 @@ interface AdsApi {
 
     @GET("ad/user/{userId}")
     suspend fun getUserAds(@Path("userId") userId : String): List<CompactAd>
+
+
+
+    @POST("ad/")
+    suspend fun createAd(@Body body: CreateAdRequest): Ad
 
 
 

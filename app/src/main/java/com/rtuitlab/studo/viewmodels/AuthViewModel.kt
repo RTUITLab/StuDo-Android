@@ -104,19 +104,19 @@ class AuthViewModel(
 
     private fun isRegisterDataCorrect(): Boolean {
         var result = true
-        if (name.isEmpty()) {
+        if (name.isBlank()) {
             nameError.set(getApplication<App>().getString(R.string.empty_field_error))
             result = false
         } else {
             nameError.set("")
         }
-        if (surname.isEmpty()) {
+        if (surname.isBlank()) {
             surnameError.set(getApplication<App>().getString(R.string.empty_field_error))
             result = false
         } else {
             surnameError.set("")
         }
-        if (cardNumber.isEmpty()) {
+        if (cardNumber.isBlank()) {
             cardNumberError.set(getApplication<App>().getString(R.string.empty_field_error))
             result = false
         } else {
@@ -125,7 +125,7 @@ class AuthViewModel(
         if (!isLoginDataCorrect()) {
             result = false
         }
-        if (confirmPassword.isEmpty()) {
+        if (confirmPassword.isBlank()) {
             confirmPasswordError.set(getApplication<App>().getString(R.string.empty_field_error))
             result = false
         } else {

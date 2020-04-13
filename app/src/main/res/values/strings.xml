@@ -54,4 +54,12 @@
     <string name="language">Language</string>
     <string name="russian">Russian</string>
     <string name="english">English</string>
+    <string name="create_ad">Create ad</string>
+    <string name="edit_ad">Edit ad</string>
+    <string name="title_hint"><font size="24">Title</font></string>
+    <string name="short_desc_hint">Short description (optional)</string>
+    <string name="desc">Description</string>
+    <string name="only_date">Only date</string>
+    <string name="not_selected">Not selected</string>
+    <string name="select_date_range">Select a date range</string>
 </resources>

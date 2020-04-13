@@ -12,4 +12,5 @@ val viewModelsModule = module {
     viewModel { ProfileViewModel(androidApplication(), get(), get(), get()) }
     viewModel { AccountChangesDialogsViewModel(get()) }
     viewModel { AdViewModel(get(), get()) }
+    viewModel { CreateEditAdViewModel(androidApplication(), get(), get()) }
 }

@@ -59,6 +59,6 @@ class AdViewModel(
             }
         }
 
-        adDateTimeText.set(dateTimeFormatter.generateDateTimeAd(ad.beginTime, ad.endTime))
+        adDateTimeText.set(dateTimeFormatter.generateDateRangeFromDateTimeForAd(ad.beginTime, ad.endTime))
     }
 }

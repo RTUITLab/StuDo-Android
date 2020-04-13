@@ -103,4 +103,12 @@ dependencies {
     // Security crypto
     def crypto_version = "1.0.0-beta01"
     implementation "androidx.security:security-crypto:$crypto_version"
+
+    // Multiline collapsing toolbar
+    def multiline_toolbar_version = "27.1.1"
+    implementation "net.opacapp:multiline-collapsingtoolbar:$multiline_toolbar_version"
+
+    // Time range picker
+    def time_range_version = "0.2"
+    implementation "com.github.tittojose:timerangepicker-library:$time_range_version"
 }

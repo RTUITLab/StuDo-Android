@@ -1,7 +1,6 @@
 package com.rtuitlab.studo.ui.general.ads
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -84,6 +83,10 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
     private fun setListeners() {
         swipeContainer.setOnRefreshListener {
             loadAds()
+        }
+
+        createBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_adsListFragment_to_createEditAdFragment)
         }
     }
 

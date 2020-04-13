@@ -67,24 +67,27 @@ class ProfileViewModel(
     }
 
     fun checkUserData() {
+        name.set(name.get()?.trimStart())
+        surname.set(surname.get()?.trimStart())
+        cardNumber.set(cardNumber.get()?.trimStart())
         var result = (
                 name.get() != user.name ||
                         surname.get() != user.surname ||
                         cardNumber.get() != user.studentCardNumber
                 )
-        if (name.get()!!.isEmpty()) {
+        if (name.get().isNullOrBlank()) {
             nameError.set(getApplication<App>().getString(R.string.empty_field_error))
             result = false
         } else {
             nameError.set("")
         }
-        if (surname.get()!!.isEmpty()) {
+        if (surname.get().isNullOrBlank()) {
             surnameError.set(getApplication<App>().getString(R.string.empty_field_error))
             result = false
         } else {
             surnameError.set("")
         }
-        if (cardNumber.get()!!.isEmpty()) {
+        if (cardNumber.get().isNullOrBlank()) {
             cardNumberError.set(getApplication<App>().getString(R.string.empty_field_error))
             result = false
         } else {

@@ -4,6 +4,7 @@ import com.rtuitlab.studo.server.Resource
 import com.rtuitlab.studo.server.ResponseHandler
 import com.rtuitlab.studo.server.general.ads.models.Ad
 import com.rtuitlab.studo.server.general.ads.models.CompactAd
+import com.rtuitlab.studo.server.general.ads.models.CreateAdRequest
 import java.lang.Exception
 
 class AdsRepository(
@@ -29,6 +30,25 @@ class AdsRepository(
     suspend fun getUserAds(userId: String): Resource<List<CompactAd>> {
         return try {
             responseHandler.handleSuccess(adsApi.getUserAds(userId))
+        } catch (e: Exception) {
+            responseHandler.handleException(e)
+        }
+    }
+
+
+
+    suspend fun createAd(
+        name: String,
+        description: String,
+        shortDescription: String,
+        beginTime: String,
+        endTime: String,
+        organizationId: String? = null
+    ): Resource<Ad> {
+        return try {
+            responseHandler.handleSuccess(adsApi.createAd(CreateAdRequest(
+                name, description, shortDescription, beginTime, endTime, organizationId
+            )))
         } catch (e: Exception) {
             responseHandler.handleException(e)
         }

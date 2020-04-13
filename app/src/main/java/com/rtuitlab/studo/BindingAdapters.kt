@@ -1,12 +1,10 @@
 package com.rtuitlab.studo
 
-import android.util.Log
-import android.widget.ImageView
+import android.widget.EditText
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.BindingAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.rtuitlab.studo.custom_views.AvatarView
 
@@ -28,7 +26,7 @@ fun AvatarView.setText(text: String) {
 }
 
 @BindingAdapter("bindAfterTextChanged")
-fun TextInputEditText.setAfterTextChangedListener(func: () -> Unit) {
+fun EditText.setAfterTextChangedListener(func: () -> Unit) {
     this.addTextChangedListener {
         doAfterTextChanged {
             func.invoke()

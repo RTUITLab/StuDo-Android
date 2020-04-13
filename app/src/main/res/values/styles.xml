@@ -8,6 +8,7 @@
         <item name="colorOnSecondary">@android:color/white</item>
         <item name="colorOnPrimary">@android:color/white</item>
         <item name="preferenceTheme">@style/AppTheme.SettingsTheme</item>
+        <item name="materialCalendarFullscreenTheme">@style/CustomThemeOverlay_MaterialCalendar_Fullscreen</item>
     </style>
 
     <style name="AuthTitleTextColor" parent="AppTheme">
@@ -16,6 +17,16 @@
 
     <style name="AppTheme.SettingsTheme" parent="@style/PreferenceThemeOverlay">
         <item name="android:layout">@layout/fragment_settings</item>
+    </style>
+
+    <style name="CustomThemeOverlay_MaterialCalendar_Fullscreen"
+        parent="@style/ThemeOverlay.MaterialComponents.MaterialCalendar.Fullscreen">
+        <item name="materialCalendarStyle">@style/Custom_MaterialCalendar.Fullscreen</item>
+    </style>
+
+    <style name="Custom_MaterialCalendar.Fullscreen"
+        parent="@style/Widget.MaterialComponents.MaterialCalendar.Fullscreen">
+        <item name="android:windowFullscreen">false</item>
     </style>
 
 </resources>
