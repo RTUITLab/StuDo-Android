@@ -80,11 +80,8 @@ class AccountSettingsFragment: Fragment() {
 
         logoutBtn.setOnClickListener {
             profileViewModel.logout()
-            val intent = Intent(requireContext(), MainActivity::class.java)
-            intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
-            requireActivity().startActivity(intent)
+            startActivity(Intent(requireContext(), MainActivity::class.java))
             requireActivity().finish()
-            Runtime.getRuntime().exit(0)
         }
     }
 

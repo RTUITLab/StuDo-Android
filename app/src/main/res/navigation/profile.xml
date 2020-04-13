@@ -15,14 +15,14 @@
             android:id="@+id/action_profileFragment_to_accountSettingsFragment"
             app:destination="@id/accountSettingsFragment"/>
         <action
-            android:id="@+id/action_profileFragment_to_adsListFragment2"
-            app:destination="@id/adsListFragment2" />
-        <action
-            android:id="@+id/action_profileFragment_to_resumesListFragment2"
-            app:destination="@id/resumesListFragment2" />
-        <action
             android:id="@+id/action_profileFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_ads"
+            app:destination="@id/ads" />
+        <action
+            android:id="@+id/action_profileFragment_to_resumes"
+            app:destination="@id/resumes" />
     </fragment>
     <fragment
         android:id="@+id/accountSettingsFragment"
@@ -47,17 +47,10 @@
         android:label="ChangePasswordDialog"
         tools:layout="@layout/dialog_change_password"/>
     <fragment
-        android:id="@+id/adsListFragment2"
-        android:name="com.rtuitlab.studo.ui.general.ads.AdsListFragment"
-        android:label="AdsListFragment"
-        tools:layout="@layout/fragment_recycler_list"/>
-    <fragment
-        android:id="@+id/resumesListFragment2"
-        android:name="com.rtuitlab.studo.ui.general.resumes.ResumesListFragment"
-        android:label="ResumesListFragment"
-        tools:layout="@layout/fragment_recycler_list"/>
-    <fragment
         android:id="@+id/settingsFragment"
         android:name="com.rtuitlab.studo.ui.general.users.fragments.SettingsFragment"
-        android:label="SettingsFragment"/>
+        android:label="SettingsFragment"
+        tools:layout="@layout/fragment_settings"/>
+    <include app:graph="@navigation/ads" />
+    <include app:graph="@navigation/resumes" />
 </navigation>

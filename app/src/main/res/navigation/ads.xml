@@ -14,10 +14,18 @@
         <action
             android:id="@+id/action_adsListFragment_to_adFragment"
             app:destination="@id/adFragment" />
+        <action
+            android:id="@+id/action_adsListFragment_to_createEditAdFragment"
+            app:destination="@id/createEditAdFragment" />
     </fragment>
     <fragment
         android:id="@+id/adFragment"
         android:name="com.rtuitlab.studo.ui.general.ads.AdFragment"
         android:label="AdFragment"
         tools:layout="@layout/fragment_ad"/>
+    <fragment
+        android:id="@+id/createEditAdFragment"
+        android:name="com.rtuitlab.studo.ui.general.ads.CreateEditAdFragment"
+        android:label="CreateEditAdFragment"
+        tools:layout="@layout/fragment_create_edit_ad"/>
 </navigation>

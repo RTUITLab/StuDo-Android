@@ -68,24 +68,25 @@ class ProfileFragment : Fragment() {
                 R.id.action_profileFragment_to_accountSettingsFragment, null, null, extras
             )
         }
+
         profileList.setOnMenuItemClickListener (
             onAds = {
                 val bundle = Bundle().apply {
                     putSerializable(AdsType::class.java.simpleName, MyAds)
                 }
-                findNavController().navigate(R.id.action_profileFragment_to_adsListFragment2, bundle)
+                findNavController().navigate(R.id.action_profileFragment_to_ads, bundle)
             },
             onResumes = {
                 val bundle = Bundle().apply {
                     putSerializable(ResumesType::class.java.simpleName, MyResumes)
                 }
-                findNavController().navigate(R.id.action_profileFragment_to_resumesListFragment2, bundle)
+                findNavController().navigate(R.id.action_profileFragment_to_resumes, bundle)
             },
             onBookmarks = {
                 val bundle = Bundle().apply {
                     putSerializable(AdsType::class.java.simpleName, BookmarkedAds)
                 }
-                findNavController().navigate(R.id.action_profileFragment_to_adsListFragment2, bundle)
+                findNavController().navigate(R.id.action_profileFragment_to_ads, bundle)
             },
             onOrganizations = {
                 Snackbar.make(requireView(), "WORK IN PROGRESS", Snackbar.LENGTH_SHORT).show()
