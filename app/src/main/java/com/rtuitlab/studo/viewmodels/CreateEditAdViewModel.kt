@@ -31,8 +31,10 @@ class CreateEditAdViewModel(
     val dateText = ObservableField(getApplication<App>().getString(R.string.not_selected))
     val timeText = ObservableField(getApplication<App>().getString(R.string.not_selected))
 
-    private var beginDate: Long = 0
-    private var endDate: Long = 0
+    var beginDate: Long = 0
+        private set
+    var endDate: Long = 0
+        private set
 
     val isTimeEnabled = ObservableBoolean(false)
 
@@ -42,12 +44,15 @@ class CreateEditAdViewModel(
         title.set(title.get()?.trimStart())
         shortDesc.set(shortDesc.get()?.trimStart())
         desc.set(desc.get()?.trimStart())
+
         isValid.set(
             !title.get().isNullOrBlank() &&
                     !shortDesc.get().isNullOrBlank() &&
                     !desc.get().isNullOrBlank() &&
-                    dateText.get() != getApplication<App>().getString(R.string.not_selected) /*&&
-                    timeText.get() != getApplication<App>().getString(R.string.not_selected)*/
+                    dateText.get() != getApplication<App>().getString(R.string.not_selected) && (
+                    !isTimeEnabled.get() ||
+                    timeText.get() != getApplication<App>().getString(R.string.not_selected) && isTimeEnabled.get()
+                    )
         )
     }
 
@@ -87,18 +92,80 @@ class CreateEditAdViewModel(
 
         beginDateCalendar.set(Calendar.HOUR_OF_DAY, beginTimeCalendar.get(Calendar.HOUR))
         beginDateCalendar.set(Calendar.MINUTE, beginTimeCalendar.get(Calendar.MINUTE))
-        beginDateCalendar.set(Calendar.SECOND, beginTimeCalendar.get(Calendar.SECOND))
+        beginDateCalendar.set(Calendar.SECOND, 0)
         beginDateCalendar.set(Calendar.MILLISECOND, 1)
 
         endDateCalendar.set(Calendar.HOUR_OF_DAY, endTimeCalendar.get(Calendar.HOUR))
         endDateCalendar.set(Calendar.MINUTE, endTimeCalendar.get(Calendar.MINUTE))
-        endDateCalendar.set(Calendar.SECOND, endTimeCalendar.get(Calendar.SECOND))
+        endDateCalendar.set(Calendar.SECOND, 0)
         endDateCalendar.set(Calendar.MILLISECOND, 1)
 
         beginDate = beginDateCalendar.timeInMillis
         endDate = endDateCalendar.timeInMillis
+
         dateText.set(dateTimeFormatter.generateDateRangeFromTimestamps(beginDate, endDate))
 
         checkData()
+    }
+
+    fun setTimeRange(beginHour: Int, beginMinute: Int, endHour: Int, endMinute: Int) {
+        val beginDateCalendar = Calendar.getInstance().apply {
+            timeInMillis = beginDate
+        }
+        val endDateCalendar = Calendar.getInstance().apply {
+            timeInMillis = endDate
+        }
+
+        beginDateCalendar.set(Calendar.HOUR_OF_DAY, beginHour)
+        beginDateCalendar.set(Calendar.MINUTE, beginMinute)
+        beginDateCalendar.set(Calendar.SECOND, 0)
+        beginDateCalendar.set(Calendar.MILLISECOND, 1)
+
+        endDateCalendar.set(Calendar.HOUR_OF_DAY, endHour)
+        endDateCalendar.set(Calendar.MINUTE, endMinute)
+        endDateCalendar.set(Calendar.SECOND, 0)
+        endDateCalendar.set(Calendar.MILLISECOND, 1)
+
+        beginDate = beginDateCalendar.timeInMillis
+        endDate = endDateCalendar.timeInMillis
+
+        timeText.set(dateTimeFormatter.generateTimeRangeFromTimestamps(beginDate, endDate))
+
+        checkData()
+    }
+
+    fun getDateRange(): Pair<Long, Long> {
+        val startPickerDate = Calendar.getInstance()
+        val endPickerDate = Calendar.getInstance()
+
+        if (dateText.get() == getApplication<App>().getString(R.string.not_selected)) {
+            startPickerDate.add(Calendar.DAY_OF_MONTH, 1)
+            endPickerDate.add(Calendar.DAY_OF_MONTH, 2)
+        } else {
+            startPickerDate.timeInMillis = beginDate
+            endPickerDate.timeInMillis = endDate
+        }
+
+        return Pair(startPickerDate.timeInMillis, endPickerDate.timeInMillis)
+    }
+
+    fun getTimeRange(): Pair<Pair<Int, Int>, Pair<Int, Int>> {
+        val beginCalendar = Calendar.getInstance()
+        val endCalendar = Calendar.getInstance()
+
+        if (timeText.get() == getApplication<App>().getString(R.string.not_selected)) {
+            beginCalendar.set(Calendar.HOUR_OF_DAY, 9)
+            beginCalendar.set(Calendar.MINUTE, 0)
+            endCalendar.set(Calendar.HOUR_OF_DAY, 16)
+            endCalendar.set(Calendar.MINUTE, 0)
+        } else {
+            beginCalendar.timeInMillis = beginDate
+            endCalendar.timeInMillis = endDate
+        }
+
+        return Pair(
+            Pair(beginCalendar.get(Calendar.HOUR_OF_DAY), beginCalendar.get(Calendar.MINUTE)),
+            Pair(endCalendar.get(Calendar.HOUR_OF_DAY), endCalendar.get(Calendar.MINUTE))
+        )
     }
 }

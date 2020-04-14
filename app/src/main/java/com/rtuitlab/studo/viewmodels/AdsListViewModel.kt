@@ -24,7 +24,7 @@ class AdsListViewModel(
     private val accStorage: AccountStorage
 ): ViewModel() {
 
-    private val _adsListResource = SingleLiveEvent<Resource<List<CompactAd>>>()
+     val _adsListResource = SingleLiveEvent<Resource<List<CompactAd>>>()
     val adsListResource: LiveData<Resource<List<CompactAd>>> = _adsListResource
 
     fun loadAdsList(adsType: AdsType) {

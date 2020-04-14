@@ -67,6 +67,16 @@ class DateTimeFormatter {
         return "$beginTimeStr${separatorSpannable}$endTimeStr"
     }
 
+    fun generateTimeRangeFromTimestamps(beginTime: Long, endTime: Long): String {
+        val beginTimeStr = DateFormat.format("HH:mm", Calendar.getInstance().apply {
+            timeInMillis = beginTime
+        })
+        val endTimeStr = DateFormat.format("HH:mm", Calendar.getInstance().apply {
+            timeInMillis = endTime
+        })
+        return "$beginTimeStr${separatorSpannable}$endTimeStr"
+    }
+
     fun generateDateTimeFromTimestamp(time: Long, isTimeEnabled: Boolean): String {
         val date = Date().apply {
             this.time = time

@@ -58,5 +58,9 @@
     <string name="short_desc_hint">Краткое описание (необязательно)</string>
     <string name="only_date">Только дата</string>
     <string name="not_selected">Не выбрано</string>
-    <string name="select_date_range">Выберите дату начала и конца</string>
+    <string name="select_date_range">Выберите даты</string>
+    <string name="begin_time">Начало</string>
+    <string name="end_time">Конец</string>
+    <string name="done">Готово</string>
+    <string name="next">Далее</string>
 </resources>
