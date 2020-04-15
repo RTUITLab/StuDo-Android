@@ -33,15 +33,15 @@ class CreateEditAdFragment: Fragment() {
 
     private val viewModel: CreateEditAdViewModel by viewModel()
 
-    var editType: EditType = CreateAd
+    private var createEditAd: CreateEditAd = CreateAd
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        (arguments?.getSerializable(EditType::class.java.simpleName) as? EditType)?.let {
-            editType = it
+        (arguments?.getSerializable(CreateEditAd::class.java.simpleName) as? CreateEditAd)?.let {
+            createEditAd = it
         }
         val binding = DataBindingUtil.inflate<FragmentCreateEditAdBinding>(
             inflater,
@@ -56,7 +56,7 @@ class CreateEditAdFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        when(editType) {
+        when(createEditAd) {
             CreateAd -> {
                 collapsingToolbar.title = getString(R.string.create_ad)
                 doneBtn.setOnClickListener { viewModel.createAd() }
@@ -65,7 +65,7 @@ class CreateEditAdFragment: Fragment() {
                 collapsingToolbar.title = getString(R.string.edit_ad)
                 doneBtn.text = getString(R.string.save)
                 doneBtn.setOnClickListener { viewModel.editAd() }
-                viewModel.fillAdData((editType as EditAd).ad)
+                viewModel.fillAdData((createEditAd as EditAd).ad)
                 if (!viewModel.isTimeEnabled) {
                     timeSwitch.isChecked = true
                 }
@@ -93,14 +93,14 @@ class CreateEditAdFragment: Fragment() {
                 Status.SUCCESS -> {
                     requireActivity().onBackPressed()
 
-                    if (editType == CreateAd) {
+                    if (createEditAd == CreateAd) {
                         mainActivity().updateStatuses.isNeedToUpdateAdsList = true
 
                         val bundle = Bundle().apply {
                             putString("adId", it.data!!.id)
                         }
                         findNavController().navigate(R.id.action_adsListFragment_to_adFragment, bundle)
-                    } else if (editType is EditAd) {
+                    } else if (createEditAd is EditAd) {
                         mainActivity().updateStatuses.isNeedToUpdateAd = true
                         mainActivity().updateStatuses.isNeedToUpdateAdsList = true
                     }

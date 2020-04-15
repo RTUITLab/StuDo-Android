@@ -65,4 +65,6 @@
     <string name="next">Далее</string>
     <string name="edit">Изменить</string>
     <string name="save">Сохранить</string>
+    <string name="create_resume">Создание резюме</string>
+    <string name="edit_resume">Редактирование резюме</string>
 </resources>

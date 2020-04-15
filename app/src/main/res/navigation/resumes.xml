@@ -10,5 +10,14 @@
         android:id="@+id/resumesListFragment"
         android:name="com.rtuitlab.studo.ui.general.resumes.ResumesListFragment"
         android:label="ResumesListFragment"
-        tools:layout="@layout/fragment_recycler_list"/>
+        tools:layout="@layout/fragment_recycler_list">
+        <action
+            android:id="@+id/action_resumesListFragment_to_createEditResumeFragment"
+            app:destination="@id/createEditResumeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createEditResumeFragment"
+        android:name="com.rtuitlab.studo.ui.general.resumes.CreateEditResumeFragment"
+        android:label="CreateEditResumeFragment"
+        tools:layout="@layout/fragment_create_edit_resume"/>
 </navigation>

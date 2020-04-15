@@ -54,8 +54,8 @@
     <string name="language">Language</string>
     <string name="russian">Russian</string>
     <string name="english">English</string>
-    <string name="create_ad">Create ad</string>
-    <string name="edit_ad">Edit ad</string>
+    <string name="create_ad">Creating ad</string>
+    <string name="edit_ad">Editing ad</string>
     <string name="title_hint"><font size="24">Title</font></string>
     <string name="short_desc_hint">Short description (optional)</string>
     <string name="desc">Description</string>
@@ -68,4 +68,6 @@
     <string name="next">Next</string>
     <string name="edit">Edit</string>
     <string name="save">Save</string>
+    <string name="create_resume">Creating resume</string>
+    <string name="edit_resume">Editing resume</string>
 </resources>

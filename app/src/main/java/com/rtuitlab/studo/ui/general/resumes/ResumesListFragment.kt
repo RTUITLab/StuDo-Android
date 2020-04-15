@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.adapters.ResumesRecyclerAdapter
@@ -59,8 +60,10 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
 
         initRecyclerView()
 
-        if (resumesListViewModel.resumesListResource.value?.status != Status.SUCCESS) {
+        if (resumesListViewModel.resumesListResource.value?.status != Status.SUCCESS ||
+            mainActivity().updateStatuses.isNeedToUpdateResumesList) {
             loadResumes()
+            mainActivity().updateStatuses.isNeedToUpdateResumesList = false
         } else {
             recyclerAdapter?.data = resumesListViewModel.resumesListResource.value!!.data!!
         }
@@ -76,6 +79,10 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
     private fun setListeners() {
         swipeContainer.setOnRefreshListener {
             loadResumes()
+        }
+
+        createBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_resumesListFragment_to_createEditResumeFragment)
         }
     }
 
