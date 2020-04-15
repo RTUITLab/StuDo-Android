@@ -78,8 +78,4 @@ class AdsListViewModel(
             }
         }
     }
-
-    fun isOwnAd(creatorId: String): Boolean {
-        return creatorId == accStorage.user.id
-    }
 }

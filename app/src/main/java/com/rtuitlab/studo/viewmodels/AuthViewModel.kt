@@ -25,22 +25,22 @@ class AuthViewModel(
 ) : AndroidViewModel(app) {
 
     var name = ""
-    var nameError = ObservableField("")
+    val nameError = ObservableField("")
 
     var surname = ""
-    var surnameError = ObservableField("")
+    val surnameError = ObservableField("")
 
     var email = "almostroll@yandex.ru"
-    var emailError = ObservableField("")
+    val emailError = ObservableField("")
 
     var cardNumber = ""
-    var cardNumberError = ObservableField("")
+    val cardNumberError = ObservableField("")
 
     var password = "123456"
-    var passwordError = ObservableField("")
+    val passwordError = ObservableField("")
 
     var confirmPassword = ""
-    var confirmPasswordError = ObservableField("")
+    val confirmPasswordError = ObservableField("")
 
     private val _loginResource = SingleLiveEvent<Resource<UserLoginResponse>>()
     val loginResource: LiveData<Resource<UserLoginResponse>> = _loginResource

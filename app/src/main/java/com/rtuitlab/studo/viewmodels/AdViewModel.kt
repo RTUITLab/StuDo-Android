@@ -1,10 +1,11 @@
 package com.rtuitlab.studo.viewmodels
 
+import android.app.Application
 import android.text.SpannableStringBuilder
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rtuitlab.studo.DateTimeFormatter
 import com.rtuitlab.studo.SingleLiveEvent
@@ -13,15 +14,18 @@ import com.rtuitlab.studo.server.Resource
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.ads.AdsRepository
 import com.rtuitlab.studo.server.general.ads.models.Ad
+import com.yydcdut.markdown.MarkdownProcessor
+import com.yydcdut.markdown.syntax.text.TextFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class AdViewModel(
+    app: Application,
     private val adsRepo: AdsRepository,
     private val accStorage: AccountStorage,
     private val dateTimeFormatter: DateTimeFormatter
-): ViewModel() {
+): AndroidViewModel(app) {
 
     var adId = ""
 
@@ -29,9 +33,10 @@ class AdViewModel(
     val currentAdResource: LiveData<Resource<Ad>> = _currentAdResource
 
     val currentAd = ObservableField<Ad>()
-    var creatorFullName = ObservableField("")
-    var creatorAvatarText = ObservableField("")
-    var adDateTimeText = ObservableField(SpannableStringBuilder(""))
+    val spannedDescription = ObservableField<CharSequence>("")
+    val creatorFullName = ObservableField("")
+    val creatorAvatarText = ObservableField("")
+    val adDateTimeText = ObservableField(SpannableStringBuilder(""))
 
     val isOwnAd = ObservableBoolean(false)
 
@@ -53,6 +58,12 @@ class AdViewModel(
 
     private fun fillAdData(ad: Ad) {
         currentAd.set(ad)
+
+        viewModelScope.launch(Dispatchers.Default) {
+            val markdownProcessor = MarkdownProcessor(getApplication())
+            markdownProcessor.factory(TextFactory.create())
+            spannedDescription.set(markdownProcessor.parse(ad.description))
+        }
 
         ad.user?.let{ // User`s ad
             creatorFullName.set("${it.name} ${it.surname}")

@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.rtuitlab.studo.R
+import com.rtuitlab.studo.custom_views.AvatarView
 import com.rtuitlab.studo.diff_util.ResumesListDiffUtilCallback
 import com.rtuitlab.studo.server.general.resumes.models.CompactResume
 import kotlinx.android.synthetic.main.view_recycler_resume.view.*
@@ -49,10 +50,13 @@ class ResumesRecyclerAdapter: RecyclerView.Adapter<ResumesRecyclerAdapter.Resume
         RecyclerView.ViewHolder(view) {
         private val name: TextView = view.title
         private val description: TextView = view.desc
+        private val avatarView: AvatarView = view.avatarView
 
         fun bind(compactResume: CompactResume) {
             this.name.text = compactResume.name
             this.description.text = compactResume.description
+            val userName = compactResume.userName.split(" ")
+            this.avatarView.text = "${userName[0].first()}${userName[1].first()}"
         }
 
         init {
