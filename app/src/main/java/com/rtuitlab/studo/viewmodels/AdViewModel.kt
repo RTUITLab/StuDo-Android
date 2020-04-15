@@ -29,9 +29,6 @@ class AdViewModel(
 
     var adId = ""
 
-    private val _currentAdResource = SingleLiveEvent<Resource<Ad>>()
-    val currentAdResource: LiveData<Resource<Ad>> = _currentAdResource
-
     val currentAd = ObservableField<Ad>()
     val spannedDescription = ObservableField<CharSequence>("")
     val creatorFullName = ObservableField("")
@@ -39,6 +36,9 @@ class AdViewModel(
     val adDateTimeText = ObservableField(SpannableStringBuilder(""))
 
     val isOwnAd = ObservableBoolean(false)
+
+    private val _currentAdResource = SingleLiveEvent<Resource<Ad>>()
+    val currentAdResource: LiveData<Resource<Ad>> = _currentAdResource
 
     fun loadAd(adId: String = this.adId) {
         viewModelScope.launch {
@@ -69,11 +69,7 @@ class AdViewModel(
             creatorFullName.set("${it.name} ${it.surname}")
             creatorAvatarText.set("${it.name.first()}${it.surname.first()}")
 
-            if (ad.userId == accStorage.user.id) {
-                isOwnAd.set(true)
-            } else {
-                isOwnAd.set(false)
-            }
+            isOwnAd.set(ad.userId == accStorage.user.id)
         } ?:run {
             ad.organization?.let { // Organization`s ad
                 creatorFullName.set(it.name)

@@ -8,7 +8,7 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="com.rtuitlab.studo.viewmodels.AdViewModel" />
+            type="com.rtuitlab.studo.viewmodels.ResumeViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -45,7 +45,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="16dp"
-                            android:text="@{viewModel.currentAd.component2()}"
+                            android:text="@{viewModel.currentResume.component2()}"
                             style="@style/TextAppearance.MaterialComponents.Headline6"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -57,32 +57,11 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="@{viewModel.spannedDescription}"
+                            android:text="@{viewModel.currentResume.component3()}"
                             app:layout_constraintEnd_toEndOf="@+id/titleTV"
                             app:layout_constraintStart_toStartOf="@+id/titleTV"
                             app:layout_constraintTop_toBottomOf="@+id/titleTV"
                             tools:text="Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description " />
-
-                        <ImageView
-                            android:id="@+id/dateIV"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:contentDescription="@string/date"
-                            android:src="@drawable/ic_date"
-                            android:tint="@android:color/darker_gray"
-                            app:layout_constraintStart_toStartOf="@+id/descTV"
-                            app:layout_constraintTop_toBottomOf="@+id/descTV" />
-
-                        <TextView
-                            android:id="@+id/dateTV"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{viewModel.adDateTimeText}"
-                            app:layout_constraintBottom_toBottomOf="@+id/dateIV"
-                            app:layout_constraintEnd_toEndOf="@+id/descTV"
-                            app:layout_constraintTop_toTopOf="@+id/dateIV"
-                            tools:text="15.04.2020, 00:00 → 16.05.2020, 00:00" />
 
                         <View
                             android:id="@+id/separator"
@@ -92,7 +71,7 @@
                             android:background="?android:attr/colorButtonNormal"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/dateIV" />
+                            app:layout_constraintTop_toBottomOf="@+id/descTV" />
 
                         <LinearLayout
                             android:id="@+id/profilePanel"
@@ -129,35 +108,6 @@
 
                         </LinearLayout>
 
-                        <ImageView
-                            android:id="@+id/commentBtn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:padding="8dp"
-                            android:background="?android:attr/selectableItemBackgroundBorderless"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:contentDescription="@string/comments"
-                            android:src="@drawable/ic_comment"
-                            app:layout_constraintEnd_toStartOf="@+id/favouriteBtn"
-                            app:layout_constraintTop_toTopOf="@+id/profilePanel" />
-
-
-                        <ImageView
-                            android:id="@+id/favouriteBtn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:background="?android:attr/selectableItemBackgroundBorderless"
-                            android:clickable="true"
-                            android:contentDescription="@string/favourites"
-                            android:focusable="true"
-                            android:padding="8dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/commentBtn"
-                            tools:src="@drawable/ic_star_border" />
-
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </com.google.android.material.card.MaterialCardView>
@@ -176,7 +126,7 @@
             app:icon="@drawable/ic_edit_white"
             app:layout_anchor="@id/swipeContainer"
             app:layout_anchorGravity="bottom|end"
-            app:isShow="@{viewModel.isOwnAd()}"
+            app:isShow="@{viewModel.isOwnResume()}"
             tools:visibility="visible"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

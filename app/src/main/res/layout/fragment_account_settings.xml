@@ -163,7 +163,7 @@
             app:layout_anchorGravity="bottom|end"
             android:src="@drawable/ic_done"
             android:onClick="@{() -> viewModel.saveUserDataChanges()}"
-            app:isShow="@{viewModel.isUserDataChanged}"/>
+            app:isShow="@{viewModel.isUserDataChanged()}"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

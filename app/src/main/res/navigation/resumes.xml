@@ -14,10 +14,22 @@
         <action
             android:id="@+id/action_resumesListFragment_to_createEditResumeFragment"
             app:destination="@id/createEditResumeFragment" />
+        <action
+            android:id="@+id/action_resumesListFragment_to_resumeFragment"
+            app:destination="@id/resumeFragment" />
     </fragment>
     <fragment
         android:id="@+id/createEditResumeFragment"
         android:name="com.rtuitlab.studo.ui.general.resumes.CreateEditResumeFragment"
         android:label="CreateEditResumeFragment"
         tools:layout="@layout/fragment_create_edit_resume"/>
+    <fragment
+        android:id="@+id/resumeFragment"
+        android:name="com.rtuitlab.studo.ui.general.resumes.ResumeFragment"
+        android:label="ResumeFragment"
+        tools:layout="@layout/fragment_resume">
+        <action
+            android:id="@+id/action_resumeFragment_to_createEditResumeFragment"
+            app:destination="@id/createEditResumeFragment" />
+    </fragment>
 </navigation>

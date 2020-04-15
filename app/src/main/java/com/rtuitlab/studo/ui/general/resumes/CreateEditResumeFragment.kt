@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentCreateEditResumeBinding
 import com.rtuitlab.studo.extensions.mainActivity
@@ -72,11 +73,11 @@ class CreateEditResumeFragment: Fragment() {
 
                     if (createEditResume == CreateResume) {
                         mainActivity().updateStatuses.isNeedToUpdateResumesList = true
-//
-//                        val bundle = Bundle().apply {
-//                            putString("resumeId", it.data!!.id)
-//                        }
-//                        findNavController().navigate(R.id.action_adsListFragment_to_adFragment, bundle)
+
+                        val bundle = Bundle().apply {
+                            putString("resumeId", it.data!!.id)
+                        }
+                        findNavController().navigate(R.id.action_resumesListFragment_to_resumeFragment, bundle)
                     } else if (createEditResume is EditResume) {
                         mainActivity().updateStatuses.isNeedToUpdateResume = true
                         mainActivity().updateStatuses.isNeedToUpdateResumesList = true

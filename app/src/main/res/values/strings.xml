@@ -70,4 +70,5 @@
     <string name="save">Save</string>
     <string name="create_resume">Creating resume</string>
     <string name="edit_resume">Editing resume</string>
+    <string name="resume">Resume</string>
 </resources>

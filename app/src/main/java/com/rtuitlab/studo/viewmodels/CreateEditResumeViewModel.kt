@@ -1,6 +1,5 @@
 package com.rtuitlab.studo.viewmodels
 
-import android.util.Log
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
@@ -33,7 +32,6 @@ class CreateEditResumeViewModel(
     fun checkData() {
         title.set(title.get()?.trimStart())
         desc.set(desc.get()?.trimStart())
-        Log.wtf("hey", title.get() + desc.get())
 
         isValid.set(!title.get().isNullOrBlank() && !desc.get().isNullOrBlank())
     }
@@ -69,5 +67,6 @@ class CreateEditResumeViewModel(
         resumeId = resume.id
         title.set(resume.name)
         desc.set(resume.description)
+        checkData()
     }
 }

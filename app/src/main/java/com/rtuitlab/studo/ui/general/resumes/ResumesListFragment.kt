@@ -114,6 +114,9 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
     }
 
     override fun onResumeClick(compactResume: CompactResume) {
-        Snackbar.make(requireView(), compactResume.name, Snackbar.LENGTH_SHORT).show()
+        val bundle = Bundle().apply {
+            putString("resumeId", compactResume.id)
+        }
+        findNavController().navigate(R.id.action_resumesListFragment_to_resumeFragment, bundle)
     }
 }
