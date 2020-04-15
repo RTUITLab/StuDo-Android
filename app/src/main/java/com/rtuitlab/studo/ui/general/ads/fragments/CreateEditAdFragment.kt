@@ -1,4 +1,4 @@
-package com.rtuitlab.studo.ui.general.ads
+package com.rtuitlab.studo.ui.general.ads.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater

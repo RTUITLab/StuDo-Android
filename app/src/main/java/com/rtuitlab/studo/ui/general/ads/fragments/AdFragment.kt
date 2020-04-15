@@ -1,4 +1,4 @@
-package com.rtuitlab.studo.ui.general.ads
+package com.rtuitlab.studo.ui.general.ads.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -22,12 +22,11 @@ import com.rtuitlab.studo.viewmodels.EditAd
 import kotlinx.android.synthetic.main.fragment_ad.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.view.*
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AdFragment: Fragment() {
 
-    private val adsListViewModel: AdsListViewModel by sharedViewModel()
+    private val adsListViewModel: AdsListViewModel by viewModel()
     private val adViewModel: AdViewModel by viewModel()
 
     override fun onCreateView(
@@ -72,7 +71,12 @@ class AdFragment: Fragment() {
         }
 
         commentBtn.setOnClickListener {
-            Snackbar.make(requireView(), "Comments", Snackbar.LENGTH_SHORT).show()
+            adViewModel.currentAd.get()?.let {
+                val bundle = Bundle().apply {
+                    putSerializable("ad", it)
+                }
+                findNavController().navigate(R.id.action_adFragment_to_commentsBottomDialog, bundle)
+            }
         }
 
         swipeContainer.setOnRefreshListener {

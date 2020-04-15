@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/adsListFragment"
-        android:name="com.rtuitlab.studo.ui.general.ads.AdsListFragment"
+        android:name="com.rtuitlab.studo.ui.general.ads.fragments.AdsListFragment"
         android:label="AdsListFragment"
         tools:layout="@layout/fragment_recycler_list" >
         <action
@@ -20,16 +20,24 @@
     </fragment>
     <fragment
         android:id="@+id/adFragment"
-        android:name="com.rtuitlab.studo.ui.general.ads.AdFragment"
+        android:name="com.rtuitlab.studo.ui.general.ads.fragments.AdFragment"
         android:label="AdFragment"
         tools:layout="@layout/fragment_ad">
         <action
             android:id="@+id/action_adFragment_to_createEditAdFragment"
             app:destination="@id/createEditAdFragment" />
+        <action
+            android:id="@+id/action_adFragment_to_commentsBottomDialog"
+            app:destination="@id/commentsBottomDialog" />
     </fragment>
     <fragment
         android:id="@+id/createEditAdFragment"
-        android:name="com.rtuitlab.studo.ui.general.ads.CreateEditAdFragment"
+        android:name="com.rtuitlab.studo.ui.general.ads.fragments.CreateEditAdFragment"
         android:label="CreateEditAdFragment"
         tools:layout="@layout/fragment_create_edit_ad"/>
+    <dialog
+        android:id="@+id/commentsBottomDialog"
+        android:name="com.rtuitlab.studo.ui.general.ads.dialogs.CommentsBottomDialog"
+        android:label="CommentsBottomDialog"
+        tools:layout="@layout/fragment_comments"/>
 </navigation>

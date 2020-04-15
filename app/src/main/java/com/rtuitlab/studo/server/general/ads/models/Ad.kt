@@ -3,6 +3,7 @@ package com.rtuitlab.studo.server.general.ads.models
 import com.google.gson.annotations.SerializedName
 import com.rtuitlab.studo.server.general.users.models.Organization
 import com.rtuitlab.studo.server.general.users.models.User
+import java.io.Serializable
 
 data class Ad (
     val id: String,
@@ -17,4 +18,4 @@ data class Ad (
     val organization: Organization?,
     @SerializedName("isFavorite") var isFavourite: Boolean,
     val comments: List<Comment>
-)
+) : Serializable

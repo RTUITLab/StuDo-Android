@@ -27,7 +27,10 @@ class DateTimeFormatter {
     private val clientDF = SimpleDateFormat("HH:mm dd.MM.yyyy")
 
     @SuppressLint("SimpleDateFormat")
-    private val clientDFWithoutTime = SimpleDateFormat("dd.MM.yyyy")
+    private val clientDFOnlyDate = SimpleDateFormat("dd.MM.yyyy")
+
+    @SuppressLint("SimpleDateFormat")
+    private val clientDFOnlyTime = SimpleDateFormat("HH:mm")
 
     private val separatorSpannable = SpannableString(" — ")
 
@@ -36,7 +39,7 @@ class DateTimeFormatter {
         var startIndex = 5
 
         if (beginTime.contains("00:00:00.000") && endTime.contains("00:00:00.000")) { // If without time
-            clientDF = clientDFWithoutTime
+            clientDF = clientDFOnlyDate
             startIndex = 0
         }
 
@@ -49,12 +52,17 @@ class DateTimeFormatter {
         return SpannableStringBuilder().append(beginTimeSpannable).append(separatorSpannable).append(endTimeSpannable)
     }
 
-    fun generateDateFromDateTimeForComment(time: String): SpannableStringBuilder {
-        val result = SpannableStringBuilder()
+    fun generateDateFromDateTimeForComment(time: String): String {
+        val commentDate = serverDF.parse(time)!!
+        val currentDate = Calendar.getInstance().time
+        val diff = currentDate.time - commentDate.time
 
-
-
-        return result
+        val dayTimestamp = 1000 * 60 * 60 * 24
+        return if (diff > dayTimestamp) { // Difference more than day
+            clientDFOnlyDate.format(commentDate)
+        } else { // Difference lower than day
+            clientDFOnlyTime.format(commentDate)
+        }
     }
 
     fun generateDateRangeFromTimestamps(beginTime: Long, endTime: Long): String {

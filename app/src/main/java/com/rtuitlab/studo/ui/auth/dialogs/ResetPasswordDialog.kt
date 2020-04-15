@@ -14,6 +14,7 @@ import com.rtuitlab.studo.viewmodels.AuthViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class ResetPasswordDialog: DialogFragment() {
+
     private val viewModel: AuthViewModel by sharedViewModel()
 
     private lateinit var positiveBtn: Button
