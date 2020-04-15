@@ -1,7 +1,6 @@
 package com.rtuitlab.studo.ui.general.ads
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,8 +57,6 @@ class AdFragment: Fragment() {
         } else {
             setFavouriteButtonDrawable(adViewModel.currentAd.get()!!.isFavourite)
         }
-
-        Log.wtf("hey", adViewModel.toString())
 
         setListeners()
         setObservers()

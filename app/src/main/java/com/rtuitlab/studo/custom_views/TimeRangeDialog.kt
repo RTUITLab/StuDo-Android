@@ -24,7 +24,7 @@ class TimeRangeDialog: DialogFragment() {
     private var endHour = 16
     private var endMinute = 0
 
-    private var onDoneListener: ((Int, Int, Int, Int) -> Unit)? = null
+    var onTimeSetListener: ((Int, Int, Int, Int) -> Unit)? = null
 
     companion object {
         fun getInstance(
@@ -91,9 +91,8 @@ class TimeRangeDialog: DialogFragment() {
             override fun onTabReselected(tab: TabLayout.Tab?) {}
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                when(tab?.position) {
-                    0 -> { toggleButton(0) }
-                    1 -> { toggleButton(1) }
+                tab?.position?.let {
+                    checkButton(it)
                 }
             }
         })
@@ -104,14 +103,14 @@ class TimeRangeDialog: DialogFragment() {
                     tabs.getTabAt(1)?.select()
                 }
                 doneTag -> {
-                    onDoneListener?.invoke(beginHour, beginMinute, endHour, endMinute)
+                    onTimeSetListener?.invoke(beginHour, beginMinute, endHour, endMinute)
                     dismiss()
                 }
             }
         }
     }
 
-    private fun toggleButton(state: Int) {
+    private fun checkButton(state: Int) {
         when(state) {
             0 -> {
                 doneButton.text = getString(R.string.next)
@@ -125,12 +124,6 @@ class TimeRangeDialog: DialogFragment() {
                         (beginHour == endHour && beginMinute < endMinute)
             }
         }
-    }
-
-    fun setOnTimeSetListener(
-        onTimeSetListener: (beginHour: Int, beginMinute: Int, endHour: Int, endMinute: Int) -> Unit
-    ) {
-        onDoneListener = onTimeSetListener
     }
 
 
@@ -161,7 +154,6 @@ class TimeRangeDialog: DialogFragment() {
                         timePicker.setOnTimeChangedListener { _, hourOfDay, minute ->
                             beginHour = hourOfDay
                             beginMinute = minute
-                            toggleButton(0)
                         }
                     }
                     1 -> {
@@ -170,11 +162,12 @@ class TimeRangeDialog: DialogFragment() {
                         timePicker.setOnTimeChangedListener { _, hourOfDay, minute ->
                             endHour = hourOfDay
                             endMinute = minute
-                            toggleButton(1)
+                            doneButton.isEnabled = beginHour < endHour ||
+                                    (beginHour == endHour && beginMinute < endMinute)
                         }
                     }
                 }
-                toggleButton(position)
+                checkButton(position)
             }
         }
     }

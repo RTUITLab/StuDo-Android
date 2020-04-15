@@ -164,7 +164,7 @@ class CreateEditAdFragment: Fragment() {
             timeRange.second.first,
             timeRange.second.second
         )
-        dialog.setOnTimeSetListener { beginHour, beginMinute, endHour, endMinute ->
+        dialog.onTimeSetListener = { beginHour, beginMinute, endHour, endMinute ->
             viewModel.setTimeRange(beginHour, beginMinute, endHour, endMinute)
         }
         dialog.show(childFragmentManager, null)
