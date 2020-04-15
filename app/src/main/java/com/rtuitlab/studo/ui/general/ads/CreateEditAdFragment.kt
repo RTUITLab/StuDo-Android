@@ -14,9 +14,9 @@ import com.rtuitlab.studo.DateRangeValidator
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.custom_views.TimeRangeDialog
 import com.rtuitlab.studo.databinding.FragmentCreateEditAdBinding
+import com.rtuitlab.studo.extensions.mainActivity
 import com.rtuitlab.studo.server.Status
-import com.rtuitlab.studo.ui.general.MainActivity
-import com.rtuitlab.studo.viewmodels.CreateEditAdViewModel
+import com.rtuitlab.studo.viewmodels.*
 import kotlinx.android.synthetic.main.fragment_create_edit_ad.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.view.*
@@ -25,13 +25,18 @@ import java.util.*
 
 class CreateEditAdFragment: Fragment() {
 
-    val viewModel: CreateEditAdViewModel by viewModel()
+    private val viewModel: CreateEditAdViewModel by viewModel()
+
+    var editType: EditType = CreateAd
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        (arguments?.getSerializable(EditType::class.java.simpleName) as? EditType)?.let {
+            editType = it
+        }
         val binding = DataBindingUtil.inflate<FragmentCreateEditAdBinding>(
             inflater,
             R.layout.fragment_create_edit_ad,
@@ -45,8 +50,22 @@ class CreateEditAdFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        collapsingToolbar.title = getString(R.string.create_ad)
-        (requireActivity() as MainActivity).enableNavigateButton(collapsingToolbar.toolbar)
+        when(editType) {
+            CreateAd -> {
+                collapsingToolbar.title = getString(R.string.create_ad)
+                doneBtn.setOnClickListener { viewModel.createAd() }
+            }
+            is EditAd -> {
+                collapsingToolbar.title = getString(R.string.edit_ad)
+                doneBtn.text = getString(R.string.save)
+                doneBtn.setOnClickListener { viewModel.editAd() }
+                viewModel.fillAdData((editType as EditAd).ad)
+                if (!viewModel.isTimeEnabled) {
+                    timeSwitch.isChecked = true
+                }
+            }
+        }
+        mainActivity().enableNavigateButton(collapsingToolbar.toolbar)
 
         checkSwitch(timeSwitch.isChecked)
 
@@ -66,10 +85,17 @@ class CreateEditAdFragment: Fragment() {
                 Status.SUCCESS -> {
                     requireActivity().onBackPressed()
 
-                    val bundle = Bundle().apply {
-                        putString("adId", it.data!!.id)
+                    if (editType == CreateAd) {
+                        mainActivity().updateStatuses.isNeedToUpdateAdsList = true
+
+                        val bundle = Bundle().apply {
+                            putString("adId", it.data!!.id)
+                        }
+                        findNavController().navigate(R.id.action_adsListFragment_to_adFragment, bundle)
+                    } else if (editType is EditAd) {
+                        mainActivity().updateStatuses.isNeedToUpdateAd = true
+                        mainActivity().updateStatuses.isNeedToUpdateAdsList = true
                     }
-                    findNavController().navigate(R.id.action_adsListFragment_to_adFragment, bundle)
                 }
                 Status.ERROR -> {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
@@ -81,7 +107,7 @@ class CreateEditAdFragment: Fragment() {
 
     private fun checkSwitch(isChecked: Boolean) {
         timeTV.isEnabled = !isChecked
-        viewModel.isTimeEnabled.set(!isChecked)
+        viewModel.isTimeEnabled = !isChecked
         if (isChecked) {
             timeTV.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_time_disabled, 0, 0, 0)
         } else {

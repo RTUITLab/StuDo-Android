@@ -87,4 +87,8 @@ class DateTimeFormatter {
             serverDFWithoutTime.format(date)
         }
     }
+
+    fun generateTimestampFromDateTime(dateTime: String): Long {
+        return serverDF.parse(dateTime)!!.time
+    }
 }

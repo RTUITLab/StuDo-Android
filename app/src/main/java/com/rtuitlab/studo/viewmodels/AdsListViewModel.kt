@@ -24,7 +24,7 @@ class AdsListViewModel(
     private val accStorage: AccountStorage
 ): ViewModel() {
 
-     val _adsListResource = SingleLiveEvent<Resource<List<CompactAd>>>()
+    private val _adsListResource = SingleLiveEvent<Resource<List<CompactAd>>>()
     val adsListResource: LiveData<Resource<List<CompactAd>>> = _adsListResource
 
     fun loadAdsList(adsType: AdsType) {
@@ -77,5 +77,9 @@ class AdsListViewModel(
                 }
             }
         }
+    }
+
+    fun isOwnAd(creatorId: String): Boolean {
+        return creatorId == accStorage.user.id
     }
 }

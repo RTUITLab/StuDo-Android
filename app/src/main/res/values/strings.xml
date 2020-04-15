@@ -66,4 +66,6 @@
     <string name="end_time">"End "</string>
     <string name="done">Done</string>
     <string name="next">Next</string>
+    <string name="edit">Edit</string>
+    <string name="save">Save</string>
 </resources>

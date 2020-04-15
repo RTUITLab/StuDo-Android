@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="androidx.core.content.ContextCompat"/>
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.rtuitlab.studo.viewmodels.AdViewModel" />
@@ -167,6 +167,19 @@
             </androidx.core.widget.NestedScrollView>
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/editBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@string/edit"
+            android:contentDescription="@string/edit"
+            app:icon="@drawable/ic_edit_white"
+            app:layout_anchor="@id/swipeContainer"
+            app:layout_anchorGravity="bottom|end"
+            android:visibility="@{viewModel.isOwnAd() ? View.VISIBLE : View.GONE}"
+            tools:visibility="visible"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

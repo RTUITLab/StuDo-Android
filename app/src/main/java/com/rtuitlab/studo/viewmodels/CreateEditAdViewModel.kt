@@ -16,13 +16,20 @@ import com.rtuitlab.studo.server.general.ads.models.Ad
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.Serializable
 import java.util.*
+
+sealed class EditType : Serializable
+object CreateAd: EditType()
+data class EditAd(val ad: Ad): EditType()
 
 class CreateEditAdViewModel(
     app: Application,
     private val dateTimeFormatter: DateTimeFormatter,
     private val adsRepo: AdsRepository
 ): AndroidViewModel(app) {
+
+    private var adId = ""
 
     val title = ObservableField("")
     val shortDesc = ObservableField("")
@@ -31,12 +38,10 @@ class CreateEditAdViewModel(
     val dateText = ObservableField(getApplication<App>().getString(R.string.not_selected))
     val timeText = ObservableField(getApplication<App>().getString(R.string.not_selected))
 
-    var beginDate: Long = 0
-        private set
-    var endDate: Long = 0
-        private set
+    private var beginDate: Long = 0
+    private var endDate: Long = 0
 
-    val isTimeEnabled = ObservableBoolean(false)
+    var isTimeEnabled = false
 
     val isValid = ObservableBoolean(false)
 
@@ -50,8 +55,8 @@ class CreateEditAdViewModel(
                     !shortDesc.get().isNullOrBlank() &&
                     !desc.get().isNullOrBlank() &&
                     dateText.get() != getApplication<App>().getString(R.string.not_selected) && (
-                    !isTimeEnabled.get() ||
-                    timeText.get() != getApplication<App>().getString(R.string.not_selected) && isTimeEnabled.get()
+                    !isTimeEnabled ||
+                    timeText.get() != getApplication<App>().getString(R.string.not_selected) && isTimeEnabled
                     )
         )
     }
@@ -66,12 +71,45 @@ class CreateEditAdViewModel(
             val response = withContext(Dispatchers.IO) {
                 adsRepo.createAd(
                     title.get()!!, desc.get()!!, shortDesc.get()!!,
-                    dateTimeFormatter.generateDateTimeFromTimestamp(beginDate, isTimeEnabled.get()),
-                    dateTimeFormatter.generateDateTimeFromTimestamp(endDate, isTimeEnabled.get())
+                    dateTimeFormatter.generateDateTimeFromTimestamp(beginDate, isTimeEnabled),
+                    dateTimeFormatter.generateDateTimeFromTimestamp(endDate, isTimeEnabled)
                 )
             }
 
             _adResource.value = response
+        }
+    }
+
+    fun editAd() {
+        viewModelScope.launch {
+            _adResource.value = Resource.loading(null)
+
+            val response = withContext(Dispatchers.IO) {
+                adsRepo.editAd(
+                    adId, title.get()!!, desc.get()!!, shortDesc.get()!!,
+                    dateTimeFormatter.generateDateTimeFromTimestamp(beginDate, isTimeEnabled),
+                    dateTimeFormatter.generateDateTimeFromTimestamp(endDate, isTimeEnabled)
+                )
+            }
+
+            _adResource.value = response
+        }
+    }
+
+    fun fillAdData(ad: Ad) {
+        adId = ad.id
+        title.set(ad.name)
+        shortDesc.set(ad.shortDescription)
+        desc.set(ad.description)
+
+        beginDate = dateTimeFormatter.generateTimestampFromDateTime(ad.beginTime)
+        endDate = dateTimeFormatter.generateTimestampFromDateTime(ad.endTime)
+
+        dateText.set(dateTimeFormatter.generateDateRangeFromTimestamps(beginDate, endDate))
+
+        if (!ad.beginTime.contains("00:00:00.000")) {
+            timeText.set(dateTimeFormatter.generateTimeRangeFromTimestamps(beginDate, endDate))
+            isTimeEnabled = true
         }
     }
 

@@ -1,6 +1,7 @@
 package com.rtuitlab.studo.ui.general.ads
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,14 +9,17 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentAdBinding
+import com.rtuitlab.studo.extensions.mainActivity
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.ads.models.AdIdWithIsFavourite
-import com.rtuitlab.studo.ui.general.MainActivity
 import com.rtuitlab.studo.viewmodels.AdViewModel
 import com.rtuitlab.studo.viewmodels.AdsListViewModel
+import com.rtuitlab.studo.viewmodels.EditAd
+import com.rtuitlab.studo.viewmodels.EditType
 import kotlinx.android.synthetic.main.fragment_ad.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.view.*
@@ -44,14 +48,18 @@ class AdFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         collapsingToolbar.title = getString(R.string.ad)
-        (requireActivity() as MainActivity).enableNavigateButton(collapsingToolbar.toolbar)
+        mainActivity().enableNavigateButton(collapsingToolbar.toolbar)
 
-        if (adViewModel.currentAdResource.value?.status != Status.SUCCESS) {
+        if (adViewModel.currentAdResource.value?.status != Status.SUCCESS ||
+            mainActivity().updateStatuses.isNeedToUpdateAd) {
             adViewModel.adId = requireArguments().getString("adId")!!
             loadAd()
+            mainActivity().updateStatuses.isNeedToUpdateAd = false
         } else {
             setFavouriteButtonDrawable(adViewModel.currentAd.get()!!.isFavourite)
         }
+
+        Log.wtf("hey", adViewModel.toString())
 
         setListeners()
         setObservers()
@@ -67,11 +75,18 @@ class AdFragment: Fragment() {
         }
 
         commentBtn.setOnClickListener {
-            requireActivity().onBackPressed()
+            Snackbar.make(requireView(), "Comments", Snackbar.LENGTH_SHORT).show()
         }
 
         swipeContainer.setOnRefreshListener {
             loadAd()
+        }
+
+        editBtn.setOnClickListener {
+            val bundle = Bundle().apply {
+                putSerializable(EditType::class.java.simpleName, EditAd(adViewModel.currentAd.get()!!))
+            }
+            findNavController().navigate(R.id.action_adFragment_to_createEditAdFragment, bundle)
         }
 
         favouriteBtn.setOnClickListener {

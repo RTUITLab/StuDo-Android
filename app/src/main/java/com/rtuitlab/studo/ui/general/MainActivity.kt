@@ -8,6 +8,7 @@ import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.rtuitlab.studo.R
@@ -18,13 +19,20 @@ import com.rtuitlab.studo.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.io.Serializable
 import java.util.*
-
 
 class MainActivity : AppCompatActivity() {
 
 	private val viewModel: MainViewModel by viewModel()
 	private val settingsPref: SettingsPreferences by inject()
+
+	var updateStatuses = UpdateStatuses()
+
+	data class UpdateStatuses(
+		var isNeedToUpdateAd: Boolean = false,
+		var isNeedToUpdateAdsList: Boolean = false
+	) : Serializable
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		viewModel.checkTheme()
@@ -43,7 +51,13 @@ class MainActivity : AppCompatActivity() {
 
 	override fun onRestoreInstanceState(savedInstanceState: Bundle) {
 		super.onRestoreInstanceState(savedInstanceState)
+		updateStatuses = savedInstanceState.getSerializable(UpdateStatuses::class.java.simpleName) as UpdateStatuses
 		setupBottomNavigationBar()
+	}
+
+	override fun onSaveInstanceState(outState: Bundle) {
+		outState.putSerializable(UpdateStatuses::class.java.simpleName, updateStatuses)
+		super.onSaveInstanceState(outState)
 	}
 
 	private fun setupBottomNavigationBar() {
@@ -64,7 +78,11 @@ class MainActivity : AppCompatActivity() {
 
 	fun enableNavigateButton(toolbar: Toolbar) {
 		toolbar.setNavigationIcon(R.drawable.ic_arrow)
-		toolbar.setNavigationOnClickListener { onBackPressed() }
+		toolbar.setNavigationOnClickListener {
+			onBackPressed()
+			val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+			imm?.hideSoftInputFromWindow(it.windowToken, 0)
+		}
 	}
 
 

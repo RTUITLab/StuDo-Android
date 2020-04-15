@@ -1,12 +1,14 @@
 package com.rtuitlab.studo.viewmodels
 
 import android.text.SpannableStringBuilder
+import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rtuitlab.studo.DateTimeFormatter
 import com.rtuitlab.studo.SingleLiveEvent
+import com.rtuitlab.studo.account.AccountStorage
 import com.rtuitlab.studo.server.Resource
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.ads.AdsRepository
@@ -17,6 +19,7 @@ import kotlinx.coroutines.withContext
 
 class AdViewModel(
     private val adsRepo: AdsRepository,
+    private val accStorage: AccountStorage,
     private val dateTimeFormatter: DateTimeFormatter
 ): ViewModel() {
 
@@ -29,6 +32,8 @@ class AdViewModel(
     var creatorFullName = ObservableField("")
     var creatorAvatarText = ObservableField("")
     var adDateTimeText = ObservableField(SpannableStringBuilder(""))
+
+    val isOwnAd = ObservableBoolean(false)
 
     fun loadAd(adId: String = this.adId) {
         viewModelScope.launch {
@@ -52,6 +57,12 @@ class AdViewModel(
         ad.user?.let{ // User`s ad
             creatorFullName.set("${it.name} ${it.surname}")
             creatorAvatarText.set("${it.name.first()}${it.surname.first()}")
+
+            if (ad.userId == accStorage.user.id) {
+                isOwnAd.set(true)
+            } else {
+                isOwnAd.set(false)
+            }
         } ?:run {
             ad.organization?.let { // Organization`s ad
                 creatorFullName.set(it.name)

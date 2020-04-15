@@ -1,7 +1,6 @@
 package com.rtuitlab.studo.ui.general.users.fragments
 
 import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +15,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialContainerTransform
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentAccountSettingsBinding
+import com.rtuitlab.studo.extensions.mainActivity
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.ui.general.MainActivity
 import com.rtuitlab.studo.viewmodels.AccountChangesDialogsViewModel
@@ -56,7 +56,7 @@ class AccountSettingsFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         collapsingToolbar.title = getString(R.string.account)
-        (requireActivity() as MainActivity).enableNavigateButton(collapsingToolbar.toolbar)
+        mainActivity().enableNavigateButton(collapsingToolbar.toolbar)
 
         setListeners()
         setObservers()

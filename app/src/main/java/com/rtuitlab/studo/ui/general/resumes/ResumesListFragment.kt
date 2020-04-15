@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.adapters.ResumesRecyclerAdapter
+import com.rtuitlab.studo.extensions.mainActivity
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.resumes.models.CompactResume
 import com.rtuitlab.studo.ui.general.MainActivity
@@ -47,11 +48,11 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
             }
             is MyResumes -> {
                 collapsingToolbar.title = getString(R.string.my_resumes)
-                (requireActivity() as MainActivity).enableNavigateButton(collapsingToolbar.toolbar)
+                mainActivity().enableNavigateButton(collapsingToolbar.toolbar)
             }
             is UserResumes -> {
                 // TODO - add title in toolbar
-                (requireActivity() as MainActivity).enableNavigateButton(collapsingToolbar.toolbar)
+                mainActivity().enableNavigateButton(collapsingToolbar.toolbar)
                 createBtn.hide()
             }
         }

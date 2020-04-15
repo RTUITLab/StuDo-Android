@@ -5,6 +5,7 @@ import com.rtuitlab.studo.server.ResponseHandler
 import com.rtuitlab.studo.server.general.ads.models.Ad
 import com.rtuitlab.studo.server.general.ads.models.CompactAd
 import com.rtuitlab.studo.server.general.ads.models.CreateAdRequest
+import com.rtuitlab.studo.server.general.ads.models.EditAdRequest
 import java.lang.Exception
 
 class AdsRepository(
@@ -48,6 +49,23 @@ class AdsRepository(
         return try {
             responseHandler.handleSuccess(adsApi.createAd(CreateAdRequest(
                 name, description, shortDescription, beginTime, endTime, organizationId
+            )))
+        } catch (e: Exception) {
+            responseHandler.handleException(e)
+        }
+    }
+
+    suspend fun editAd(
+        id: String,
+        name: String,
+        description: String,
+        shortDescription: String,
+        beginTime: String,
+        endTime: String
+    ): Resource<Ad> {
+        return try {
+            responseHandler.handleSuccess(adsApi.editAd(EditAdRequest(
+                id, name, description, shortDescription, beginTime, endTime
             )))
         } catch (e: Exception) {
             responseHandler.handleException(e)

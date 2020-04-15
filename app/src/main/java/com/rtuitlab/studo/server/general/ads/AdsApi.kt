@@ -3,6 +3,7 @@ package com.rtuitlab.studo.server.general.ads
 import com.rtuitlab.studo.server.general.ads.models.Ad
 import com.rtuitlab.studo.server.general.ads.models.CompactAd
 import com.rtuitlab.studo.server.general.ads.models.CreateAdRequest
+import com.rtuitlab.studo.server.general.ads.models.EditAdRequest
 import retrofit2.http.*
 
 interface AdsApi {
@@ -17,8 +18,11 @@ interface AdsApi {
 
 
 
-    @POST("ad/")
+    @POST("ad")
     suspend fun createAd(@Body body: CreateAdRequest): Ad
+
+    @PUT("ad")
+    suspend fun editAd(@Body body: EditAdRequest): Ad
 
 
 

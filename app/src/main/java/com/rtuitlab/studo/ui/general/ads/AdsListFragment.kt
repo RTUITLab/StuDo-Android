@@ -11,10 +11,10 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.adapters.AdsRecyclerAdapter
+import com.rtuitlab.studo.extensions.mainActivity
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.ads.models.AdIdWithIsFavourite
 import com.rtuitlab.studo.server.general.ads.models.CompactAd
-import com.rtuitlab.studo.ui.general.MainActivity
 import com.rtuitlab.studo.viewmodels.*
 import kotlinx.android.synthetic.main.fragment_recycler_list.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
@@ -49,16 +49,16 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
             }
             BookmarkedAds -> {
                 collapsingToolbar.title = getString(R.string.favourites)
-                (requireActivity() as MainActivity).enableNavigateButton(collapsingToolbar.toolbar)
+                mainActivity().enableNavigateButton(collapsingToolbar.toolbar)
                 createBtn.hide()
             }
             is MyAds -> {
                 collapsingToolbar.title = getString(R.string.my_ads)
-                (requireActivity() as MainActivity).enableNavigateButton(collapsingToolbar.toolbar)
+                mainActivity().enableNavigateButton(collapsingToolbar.toolbar)
             }
             is UserAds -> {
                 // TODO - add title in toolbar
-                (requireActivity() as MainActivity).enableNavigateButton(collapsingToolbar.toolbar)
+                mainActivity().enableNavigateButton(collapsingToolbar.toolbar)
                 createBtn.hide()
             }
         }
@@ -66,8 +66,10 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
 
         initRecyclerView()
 
-        if (viewModel.adsListResource.value?.status != Status.SUCCESS) {
+        if (viewModel.adsListResource.value?.status != Status.SUCCESS ||
+            mainActivity().updateStatuses.isNeedToUpdateAdsList) {
             loadAds()
+            mainActivity().updateStatuses.isNeedToUpdateAdsList = false
         } else {
             recyclerAdapter?.data = viewModel.adsListResource.value!!.data!!
         }
