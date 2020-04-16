@@ -1,43 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout>
 
-    <TextView
-        android:id="@+id/commentTitle"
-        style="@style/TextAppearance.MaterialComponents.Headline6"
-        android:layout_width="wrap_content"
+    <data>
+        <variable
+            name="viewModel"
+            type="com.rtuitlab.studo.viewmodels.CommentsViewModel" />
+    </data>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/comments"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/closeBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@drawable/ic_close"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/commentTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/commentTitle"
-        android:contentDescription="Close" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/titlePanel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/commentRV"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/commentTitle" />
+            <TextView
+                android:id="@+id/commentTitle"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/comments"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/closeBtn"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/closeBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ic_close"
+                app:layout_constraintBottom_toBottomOf="@+id/commentTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/commentTitle" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/colorButtonNormal"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/commentRV"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/colorButtonNormal"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:hint="@string/type_comment_hint"
+                android:maxLines="3"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine|textCapSentences"
+                android:padding="8dp"
+                android:text="@={viewModel.commentText}"
+                app:bindAfterTextChanged="@{viewModel::checkData}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/sendBtn"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/sendBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="@{() -> viewModel.createComment()}"
+                android:padding="8dp"
+                android:src="@drawable/ic_send"
+                app:isEnabled="@{viewModel.isValid()}"
+                app:layout_constraintBottom_toBottomOf="@+id/editText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/editText"
+                app:layout_constraintVertical_bias="0.0" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</layout>

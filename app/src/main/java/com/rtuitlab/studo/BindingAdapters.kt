@@ -1,6 +1,9 @@
 package com.rtuitlab.studo
 
 import android.widget.EditText
+import android.widget.ImageView
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.BindingAdapter
@@ -50,5 +53,18 @@ fun ExtendedFloatingActionButton.isShow(isShow: Boolean) {
         this.show()
     } else {
         this.hide()
+    }
+}
+
+@BindingAdapter("isEnabled")
+fun ImageView.isEnabled(isEnabled: Boolean) {
+    if (isEnabled) {
+        DrawableCompat.setTint(this.drawable, ContextCompat.getColor(context, R.color.colorPrimary))
+        this.isClickable = true
+        this.isFocusable = true
+    } else {
+        DrawableCompat.setTint(this.drawable, ContextCompat.getColor(context, R.color.colorDisable))
+        this.isClickable = false
+        this.isFocusable = false
     }
 }

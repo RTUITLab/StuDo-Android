@@ -1,11 +1,9 @@
 package com.rtuitlab.studo.server.general.ads
 
+import android.util.Log
 import com.rtuitlab.studo.server.Resource
 import com.rtuitlab.studo.server.ResponseHandler
-import com.rtuitlab.studo.server.general.ads.models.Ad
-import com.rtuitlab.studo.server.general.ads.models.CompactAd
-import com.rtuitlab.studo.server.general.ads.models.CreateAdRequest
-import com.rtuitlab.studo.server.general.ads.models.EditAdRequest
+import com.rtuitlab.studo.server.general.ads.models.*
 import java.lang.Exception
 
 class AdsRepository(
@@ -46,6 +44,7 @@ class AdsRepository(
         endTime: String,
         organizationId: String? = null
     ): Resource<Ad> {
+        Log.wtf("Create ad", "$beginTime - $endTime")
         return try {
             responseHandler.handleSuccess(adsApi.createAd(CreateAdRequest(
                 name, description, shortDescription, beginTime, endTime, organizationId
@@ -93,6 +92,24 @@ class AdsRepository(
     suspend fun removeFromBookmarks(adId: String): Resource<Unit> {
         return try {
             responseHandler.handleSuccess(adsApi.removeFromBookmarks(adId))
+        } catch (e: Exception) {
+            responseHandler.handleException(e)
+        }
+    }
+
+
+
+    suspend fun createComment(adId: String, commentText: String): Resource<Comment> {
+        return try {
+            responseHandler.handleSuccess(adsApi.createComment(adId, CreateCommentRequest(commentText)))
+        } catch (e: Exception) {
+            responseHandler.handleException(e)
+        }
+    }
+
+    suspend fun deleteComment(adId: String, commentId: String): Resource<String> {
+        return try {
+            responseHandler.handleSuccess(adsApi.deleteComment(adId, commentId))
         } catch (e: Exception) {
             responseHandler.handleException(e)
         }

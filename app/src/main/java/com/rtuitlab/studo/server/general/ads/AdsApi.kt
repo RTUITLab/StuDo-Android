@@ -1,9 +1,6 @@
 package com.rtuitlab.studo.server.general.ads
 
-import com.rtuitlab.studo.server.general.ads.models.Ad
-import com.rtuitlab.studo.server.general.ads.models.CompactAd
-import com.rtuitlab.studo.server.general.ads.models.CreateAdRequest
-import com.rtuitlab.studo.server.general.ads.models.EditAdRequest
+import com.rtuitlab.studo.server.general.ads.models.*
 import retrofit2.http.*
 
 interface AdsApi {
@@ -34,4 +31,12 @@ interface AdsApi {
 
     @DELETE("ad/bookmarks/{adId}")
     suspend fun removeFromBookmarks(@Path("adId") adId : String)
+
+
+
+    @POST("ad/comment/{adId}")
+    suspend fun createComment(@Path("adId") adId : String, @Body body: CreateCommentRequest): Comment
+
+    @DELETE("ad/comment/{adId}/{commentId}")
+    suspend fun deleteComment(@Path("adId") adId : String, @Path("commentId") commentId: String): String
 }

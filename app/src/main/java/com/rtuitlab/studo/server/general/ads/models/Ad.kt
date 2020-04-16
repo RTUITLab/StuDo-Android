@@ -17,5 +17,5 @@ data class Ad (
     val organizationId: String?,
     val organization: Organization?,
     @SerializedName("isFavorite") var isFavourite: Boolean,
-    val comments: List<Comment>
+    var comments: List<Comment>
 ) : Serializable

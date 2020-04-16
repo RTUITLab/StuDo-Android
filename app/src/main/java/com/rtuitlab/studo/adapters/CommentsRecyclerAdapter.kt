@@ -24,21 +24,23 @@ class CommentsRecyclerAdapter(
 
     val dateTimeFormatter: DateTimeFormatter by getKoin().inject()
 
-    var data: List<Comment> = startData
-        set(value) {
-            GlobalScope.launch(Dispatchers.Main) {
-                val commentsDiffResult = withContext(Dispatchers.Default) {
-                    val diffUtilCallback =
-                        CommentsDiffUtilCallback(
-                            data,
-                            value
-                        )
-                    DiffUtil.calculateDiff(diffUtilCallback)
-                }
-                field = value
-                commentsDiffResult.dispatchUpdatesTo(this@CommentsRecyclerAdapter)
+    private var data: List<Comment> = startData
+
+    fun updateData(newData: List<Comment>, onComplete: () -> Unit) {
+        GlobalScope.launch(Dispatchers.Main) {
+            val commentsDiffResult = withContext(Dispatchers.Default) {
+                val diffUtilCallback =
+                    CommentsDiffUtilCallback(
+                        data,
+                        newData
+                    )
+                DiffUtil.calculateDiff(diffUtilCallback)
             }
+            data = newData
+            commentsDiffResult.dispatchUpdatesTo(this@CommentsRecyclerAdapter)
+            onComplete.invoke()
         }
+    }
 
     override fun getItemCount() = data.size
 

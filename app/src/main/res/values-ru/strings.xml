@@ -24,7 +24,7 @@
     <string name="my_ads">Мои объявления</string>
     <string name="my_resumes">Мои резюме</string>
     <string name="favourites">Закладки</string>
-    <string name="organizations">Организации (WIP)</string>
+    <string name="organizations">Организации</string>
     <string name="settings">Настройки</string>
     <string name="about">О приложении</string>
     <string name="change_email">Изменить почту</string>
@@ -52,7 +52,7 @@
     <string name="russian">Русский</string>
     <string name="english">Английский</string>
     <string name="create_ad">Создание объявления</string>
-    <string name="edit_ad">Редактирование объявления</string>
+    <string name="edit_ad">Изменение объявления</string>
     <string name="title_hint"><font size="24">Название</font></string>
     <string name="desc">Описание</string>
     <string name="short_desc_hint">Краткое описание (необязательно)</string>
@@ -66,6 +66,7 @@
     <string name="edit">Изменить</string>
     <string name="save">Сохранить</string>
     <string name="create_resume">Создание резюме</string>
-    <string name="edit_resume">Редактирование резюме</string>
+    <string name="edit_resume">Изменение резюме</string>
     <string name="resume">Резюме</string>
+    <string name="type_comment_hint">Добавить комментарий...</string>
 </resources>

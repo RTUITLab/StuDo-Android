@@ -26,7 +26,7 @@
     <string name="my_ads">My ads</string>
     <string name="my_resumes">My resumes</string>
     <string name="favourites">Favourites</string>
-    <string name="organizations">Organizations (WIP)</string>
+    <string name="organizations">Organizations</string>
     <string name="settings">Settings</string>
     <string name="about">About</string>
     <string name="fullName" translatable="false">%1$s %2$s</string>
@@ -71,4 +71,5 @@
     <string name="create_resume">Creating resume</string>
     <string name="edit_resume">Editing resume</string>
     <string name="resume">Resume</string>
+    <string name="type_comment_hint">Add comment...</string>
 </resources>
