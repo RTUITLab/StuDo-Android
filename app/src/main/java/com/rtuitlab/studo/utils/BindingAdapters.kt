@@ -1,4 +1,4 @@
-package com.rtuitlab.studo
+package com.rtuitlab.studo.utils
 
 import android.widget.EditText
 import android.widget.ImageView

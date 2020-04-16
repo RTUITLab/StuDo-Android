@@ -18,8 +18,8 @@ import com.rtuitlab.studo.databinding.FragmentAccountSettingsBinding
 import com.rtuitlab.studo.extensions.mainActivity
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.ui.general.MainActivity
-import com.rtuitlab.studo.viewmodels.AccountChangesDialogsViewModel
-import com.rtuitlab.studo.viewmodels.ProfileViewModel
+import com.rtuitlab.studo.viewmodels.users.AccountChangesDialogsViewModel
+import com.rtuitlab.studo.viewmodels.users.ProfileViewModel
 import kotlinx.android.synthetic.main.fragment_account_settings.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.view.*

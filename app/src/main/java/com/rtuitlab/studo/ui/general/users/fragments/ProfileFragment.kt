@@ -14,7 +14,12 @@ import com.google.android.material.snackbar.Snackbar
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentProfileBinding
 import com.rtuitlab.studo.server.Status
-import com.rtuitlab.studo.viewmodels.*
+import com.rtuitlab.studo.viewmodels.ads.AdsType
+import com.rtuitlab.studo.viewmodels.ads.BookmarkedAds
+import com.rtuitlab.studo.viewmodels.ads.MyAds
+import com.rtuitlab.studo.viewmodels.resumes.MyResumes
+import com.rtuitlab.studo.viewmodels.resumes.ResumesType
+import com.rtuitlab.studo.viewmodels.users.ProfileViewModel
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -72,19 +77,28 @@ class ProfileFragment : Fragment() {
         profileList.setOnMenuItemClickListener (
             onAds = {
                 val bundle = Bundle().apply {
-                    putSerializable(AdsType::class.java.simpleName, MyAds)
+                    putSerializable(
+                        AdsType::class.java.simpleName,
+                        MyAds
+                    )
                 }
                 findNavController().navigate(R.id.action_profileFragment_to_ads, bundle)
             },
             onResumes = {
                 val bundle = Bundle().apply {
-                    putSerializable(ResumesType::class.java.simpleName, MyResumes)
+                    putSerializable(
+                        ResumesType::class.java.simpleName,
+                        MyResumes
+                    )
                 }
                 findNavController().navigate(R.id.action_profileFragment_to_resumes, bundle)
             },
             onBookmarks = {
                 val bundle = Bundle().apply {
-                    putSerializable(AdsType::class.java.simpleName, BookmarkedAds)
+                    putSerializable(
+                        AdsType::class.java.simpleName,
+                        BookmarkedAds
+                    )
                 }
                 findNavController().navigate(R.id.action_profileFragment_to_ads, bundle)
             },

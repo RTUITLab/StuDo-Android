@@ -15,10 +15,10 @@ import com.rtuitlab.studo.databinding.FragmentAdBinding
 import com.rtuitlab.studo.extensions.mainActivity
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.ads.models.AdIdWithIsFavourite
-import com.rtuitlab.studo.viewmodels.AdViewModel
-import com.rtuitlab.studo.viewmodels.AdsListViewModel
-import com.rtuitlab.studo.viewmodels.CreateEditAd
-import com.rtuitlab.studo.viewmodels.EditAd
+import com.rtuitlab.studo.viewmodels.ads.AdViewModel
+import com.rtuitlab.studo.viewmodels.ads.AdsListViewModel
+import com.rtuitlab.studo.viewmodels.ads.CreateEditAd
+import com.rtuitlab.studo.viewmodels.ads.EditAd
 import kotlinx.android.synthetic.main.fragment_ad.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.view.*
@@ -85,7 +85,10 @@ class AdFragment: Fragment() {
 
         editBtn.setOnClickListener {
             val bundle = Bundle().apply {
-                putSerializable(CreateEditAd::class.java.simpleName, EditAd(adViewModel.currentAd.get()!!))
+                putSerializable(
+                    CreateEditAd::class.java.simpleName,
+                    EditAd(adViewModel.currentAd.get()!!)
+                )
             }
             findNavController().navigate(R.id.action_adFragment_to_createEditAdFragment, bundle)
         }

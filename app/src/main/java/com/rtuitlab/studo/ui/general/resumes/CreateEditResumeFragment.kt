@@ -12,10 +12,10 @@ import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentCreateEditResumeBinding
 import com.rtuitlab.studo.extensions.mainActivity
 import com.rtuitlab.studo.server.Status
-import com.rtuitlab.studo.viewmodels.CreateEditResume
-import com.rtuitlab.studo.viewmodels.CreateEditResumeViewModel
-import com.rtuitlab.studo.viewmodels.CreateResume
-import com.rtuitlab.studo.viewmodels.EditResume
+import com.rtuitlab.studo.viewmodels.resumes.CreateEditResume
+import com.rtuitlab.studo.viewmodels.resumes.CreateEditResumeViewModel
+import com.rtuitlab.studo.viewmodels.resumes.CreateResume
+import com.rtuitlab.studo.viewmodels.resumes.EditResume
 import kotlinx.android.synthetic.main.fragment_create_edit_resume.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.view.*
@@ -25,7 +25,8 @@ class CreateEditResumeFragment: Fragment() {
 
     private val viewModel: CreateEditResumeViewModel by viewModel()
 
-    private var createEditResume: CreateEditResume = CreateResume
+    private var createEditResume: CreateEditResume =
+        CreateResume
 
     override fun onCreateView(
         inflater: LayoutInflater,

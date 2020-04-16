@@ -10,7 +10,7 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.DialogChangeEmailBinding
-import com.rtuitlab.studo.viewmodels.AccountChangesDialogsViewModel
+import com.rtuitlab.studo.viewmodels.users.AccountChangesDialogsViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class ChangeEmailDialog: DialogFragment() {

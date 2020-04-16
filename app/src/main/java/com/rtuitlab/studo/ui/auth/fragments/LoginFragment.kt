@@ -15,7 +15,7 @@ import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentLoginBinding
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.ui.general.MainActivity
-import com.rtuitlab.studo.viewmodels.AuthViewModel
+import com.rtuitlab.studo.viewmodels.auth.AuthViewModel
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 

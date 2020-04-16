@@ -1,4 +1,4 @@
-package com.rtuitlab.studo.adapters
+package com.rtuitlab.studo.recyclers.resumes
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.custom_views.AvatarView
-import com.rtuitlab.studo.diff_util.ResumesListDiffUtilCallback
 import com.rtuitlab.studo.server.general.resumes.models.CompactResume
 import kotlinx.android.synthetic.main.view_recycler_resume.view.*
 import kotlinx.coroutines.Dispatchers

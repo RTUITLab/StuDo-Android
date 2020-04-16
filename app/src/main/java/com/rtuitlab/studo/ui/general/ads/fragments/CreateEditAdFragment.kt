@@ -10,13 +10,16 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.rtuitlab.studo.DateRangeValidator
+import com.rtuitlab.studo.utils.DateRangeValidator
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.custom_views.TimeRangeDialog
 import com.rtuitlab.studo.databinding.FragmentCreateEditAdBinding
 import com.rtuitlab.studo.extensions.mainActivity
 import com.rtuitlab.studo.server.Status
-import com.rtuitlab.studo.viewmodels.*
+import com.rtuitlab.studo.viewmodels.ads.CreateAd
+import com.rtuitlab.studo.viewmodels.ads.CreateEditAd
+import com.rtuitlab.studo.viewmodels.ads.CreateEditAdViewModel
+import com.rtuitlab.studo.viewmodels.ads.EditAd
 import com.yydcdut.markdown.MarkdownProcessor
 import com.yydcdut.markdown.syntax.edit.EditFactory
 import kotlinx.android.synthetic.main.fragment_create_edit_ad.*
@@ -33,7 +36,8 @@ class CreateEditAdFragment: Fragment() {
 
     private val viewModel: CreateEditAdViewModel by viewModel()
 
-    private var createEditAd: CreateEditAd = CreateAd
+    private var createEditAd: CreateEditAd =
+        CreateAd
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -146,7 +150,11 @@ class CreateEditAdFragment: Fragment() {
 
         val calendarConstraints = CalendarConstraints.Builder()
         calendarConstraints.setStart(currentDate.timeInMillis)
-        calendarConstraints.setValidator(DateRangeValidator(currentDate.timeInMillis))
+        calendarConstraints.setValidator(
+            DateRangeValidator(
+                currentDate.timeInMillis
+            )
+        )
 
         builder.setCalendarConstraints(calendarConstraints.build())
 

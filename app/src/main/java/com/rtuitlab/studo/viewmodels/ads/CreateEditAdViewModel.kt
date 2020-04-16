@@ -1,4 +1,4 @@
-package com.rtuitlab.studo.viewmodels
+package com.rtuitlab.studo.viewmodels.ads
 
 import android.app.Application
 import androidx.databinding.ObservableBoolean
@@ -7,9 +7,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.rtuitlab.studo.App
-import com.rtuitlab.studo.DateTimeFormatter
+import com.rtuitlab.studo.utils.DateTimeFormatter
 import com.rtuitlab.studo.R
-import com.rtuitlab.studo.SingleLiveEvent
+import com.rtuitlab.studo.utils.SingleLiveEvent
 import com.rtuitlab.studo.server.Resource
 import com.rtuitlab.studo.server.general.ads.AdsRepository
 import com.rtuitlab.studo.server.general.ads.models.Ad
@@ -61,7 +61,8 @@ class CreateEditAdViewModel(
         )
     }
 
-    private val _adResource = SingleLiveEvent<Resource<Ad>>()
+    private val _adResource =
+        SingleLiveEvent<Resource<Ad>>()
     val adResource: LiveData<Resource<Ad>> = _adResource
 
     fun createAd() {

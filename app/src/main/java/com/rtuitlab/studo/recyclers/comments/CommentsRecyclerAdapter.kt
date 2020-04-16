@@ -1,4 +1,4 @@
-package com.rtuitlab.studo.adapters
+package com.rtuitlab.studo.recyclers.comments
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,10 +6,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.rtuitlab.studo.DateTimeFormatter
+import com.rtuitlab.studo.utils.DateTimeFormatter
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.custom_views.AvatarView
-import com.rtuitlab.studo.diff_util.CommentsDiffUtilCallback
 import com.rtuitlab.studo.server.general.ads.models.Comment
 import kotlinx.android.synthetic.main.view_recycler_comment.view.*
 import kotlinx.coroutines.Dispatchers

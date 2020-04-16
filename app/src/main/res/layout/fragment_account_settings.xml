@@ -8,7 +8,7 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="com.rtuitlab.studo.viewmodels.ProfileViewModel" />
+            type="com.rtuitlab.studo.viewmodels.users.ProfileViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

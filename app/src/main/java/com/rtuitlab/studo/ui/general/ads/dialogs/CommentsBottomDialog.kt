@@ -9,12 +9,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.rtuitlab.studo.R
-import com.rtuitlab.studo.adapters.CommentsRecyclerAdapter
+import com.rtuitlab.studo.recyclers.comments.CommentsRecyclerAdapter
 import com.rtuitlab.studo.databinding.FragmentCommentsBinding
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.ads.models.Ad
 import com.rtuitlab.studo.server.general.ads.models.Comment
-import com.rtuitlab.studo.viewmodels.CommentsViewModel
+import com.rtuitlab.studo.viewmodels.ads.CommentsViewModel
 import kotlinx.android.synthetic.main.fragment_comments.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -58,7 +58,10 @@ class CommentsBottomDialog: BottomSheetDialogFragment() {
     }
 
     private fun initRecyclerView() {
-        recyclerAdapter = CommentsRecyclerAdapter(commentsMutableList.toList())
+        recyclerAdapter =
+            CommentsRecyclerAdapter(
+                commentsMutableList.toList()
+            )
         commentRV.adapter = recyclerAdapter
     }
 

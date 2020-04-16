@@ -11,6 +11,7 @@ import com.rtuitlab.studo.server.general.resumes.resumesApiModule
 import com.rtuitlab.studo.server.general.users.userApiModule
 import com.rtuitlab.studo.server.repositoriesModule
 import com.rtuitlab.studo.server.responseHandlerModule
+import com.rtuitlab.studo.utils.timeFormatterModule
 import com.rtuitlab.studo.viewmodels.viewModelsModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger

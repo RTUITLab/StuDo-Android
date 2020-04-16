@@ -1,4 +1,4 @@
-package com.rtuitlab.studo.adapters
+package com.rtuitlab.studo.recyclers.ads
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +7,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.rtuitlab.studo.diff_util.AdsListDiffUtilCallback
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.server.general.ads.models.AdIdWithIsFavourite
 import com.rtuitlab.studo.server.general.ads.models.CompactAd

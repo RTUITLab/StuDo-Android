@@ -1,4 +1,4 @@
-package com.rtuitlab.studo.viewmodels
+package com.rtuitlab.studo.viewmodels.auth
 
 import android.app.Application
 import androidx.databinding.ObservableField
@@ -13,6 +13,7 @@ import com.rtuitlab.studo.server.Resource
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.auth.AuthRepository
 import com.rtuitlab.studo.server.auth.models.UserLoginResponse
+import com.rtuitlab.studo.utils.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -42,7 +43,8 @@ class AuthViewModel(
     var confirmPassword = ""
     val confirmPasswordError = ObservableField("")
 
-    private val _loginResource = SingleLiveEvent<Resource<UserLoginResponse>>()
+    private val _loginResource =
+        SingleLiveEvent<Resource<UserLoginResponse>>()
     val loginResource: LiveData<Resource<UserLoginResponse>> = _loginResource
 
     fun login() {
@@ -85,7 +87,8 @@ class AuthViewModel(
         return result
     }
 
-    private val _registerResource = SingleLiveEvent<Resource<Unit>>()
+    private val _registerResource =
+        SingleLiveEvent<Resource<Unit>>()
     val registerResource: LiveData<Resource<Unit>> = _registerResource
 
     fun register() {
@@ -141,7 +144,8 @@ class AuthViewModel(
 
     var resetEmail = ""
 
-    private val _resetResource = SingleLiveEvent<Resource<Unit>>()
+    private val _resetResource =
+        SingleLiveEvent<Resource<Unit>>()
     val resetResource: LiveData<Resource<Unit>> = _resetResource
 
     fun resetPassword() {

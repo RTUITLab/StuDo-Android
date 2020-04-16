@@ -8,14 +8,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import com.rtuitlab.studo.R
-import com.rtuitlab.studo.adapters.ResumesRecyclerAdapter
+import com.rtuitlab.studo.recyclers.resumes.ResumesRecyclerAdapter
 import com.rtuitlab.studo.extensions.mainActivity
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.resumes.models.CompactResume
-import com.rtuitlab.studo.ui.general.MainActivity
-import com.rtuitlab.studo.viewmodels.*
+import com.rtuitlab.studo.viewmodels.resumes.*
 import kotlinx.android.synthetic.main.fragment_recycler_list.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.view.*
@@ -27,7 +25,8 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
 
     private var recyclerAdapter: ResumesRecyclerAdapter? = null
 
-    private var resumesType: ResumesType = AllResumes
+    private var resumesType: ResumesType =
+        AllResumes
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -106,7 +105,8 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
 
     private fun initRecyclerView() {
         if (recyclerAdapter == null) {
-            recyclerAdapter = ResumesRecyclerAdapter().apply {
+            recyclerAdapter = ResumesRecyclerAdapter()
+                .apply {
                 setOnResumeClickListener(this@ResumesListFragment)
             }
         }

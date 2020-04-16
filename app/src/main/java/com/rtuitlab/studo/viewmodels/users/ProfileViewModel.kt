@@ -1,4 +1,4 @@
-package com.rtuitlab.studo.viewmodels
+package com.rtuitlab.studo.viewmodels.users
 
 import android.app.Application
 import androidx.databinding.ObservableBoolean
@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.rtuitlab.studo.App
 import com.rtuitlab.studo.R
-import com.rtuitlab.studo.SingleLiveEvent
+import com.rtuitlab.studo.utils.SingleLiveEvent
 import com.rtuitlab.studo.account.AccountStorage
 import com.rtuitlab.studo.persistence.EncryptedPreferences
 import com.rtuitlab.studo.server.Resource
@@ -28,7 +28,8 @@ class ProfileViewModel(
 
     var user = accStorage.user
 
-    private val _currentUserResource = SingleLiveEvent<Resource<User>>()
+    private val _currentUserResource =
+        SingleLiveEvent<Resource<User>>()
     val currentUserResource = _currentUserResource
 
     var userInitials =
@@ -47,7 +48,8 @@ class ProfileViewModel(
 
     val isUserDataChanged = ObservableBoolean(false)
 
-    private val _changesSavedResource = SingleLiveEvent<Resource<User>>()
+    private val _changesSavedResource =
+        SingleLiveEvent<Resource<User>>()
     val changesSavedResource: LiveData<Resource<User>> = _changesSavedResource
 
     fun updateCurrentUser() {

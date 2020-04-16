@@ -1,4 +1,4 @@
-package com.rtuitlab.studo
+package com.rtuitlab.studo.utils
 
 import android.util.Log
 import androidx.annotation.MainThread

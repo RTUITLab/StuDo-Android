@@ -1,11 +1,11 @@
-package com.rtuitlab.studo.viewmodels
+package com.rtuitlab.studo.viewmodels.resumes
 
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rtuitlab.studo.SingleLiveEvent
+import com.rtuitlab.studo.utils.SingleLiveEvent
 import com.rtuitlab.studo.server.Resource
 import com.rtuitlab.studo.server.general.resumes.ResumesRepository
 import com.rtuitlab.studo.server.general.resumes.models.Resume
@@ -36,7 +36,8 @@ class CreateEditResumeViewModel(
         isValid.set(!title.get().isNullOrBlank() && !desc.get().isNullOrBlank())
     }
 
-    private val _resumeResource = SingleLiveEvent<Resource<Resume>>()
+    private val _resumeResource =
+        SingleLiveEvent<Resource<Resume>>()
     val resumeResource: LiveData<Resource<Resume>> = _resumeResource
 
     fun createResume() {

@@ -1,7 +1,6 @@
 package com.rtuitlab.studo.ui.general.ads.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +10,12 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.rtuitlab.studo.R
-import com.rtuitlab.studo.adapters.AdsRecyclerAdapter
+import com.rtuitlab.studo.recyclers.ads.AdsRecyclerAdapter
 import com.rtuitlab.studo.extensions.mainActivity
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.ads.models.AdIdWithIsFavourite
 import com.rtuitlab.studo.server.general.ads.models.CompactAd
-import com.rtuitlab.studo.viewmodels.*
+import com.rtuitlab.studo.viewmodels.ads.*
 import kotlinx.android.synthetic.main.fragment_recycler_list.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.view.*
@@ -28,7 +27,8 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
 
     private var recyclerAdapter: AdsRecyclerAdapter? = null
 
-    private var adsType: AdsType = AllAds
+    private var adsType: AdsType =
+        AllAds
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -130,7 +130,8 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
 
     private fun initRecyclerView() {
         if (recyclerAdapter == null) {
-            recyclerAdapter = AdsRecyclerAdapter().apply {
+            recyclerAdapter = AdsRecyclerAdapter()
+                .apply {
                 setOnAdClickListener(this@AdsListFragment)
             }
         }

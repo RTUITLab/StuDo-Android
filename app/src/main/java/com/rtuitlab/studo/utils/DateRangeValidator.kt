@@ -1,4 +1,4 @@
-package com.rtuitlab.studo
+package com.rtuitlab.studo.utils
 
 import android.os.Parcel
 import android.os.Parcelable

@@ -1,4 +1,4 @@
-package com.rtuitlab.studo
+package com.rtuitlab.studo.utils
 
 import android.annotation.SuppressLint
 import android.graphics.Typeface

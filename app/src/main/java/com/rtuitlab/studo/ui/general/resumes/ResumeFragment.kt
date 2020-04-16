@@ -13,9 +13,9 @@ import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentResumeBinding
 import com.rtuitlab.studo.extensions.mainActivity
 import com.rtuitlab.studo.server.Status
-import com.rtuitlab.studo.viewmodels.CreateEditResume
-import com.rtuitlab.studo.viewmodels.EditResume
-import com.rtuitlab.studo.viewmodels.ResumeViewModel
+import com.rtuitlab.studo.viewmodels.resumes.CreateEditResume
+import com.rtuitlab.studo.viewmodels.resumes.EditResume
+import com.rtuitlab.studo.viewmodels.resumes.ResumeViewModel
 import kotlinx.android.synthetic.main.fragment_resume.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.view.*
@@ -66,7 +66,10 @@ class ResumeFragment: Fragment() {
 
         editBtn.setOnClickListener {
             val bundle = Bundle().apply {
-                putSerializable(CreateEditResume::class.java.simpleName, EditResume(viewModel.currentResume.get()!!))
+                putSerializable(
+                    CreateEditResume::class.java.simpleName,
+                    EditResume(viewModel.currentResume.get()!!)
+                )
             }
             findNavController().navigate(R.id.action_resumeFragment_to_createEditResumeFragment, bundle)
         }

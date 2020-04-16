@@ -1,7 +1,7 @@
-package com.rtuitlab.studo.viewmodels
+package com.rtuitlab.studo.viewmodels.ads
 
 import androidx.lifecycle.*
-import com.rtuitlab.studo.SingleLiveEvent
+import com.rtuitlab.studo.utils.SingleLiveEvent
 import com.rtuitlab.studo.account.AccountStorage
 import com.rtuitlab.studo.server.Resource
 import com.rtuitlab.studo.server.Status
@@ -24,7 +24,8 @@ class AdsListViewModel(
     private val accStorage: AccountStorage
 ): ViewModel() {
 
-    private val _adsListResource = SingleLiveEvent<Resource<List<CompactAd>>>()
+    private val _adsListResource =
+        SingleLiveEvent<Resource<List<CompactAd>>>()
     val adsListResource: LiveData<Resource<List<CompactAd>>> = _adsListResource
 
     fun loadAdsList(adsType: AdsType) {
@@ -44,7 +45,8 @@ class AdsListViewModel(
         }
     }
 
-    private val _favouritesResource = SingleLiveEvent<Resource<AdIdWithIsFavourite>>()
+    private val _favouritesResource =
+        SingleLiveEvent<Resource<AdIdWithIsFavourite>>()
     val favouritesResource: LiveData<Resource<AdIdWithIsFavourite>> = _favouritesResource
 
     fun toggleFavourite(adIdWithIsFavourite: AdIdWithIsFavourite) {

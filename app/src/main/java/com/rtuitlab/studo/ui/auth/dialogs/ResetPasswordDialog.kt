@@ -10,7 +10,7 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.DialogResetPasswordBinding
-import com.rtuitlab.studo.viewmodels.AuthViewModel
+import com.rtuitlab.studo.viewmodels.auth.AuthViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class ResetPasswordDialog: DialogFragment() {

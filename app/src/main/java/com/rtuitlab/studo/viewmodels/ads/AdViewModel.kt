@@ -1,4 +1,4 @@
-package com.rtuitlab.studo.viewmodels
+package com.rtuitlab.studo.viewmodels.ads
 
 import android.app.Application
 import android.text.SpannableStringBuilder
@@ -7,8 +7,8 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.rtuitlab.studo.DateTimeFormatter
-import com.rtuitlab.studo.SingleLiveEvent
+import com.rtuitlab.studo.utils.DateTimeFormatter
+import com.rtuitlab.studo.utils.SingleLiveEvent
 import com.rtuitlab.studo.account.AccountStorage
 import com.rtuitlab.studo.server.Resource
 import com.rtuitlab.studo.server.Status
@@ -37,7 +37,8 @@ class AdViewModel(
 
     val isOwnAd = ObservableBoolean(false)
 
-    private val _currentAdResource = SingleLiveEvent<Resource<Ad>>()
+    private val _currentAdResource =
+        SingleLiveEvent<Resource<Ad>>()
     val currentAdResource: LiveData<Resource<Ad>> = _currentAdResource
 
     fun loadAd(adId: String = this.adId) {

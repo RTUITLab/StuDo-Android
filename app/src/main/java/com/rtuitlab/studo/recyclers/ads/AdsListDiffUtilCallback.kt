@@ -1,4 +1,4 @@
-package com.rtuitlab.studo.diff_util
+package com.rtuitlab.studo.recyclers.ads
 
 import androidx.recyclerview.widget.DiffUtil
 import com.rtuitlab.studo.server.general.ads.models.CompactAd

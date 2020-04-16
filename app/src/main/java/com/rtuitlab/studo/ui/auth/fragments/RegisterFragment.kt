@@ -12,7 +12,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentRegisterBinding
 import com.rtuitlab.studo.server.Status
-import com.rtuitlab.studo.viewmodels.AuthViewModel
+import com.rtuitlab.studo.viewmodels.auth.AuthViewModel
 import kotlinx.android.synthetic.main.fragment_register.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 

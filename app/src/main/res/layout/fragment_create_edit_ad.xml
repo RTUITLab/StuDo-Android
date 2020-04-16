@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.rtuitlab.studo.viewmodels.CreateEditAdViewModel" />
+            type="com.rtuitlab.studo.viewmodels.ads.CreateEditAdViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

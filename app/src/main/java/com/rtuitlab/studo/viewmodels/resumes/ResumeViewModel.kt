@@ -1,11 +1,11 @@
-package com.rtuitlab.studo.viewmodels
+package com.rtuitlab.studo.viewmodels.resumes
 
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rtuitlab.studo.SingleLiveEvent
+import com.rtuitlab.studo.utils.SingleLiveEvent
 import com.rtuitlab.studo.account.AccountStorage
 import com.rtuitlab.studo.server.Resource
 import com.rtuitlab.studo.server.Status
@@ -28,7 +28,8 @@ class ResumeViewModel(
 
     val isOwnResume = ObservableBoolean(false)
 
-    private val _currentResumeResource = SingleLiveEvent<Resource<Resume>>()
+    private val _currentResumeResource =
+        SingleLiveEvent<Resource<Resume>>()
     val currentResumeResource: LiveData<Resource<Resume>> = _currentResumeResource
 
     fun loadResume(resumeId: String = this.resumeId) {
