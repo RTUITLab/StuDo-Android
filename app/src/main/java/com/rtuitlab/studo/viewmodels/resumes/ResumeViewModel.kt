@@ -49,6 +49,21 @@ class ResumeViewModel(
         }
     }
 
+    private val _deleteResumeResource = SingleLiveEvent<Resource<Unit>>()
+    val deleteResumeResource: LiveData<Resource<Unit>> = _deleteResumeResource
+
+    fun deleteResume() {
+        viewModelScope.launch {
+            _deleteResumeResource.value = Resource.loading(null)
+
+            val response = withContext(Dispatchers.IO) {
+                resumesRepo.deleteResume(compactResume.id)
+            }
+
+            _deleteResumeResource.value = response
+        }
+    }
+
     fun fillResumeData() {
         title.set(compactResume.name)
 

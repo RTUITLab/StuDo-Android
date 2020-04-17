@@ -96,6 +96,19 @@ class AdsRepository(
         }
     }
 
+    suspend fun deleteAd(adId: String): Resource<Unit> {
+        return try {
+            responseHandler.handleSuccess(adsApi.deleteAd(adId))
+        } catch (e: Exception) {
+            val errorResource: Resource<Unit> = responseHandler.handleException(e)
+            if (errorResource.message == responseHandler.retryError) {
+                deleteAd(adId)
+            } else {
+                errorResource
+            }
+        }
+    }
+
 
 
     suspend fun getBookmarkedAds(): Resource<List<CompactAd>> {

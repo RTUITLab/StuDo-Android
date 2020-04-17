@@ -23,4 +23,7 @@ interface ResumesApi {
 
     @PUT("resumes")
     suspend fun editResume(@Body body: EditResumeRequest): Resume
+
+    @DELETE("resumes/{resumeId}")
+    suspend fun deleteResume(@Path("resumeId") resumeId : String)
 }

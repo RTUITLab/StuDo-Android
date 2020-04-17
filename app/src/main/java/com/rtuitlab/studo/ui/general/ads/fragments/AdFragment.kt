@@ -14,6 +14,7 @@ import com.rtuitlab.studo.extensions.mainActivity
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.ads.models.Ad
 import com.rtuitlab.studo.server.general.ads.models.CompactAd
+import com.rtuitlab.studo.ui.general.YesNoDialog
 import com.rtuitlab.studo.viewmodels.ads.AdViewModel
 import com.rtuitlab.studo.viewmodels.ads.AdsListViewModel
 import com.rtuitlab.studo.viewmodels.ads.CreateEditAd
@@ -125,6 +126,19 @@ class AdFragment: Fragment() {
                 Status.LOADING -> {}
             }
         })
+
+        adViewModel.deleteAdResource.observe(viewLifecycleOwner, Observer {
+            when(it.status) {
+                Status.SUCCESS -> {
+                    mainActivity().updateStatuses.isNeedToUpdateResumesList = true
+                    requireActivity().onBackPressed()
+                }
+                Status.ERROR -> {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+                Status.LOADING -> {}
+            }
+        })
     }
 
     private fun loadAd() {
@@ -135,24 +149,11 @@ class AdFragment: Fragment() {
         if (adViewModel.isOwnAd && !collapsingToolbar.toolbar.menu.hasVisibleItems()) {
             collapsingToolbar.toolbar.inflateMenu(R.menu.edit_delete)
 
-            collapsingToolbar.toolbar.setOnMenuItemClickListener {
-                when(it.itemId) {
-                    R.id.action_edit -> {
-                        adViewModel.currentAd.get()?.let {
-                            val bundle = Bundle().apply {
-                                putSerializable(
-                                    CreateEditAd::class.java.simpleName,
-                                    EditAd(it)
-                                )
-                            }
-                            findNavController().navigate(
-                                R.id.action_adFragment_to_createEditAdFragment,
-                                bundle
-                            )
-                        }
-                    }
-                    R.id.action_delete -> {
-
+            collapsingToolbar.toolbar.setOnMenuItemClickListener {menuItem ->
+                adViewModel.currentAd.get()?.let {
+                    when(menuItem.itemId) {
+                        R.id.action_edit -> navigateToEdit()
+                        R.id.action_delete -> showDeleteConfirmation()
                     }
                 }
                 false
@@ -193,8 +194,30 @@ class AdFragment: Fragment() {
             )
         }
 
-
         adViewModel.compactAd = compactAd
         adViewModel.fillAdData()
+    }
+
+    private fun navigateToEdit() {
+        val bundle = Bundle().apply {
+            putSerializable(
+                CreateEditAd::class.java.simpleName,
+                EditAd(adViewModel.currentAd.get()!!)
+            )
+        }
+        findNavController().navigate(
+            R.id.action_adFragment_to_createEditAdFragment,
+            bundle
+        )
+    }
+
+    private fun showDeleteConfirmation() {
+        val dialog = YesNoDialog
+            .getInstance(getString(R.string.delete_ad_confirmation), object : YesNoDialog.OnYesClickListener{
+                override fun onYesClicked() {
+                    adViewModel.deleteAd()
+                }
+            })
+        dialog.show(childFragmentManager, null)
     }
 }

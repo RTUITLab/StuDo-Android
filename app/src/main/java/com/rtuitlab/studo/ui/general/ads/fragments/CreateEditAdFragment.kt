@@ -12,7 +12,7 @@ import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.rtuitlab.studo.utils.DateRangeValidator
 import com.rtuitlab.studo.R
-import com.rtuitlab.studo.custom_views.TimeRangeDialog
+import com.rtuitlab.studo.ui.general.ads.dialogs.TimeRangeDialog
 import com.rtuitlab.studo.databinding.FragmentCreateEditAdBinding
 import com.rtuitlab.studo.extensions.mainActivity
 import com.rtuitlab.studo.server.Status

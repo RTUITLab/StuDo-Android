@@ -59,6 +59,21 @@ class AdViewModel(
         }
     }
 
+    private val _deleteAdResource = SingleLiveEvent<Resource<Unit>>()
+    val deleteAdResource: LiveData<Resource<Unit>> = _deleteAdResource
+
+    fun deleteAd() {
+        viewModelScope.launch {
+            _deleteAdResource.value = Resource.loading(null)
+
+            val response = withContext(Dispatchers.IO) {
+                adsRepo.deleteAd(compactAd.id)
+            }
+
+            _deleteAdResource.value = response
+        }
+    }
+
     fun fillAdData() {
         title.set(compactAd.name)
 

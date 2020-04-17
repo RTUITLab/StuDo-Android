@@ -72,4 +72,8 @@
     <string name="close_comments">Закрыть комментарии</string>
     <string name="send_comment">Отправить комментарий</string>
     <string name="delete">Удалить</string>
+    <string name="delete_ad_confirmation">Вы хотите удалить объявление?</string>
+    <string name="delete_resume_confirmation">Вы хотите удалить резюме?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
 </resources>

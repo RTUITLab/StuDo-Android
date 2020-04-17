@@ -21,6 +21,8 @@ interface AdsApi {
     @PUT("ad")
     suspend fun editAd(@Body body: EditAdRequest): Ad
 
+    @DELETE("ad/{adId}")
+    suspend fun deleteAd(@Path("adId") adId : String)
 
 
     @GET("ad/bookmarks")

@@ -1,4 +1,4 @@
-package com.rtuitlab.studo.custom_views
+package com.rtuitlab.studo.ui.general.ads.dialogs
 
 import android.os.Bundle
 import android.view.LayoutInflater

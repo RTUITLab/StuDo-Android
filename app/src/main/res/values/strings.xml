@@ -75,4 +75,8 @@
     <string name="send_comment">Send comment</string>
     <string name="close_comments">Close comments</string>
     <string name="delete">Delete</string>
+    <string name="delete_ad_confirmation">Do you want to delete an ad?</string>
+    <string name="delete_resume_confirmation">Do you want to delete a resume?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

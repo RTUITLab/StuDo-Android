@@ -15,6 +15,7 @@ import com.rtuitlab.studo.extensions.mainActivity
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.resumes.models.CompactResume
 import com.rtuitlab.studo.server.general.resumes.models.Resume
+import com.rtuitlab.studo.ui.general.YesNoDialog
 import com.rtuitlab.studo.viewmodels.resumes.CreateEditResume
 import com.rtuitlab.studo.viewmodels.resumes.EditResume
 import com.rtuitlab.studo.viewmodels.resumes.ResumeViewModel
@@ -84,6 +85,19 @@ class ResumeFragment: Fragment() {
                 }
             }
         })
+
+        viewModel.deleteResumeResource.observe(viewLifecycleOwner, Observer {
+            when(it.status) {
+                Status.SUCCESS -> {
+                    mainActivity().updateStatuses.isNeedToUpdateResumesList = true
+                    requireActivity().onBackPressed()
+                }
+                Status.ERROR -> {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+                Status.LOADING -> {}
+            }
+        })
     }
 
     private fun loadResume() {
@@ -94,21 +108,11 @@ class ResumeFragment: Fragment() {
         if (viewModel.isOwnResume && !collapsingToolbar.toolbar.menu.hasVisibleItems()) {
             collapsingToolbar.toolbar.inflateMenu(R.menu.edit_delete)
 
-            collapsingToolbar.toolbar.setOnMenuItemClickListener {
-                when(it.itemId) {
-                    R.id.action_edit -> {
-                        viewModel.currentResume.get()?.let {
-                            val bundle = Bundle().apply {
-                                putSerializable(
-                                    CreateEditResume::class.java.simpleName,
-                                    EditResume(it)
-                                )
-                            }
-                            findNavController().navigate(R.id.action_resumeFragment_to_createEditResumeFragment, bundle)
-                        }
-                    }
-                    R.id.action_delete -> {
-
+            collapsingToolbar.toolbar.setOnMenuItemClickListener {menuItem ->
+                viewModel.currentResume.get()?.let {
+                    when(menuItem.itemId) {
+                        R.id.action_edit -> navigateToEdit()
+                        R.id.action_delete -> showDeleteConfirmation()
                     }
                 }
                 false
@@ -132,5 +136,25 @@ class ResumeFragment: Fragment() {
 
         viewModel.compactResume = compactResume
         viewModel.fillResumeData()
+    }
+
+    private fun navigateToEdit() {
+        val bundle = Bundle().apply {
+            putSerializable(
+                CreateEditResume::class.java.simpleName,
+                EditResume(viewModel.currentResume.get()!!)
+            )
+        }
+        findNavController().navigate(R.id.action_resumeFragment_to_createEditResumeFragment, bundle)
+    }
+
+    private fun showDeleteConfirmation() {
+        val dialog = YesNoDialog
+            .getInstance(getString(R.string.delete_resume_confirmation), object : YesNoDialog.OnYesClickListener{
+                override fun onYesClicked() {
+                    viewModel.deleteResume()
+                }
+            })
+        dialog.show(childFragmentManager, null)
     }
 }

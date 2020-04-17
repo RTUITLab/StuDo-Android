@@ -82,4 +82,17 @@ class ResumesRepository (
             }
         }
     }
+
+    suspend fun deleteResume(resumeId: String): Resource<Unit> {
+        return try {
+            responseHandler.handleSuccess(resumesApi.deleteResume(resumeId))
+        } catch (e: Exception) {
+            val errorResource: Resource<Unit> = responseHandler.handleException(e)
+            if (errorResource.message == responseHandler.retryError) {
+                deleteResume(resumeId)
+            } else {
+                errorResource
+            }
+        }
+    }
 }
