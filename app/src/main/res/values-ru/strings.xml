@@ -68,5 +68,7 @@
     <string name="create_resume">Создание резюме</string>
     <string name="edit_resume">Изменение резюме</string>
     <string name="resume">Резюме</string>
-    <string name="type_comment_hint">Добавить комментарий...</string>
+    <string name="type_comment_hint">Добавить комментарий…</string>
+    <string name="close_comments">Закрыть комментарии</string>
+    <string name="send_comment">Отправить комментарий</string>
 </resources>

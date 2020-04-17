@@ -16,7 +16,12 @@ class ResumesRepository (
         return try {
             responseHandler.handleSuccess(resumesApi.getAllResumes())
         } catch (e: Exception) {
-            responseHandler.handleException(e)
+            val errorResource: Resource<List<CompactResume>> = responseHandler.handleException(e)
+            if (errorResource.message == responseHandler.retryError) {
+                getAllResumes()
+            } else {
+                errorResource
+            }
         }
     }
 
@@ -24,7 +29,12 @@ class ResumesRepository (
         return try {
             responseHandler.handleSuccess(resumesApi.getResume(resumeId))
         } catch (e: Exception) {
-            responseHandler.handleException(e)
+            val errorResource: Resource<Resume> = responseHandler.handleException(e)
+            if (errorResource.message == responseHandler.retryError) {
+                getResume(resumeId)
+            } else {
+                errorResource
+            }
         }
     }
 
@@ -32,7 +42,12 @@ class ResumesRepository (
         return try {
             responseHandler.handleSuccess(resumesApi.getUserResumes(userId))
         } catch (e: Exception) {
-            responseHandler.handleException(e)
+            val errorResource: Resource<List<CompactResume>> = responseHandler.handleException(e)
+            if (errorResource.message == responseHandler.retryError) {
+                getUserResumes(userId)
+            } else {
+                errorResource
+            }
         }
     }
 
@@ -44,17 +59,27 @@ class ResumesRepository (
                 name, description
             )))
         } catch (e: Exception) {
-            responseHandler.handleException(e)
+            val errorResource: Resource<Resume> = responseHandler.handleException(e)
+            if (errorResource.message == responseHandler.retryError) {
+                createResume(name, description)
+            } else {
+                errorResource
+            }
         }
     }
 
-    suspend fun editResume(id:String, name: String, description: String): Resource<Resume> {
+    suspend fun editResume(id: String, name: String, description: String): Resource<Resume> {
         return try {
             responseHandler.handleSuccess(resumesApi.editResume(EditResumeRequest(
                 id, name, description
             )))
         } catch (e: Exception) {
-            responseHandler.handleException(e)
+            val errorResource: Resource<Resume> = responseHandler.handleException(e)
+            if (errorResource.message == responseHandler.retryError) {
+                editResume(id, name, description)
+            } else {
+                errorResource
+            }
         }
     }
 }

@@ -18,6 +18,7 @@ class EncryptedPreferences(context: Context) {
 
     private val userKey = "user"
     private val accessTokenKey = "accessToken"
+    private val refreshTokenKey = "refreshToken"
 
     private val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
     private val preferences = EncryptedSharedPreferences.create(
@@ -46,6 +47,14 @@ class EncryptedPreferences(context: Context) {
 
     fun getAccessToken(): String? {
         return preferences.getString(accessTokenKey, null)
+    }
+
+    fun storeRefreshToken(refreshToken: String) {
+        preferences.edit().putString(refreshTokenKey, refreshToken).commit()
+    }
+
+    fun getRefreshToken(): String? {
+        return preferences.getString(refreshTokenKey, null)
     }
 
     fun removeUserData() {

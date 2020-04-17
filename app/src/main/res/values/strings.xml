@@ -71,5 +71,7 @@
     <string name="create_resume">Creating resume</string>
     <string name="edit_resume">Editing resume</string>
     <string name="resume">Resume</string>
-    <string name="type_comment_hint">Add comment...</string>
+    <string name="type_comment_hint">Add comment…</string>
+    <string name="send_comment">Send comment</string>
+    <string name="close_comments">Close comments</string>
 </resources>

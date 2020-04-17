@@ -10,6 +10,7 @@ import androidx.databinding.BindingAdapter
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputLayout
+import com.rtuitlab.studo.R
 import com.rtuitlab.studo.custom_views.AvatarView
 
 

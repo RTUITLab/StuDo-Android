@@ -45,7 +45,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="bottom"
-                    android:background="@drawable/auth_bar_scrim"/>
+                    android:background="@drawable/scrim_auth_bar"/>
 
                 <androidx.appcompat.widget.Toolbar
                     android:layout_width="match_parent"

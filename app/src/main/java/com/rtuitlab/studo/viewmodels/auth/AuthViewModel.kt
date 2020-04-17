@@ -60,6 +60,7 @@ class AuthViewModel(
                     response.data?.let {
                         encryptedPrefs.storeUser(it.user)
                         encryptedPrefs.storeAccessToken(it.accessToken)
+                        encryptedPrefs.storeRefreshToken(it.refreshToken)
                     } ?:run {
                         throw RuntimeException("Not enough data in auth response")
                     }

@@ -33,7 +33,7 @@ class AccountSettingsFragment: Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedElementEnterTransition = MaterialContainerTransform(requireContext()).apply {
+        sharedElementEnterTransition = MaterialContainerTransform().apply {
             scrimColor = ContextCompat.getColor(requireContext(), android.R.color.transparent)
         }
     }

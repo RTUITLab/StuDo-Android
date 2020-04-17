@@ -1,9 +1,6 @@
 package com.rtuitlab.studo.server.auth
 
-import com.rtuitlab.studo.server.auth.models.ResetPasswordRequest
-import com.rtuitlab.studo.server.auth.models.UserLoginRequest
-import com.rtuitlab.studo.server.auth.models.UserLoginResponse
-import com.rtuitlab.studo.server.auth.models.UserRegisterRequest
+import com.rtuitlab.studo.server.auth.models.*
 import retrofit2.http.Body
 import retrofit2.http.POST
 
@@ -16,4 +13,7 @@ interface AuthApi {
 
     @POST("user/password/reset")
     suspend fun resetPassword(@Body body : ResetPasswordRequest)
+
+    @POST("auth/refresh")
+    suspend fun refreshToken(@Body body : RefreshTokenRequest): UserLoginResponse
 }

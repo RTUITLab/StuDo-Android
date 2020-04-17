@@ -14,7 +14,12 @@ class AdsRepository(
         return try {
             responseHandler.handleSuccess(adsApi.getAllAds())
         } catch (e: Exception) {
-            responseHandler.handleException(e)
+            val errorResource: Resource<List<CompactAd>> = responseHandler.handleException(e)
+            if (errorResource.message == responseHandler.retryError) {
+                getAllAds()
+            } else {
+                errorResource
+            }
         }
     }
 
@@ -22,7 +27,12 @@ class AdsRepository(
         return try {
             responseHandler.handleSuccess(adsApi.getAd(adId))
         } catch (e: Exception) {
-            responseHandler.handleException(e)
+            val errorResource: Resource<Ad> = responseHandler.handleException(e)
+            if (errorResource.message == responseHandler.retryError) {
+                getAd(adId)
+            } else {
+                errorResource
+            }
         }
     }
 
@@ -30,7 +40,12 @@ class AdsRepository(
         return try {
             responseHandler.handleSuccess(adsApi.getUserAds(userId))
         } catch (e: Exception) {
-            responseHandler.handleException(e)
+            val errorResource: Resource<List<CompactAd>> = responseHandler.handleException(e)
+            if (errorResource.message == responseHandler.retryError) {
+                getUserAds(userId)
+            } else {
+                errorResource
+            }
         }
     }
 
@@ -50,7 +65,12 @@ class AdsRepository(
                 name, description, shortDescription, beginTime, endTime, organizationId
             )))
         } catch (e: Exception) {
-            responseHandler.handleException(e)
+            val errorResource: Resource<Ad> = responseHandler.handleException(e)
+            if (errorResource.message == responseHandler.retryError) {
+                createAd(name, description, shortDescription, beginTime, endTime, organizationId)
+            } else {
+                errorResource
+            }
         }
     }
 
@@ -67,7 +87,12 @@ class AdsRepository(
                 id, name, description, shortDescription, beginTime, endTime
             )))
         } catch (e: Exception) {
-            responseHandler.handleException(e)
+            val errorResource: Resource<Ad> = responseHandler.handleException(e)
+            if (errorResource.message == responseHandler.retryError) {
+                createAd(id, name, description, shortDescription, beginTime, endTime)
+            } else {
+                errorResource
+            }
         }
     }
 
@@ -77,7 +102,12 @@ class AdsRepository(
         return try {
             responseHandler.handleSuccess(adsApi.getBookmarkedAds())
         } catch (e: Exception) {
-            responseHandler.handleException(e)
+            val errorResource: Resource<List<CompactAd>> = responseHandler.handleException(e)
+            if (errorResource.message == responseHandler.retryError) {
+                getBookmarkedAds()
+            } else {
+                errorResource
+            }
         }
     }
 
@@ -85,7 +115,12 @@ class AdsRepository(
         return try {
             responseHandler.handleSuccess(adsApi.addToBookmarks(adId))
         } catch (e: Exception) {
-            responseHandler.handleException(e)
+            val errorResource: Resource<Unit> = responseHandler.handleException(e)
+            if (errorResource.message == responseHandler.retryError) {
+                addToBookmarks(adId)
+            } else {
+                errorResource
+            }
         }
     }
 
@@ -93,7 +128,12 @@ class AdsRepository(
         return try {
             responseHandler.handleSuccess(adsApi.removeFromBookmarks(adId))
         } catch (e: Exception) {
-            responseHandler.handleException(e)
+            val errorResource: Resource<Unit> = responseHandler.handleException(e)
+            if (errorResource.message == responseHandler.retryError) {
+                removeFromBookmarks(adId)
+            } else {
+                errorResource
+            }
         }
     }
 
@@ -103,7 +143,12 @@ class AdsRepository(
         return try {
             responseHandler.handleSuccess(adsApi.createComment(adId, CreateCommentRequest(commentText)))
         } catch (e: Exception) {
-            responseHandler.handleException(e)
+            val errorResource: Resource<Comment> = responseHandler.handleException(e)
+            if (errorResource.message == responseHandler.retryError) {
+                createComment(adId, commentText)
+            } else {
+                errorResource
+            }
         }
     }
 
@@ -111,7 +156,12 @@ class AdsRepository(
         return try {
             responseHandler.handleSuccess(adsApi.deleteComment(adId, commentId))
         } catch (e: Exception) {
-            responseHandler.handleException(e)
+            val errorResource: Resource<String> = responseHandler.handleException(e)
+            if (errorResource.message == responseHandler.retryError) {
+                deleteComment(adId, commentId)
+            } else {
+                errorResource
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.rtuitlab.studo.account
 
+import android.util.Log
 import com.rtuitlab.studo.persistence.EncryptedPreferences
 import com.rtuitlab.studo.server.general.users.models.User
 import org.koin.dsl.module
@@ -17,11 +18,14 @@ class AccountStorage(
     lateinit var accessToken: String
     private set
 
+    lateinit var refreshToken: String
+        private set
+
     fun isLogged(): Boolean {
         return tryLoadData()
     }
 
-    private fun tryLoadData(): Boolean {
+    fun tryLoadData(): Boolean {
         preferences.getUser()?.let {
             user = it
         } ?:run {
@@ -29,6 +33,12 @@ class AccountStorage(
         }
         preferences.getAccessToken()?.let {
             accessToken = it
+            Log.wtf("Access Token", it)
+        } ?:run {
+            return false
+        }
+        preferences.getRefreshToken()?.let {
+            refreshToken = it
         } ?:run {
             return false
         }
