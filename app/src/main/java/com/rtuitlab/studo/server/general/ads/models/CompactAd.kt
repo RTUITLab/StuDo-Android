@@ -1,6 +1,7 @@
 package com.rtuitlab.studo.server.general.ads.models
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class CompactAd(
     val id : String,
@@ -13,4 +14,4 @@ data class CompactAd(
     val organizationId: String?,
     val organizationName : String?,
     @SerializedName("isFavorite") var isFavourite: Boolean
-)
+): Serializable

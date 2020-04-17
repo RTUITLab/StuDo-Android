@@ -45,7 +45,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="16dp"
-                            android:text="@{viewModel.currentAd.component2()}"
+                            android:text="@{viewModel.title}"
                             style="@style/TextAppearance.MaterialComponents.Headline6"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -156,7 +156,7 @@
                             android:padding="8dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/commentBtn"
-                            tools:src="@drawable/ic_star_border" />
+                            android:src="@drawable/ic_star_border" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -165,19 +165,6 @@
             </androidx.core.widget.NestedScrollView>
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/editBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="@string/edit"
-            android:contentDescription="@string/edit"
-            app:icon="@drawable/ic_edit_white"
-            app:layout_anchor="@id/swipeContainer"
-            app:layout_anchorGravity="bottom|end"
-            app:isShow="@{viewModel.isOwnAd()}"
-            tools:visibility="visible"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

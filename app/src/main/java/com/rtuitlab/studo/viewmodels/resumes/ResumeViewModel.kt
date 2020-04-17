@@ -1,6 +1,5 @@
 package com.rtuitlab.studo.viewmodels.resumes
 
-import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +9,7 @@ import com.rtuitlab.studo.account.AccountStorage
 import com.rtuitlab.studo.server.Resource
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.resumes.ResumesRepository
+import com.rtuitlab.studo.server.general.resumes.models.CompactResume
 import com.rtuitlab.studo.server.general.resumes.models.Resume
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,24 +20,25 @@ class ResumeViewModel(
     private val resumesRepo: ResumesRepository
 ): ViewModel() {
 
-    var resumeId = ""
+    lateinit var compactResume: CompactResume
 
     val currentResume = ObservableField<Resume>()
+
+    val title = ObservableField("")
     val creatorFullName = ObservableField("")
     val creatorAvatarText = ObservableField("")
 
-    val isOwnResume = ObservableBoolean(false)
+    var isOwnResume = false
 
-    private val _currentResumeResource =
-        SingleLiveEvent<Resource<Resume>>()
+    private val _currentResumeResource = SingleLiveEvent<Resource<Resume>>()
     val currentResumeResource: LiveData<Resource<Resume>> = _currentResumeResource
 
-    fun loadResume(resumeId: String = this.resumeId) {
+    fun loadResume() {
         viewModelScope.launch {
             _currentResumeResource.value = Resource.loading(null)
 
             val response = withContext(Dispatchers.IO) {
-                resumesRepo.getResume(resumeId)
+                resumesRepo.getResume(compactResume.id)
             }
 
             if (response.status == Status.SUCCESS) {
@@ -48,14 +49,24 @@ class ResumeViewModel(
         }
     }
 
+    fun fillResumeData() {
+        title.set(compactResume.name)
+
+        creatorFullName.set(compactResume.userName)
+        val userNameSplited = compactResume.userName.split(" ")
+        creatorAvatarText.set("${userNameSplited[0].first()}${userNameSplited[1].first()}")
+    }
+
     private fun fillResumeData(resume: Resume) {
         currentResume.set(resume)
+
+        title.set(resume.name)
 
         val user = resume.user
         creatorFullName.set("${user.name} ${user.surname}")
         creatorAvatarText.set("${user.name.first()}${user.surname.first()}")
 
-        isOwnResume.set(resume.userId == accStorage.user.id)
+        isOwnResume = resume.userId == accStorage.user.id
     }
 
 }

@@ -74,4 +74,5 @@
     <string name="type_comment_hint">Add comment…</string>
     <string name="send_comment">Send comment</string>
     <string name="close_comments">Close comments</string>
+    <string name="delete">Delete</string>
 </resources>

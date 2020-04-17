@@ -9,7 +9,7 @@ class TokenInterceptor(
     private val accStorage: AccountStorage
 ): Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-        Log.wtf("Sent access", accStorage.accessToken)
+        Log.i("Sent access", accStorage.accessToken)
         val request = chain.request()
             .newBuilder()
             .addHeader("Authorization", "Bearer ${accStorage.accessToken}")

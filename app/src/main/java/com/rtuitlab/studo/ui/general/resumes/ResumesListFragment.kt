@@ -25,8 +25,7 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
 
     private var recyclerAdapter: ResumesRecyclerAdapter? = null
 
-    private var resumesType: ResumesType =
-        AllResumes
+    private var resumesType: ResumesType = AllResumes
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -115,7 +114,7 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
 
     override fun onResumeClick(compactResume: CompactResume) {
         val bundle = Bundle().apply {
-            putString("resumeId", compactResume.id)
+            putSerializable("compactResume", compactResume)
         }
         findNavController().navigate(R.id.action_resumesListFragment_to_resumeFragment, bundle)
     }

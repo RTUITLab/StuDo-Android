@@ -33,7 +33,7 @@ class AccountStorage(
         }
         preferences.getAccessToken()?.let {
             accessToken = it
-            Log.wtf("Access Token", it)
+            Log.i("Access Token", it)
         } ?:run {
             return false
         }

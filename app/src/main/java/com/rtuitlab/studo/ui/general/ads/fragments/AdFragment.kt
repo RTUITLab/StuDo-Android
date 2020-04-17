@@ -1,9 +1,7 @@
 package com.rtuitlab.studo.ui.general.ads.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -14,7 +12,8 @@ import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentAdBinding
 import com.rtuitlab.studo.extensions.mainActivity
 import com.rtuitlab.studo.server.Status
-import com.rtuitlab.studo.server.general.ads.models.AdIdWithIsFavourite
+import com.rtuitlab.studo.server.general.ads.models.Ad
+import com.rtuitlab.studo.server.general.ads.models.CompactAd
 import com.rtuitlab.studo.viewmodels.ads.AdViewModel
 import com.rtuitlab.studo.viewmodels.ads.AdsListViewModel
 import com.rtuitlab.studo.viewmodels.ads.CreateEditAd
@@ -50,12 +49,12 @@ class AdFragment: Fragment() {
 
         if (adViewModel.currentAdResource.value?.status != Status.SUCCESS ||
             mainActivity().updateStatuses.isNeedToUpdateAd) {
-            adViewModel.adId = requireArguments().getString("adId")!!
+            extractArguments()
             loadAd()
             mainActivity().updateStatuses.isNeedToUpdateAd = false
-        } else {
-            setFavouriteButtonDrawable(adViewModel.currentAd.get()!!.isFavourite)
         }
+        setFavouriteButtonDrawable()
+        toggleMenu()
 
         setListeners()
         setObservers()
@@ -83,25 +82,12 @@ class AdFragment: Fragment() {
             loadAd()
         }
 
-        editBtn.setOnClickListener {
-            val bundle = Bundle().apply {
-                putSerializable(
-                    CreateEditAd::class.java.simpleName,
-                    EditAd(adViewModel.currentAd.get()!!)
-                )
-            }
-            findNavController().navigate(R.id.action_adFragment_to_createEditAdFragment, bundle)
-        }
-
         favouriteBtn.setOnClickListener {
-            adViewModel.currentAd.get()!!.apply { isFavourite = !isFavourite }
+            adViewModel.compactAd.apply { isFavourite = !isFavourite }
 
-            setFavouriteButtonDrawable(adViewModel.currentAd.get()!!.isFavourite)
+            setFavouriteButtonDrawable()
 
-            adsListViewModel.toggleFavourite(AdIdWithIsFavourite(
-                adViewModel.currentAd.get()!!.id,
-                adViewModel.currentAd.get()!!.isFavourite
-            ))
+            adsListViewModel.toggleFavourite(adViewModel.compactAd)
         }
     }
 
@@ -110,7 +96,7 @@ class AdFragment: Fragment() {
             when(it.status) {
                 Status.SUCCESS -> {
                     swipeContainer.isRefreshing = false
-                    setFavouriteButtonDrawable(it.data!!.isFavourite)
+                    setFavouriteButtonDrawable()
                 }
                 Status.ERROR -> {
                     swipeContainer.isRefreshing = false
@@ -132,8 +118,8 @@ class AdFragment: Fragment() {
                     }
                 }
                 Status.ERROR -> {
-                    adViewModel.currentAd.get()!!.apply { isFavourite = !isFavourite }
-                    setFavouriteButtonDrawable(it.data!!.isFavourite)
+                    adViewModel.compactAd.apply { isFavourite = !isFavourite }
+                    setFavouriteButtonDrawable()
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
                 Status.LOADING -> {}
@@ -145,11 +131,70 @@ class AdFragment: Fragment() {
         adViewModel.loadAd()
     }
 
-    private fun setFavouriteButtonDrawable(isFavourite: Boolean) {
-        if (isFavourite) {
+    private fun toggleMenu() {
+        if (adViewModel.isOwnAd && !collapsingToolbar.toolbar.menu.hasVisibleItems()) {
+            collapsingToolbar.toolbar.inflateMenu(R.menu.edit_delete)
+
+            collapsingToolbar.toolbar.setOnMenuItemClickListener {
+                when(it.itemId) {
+                    R.id.action_edit -> {
+                        adViewModel.currentAd.get()?.let {
+                            val bundle = Bundle().apply {
+                                putSerializable(
+                                    CreateEditAd::class.java.simpleName,
+                                    EditAd(it)
+                                )
+                            }
+                            findNavController().navigate(
+                                R.id.action_adFragment_to_createEditAdFragment,
+                                bundle
+                            )
+                        }
+                    }
+                    R.id.action_delete -> {
+
+                    }
+                }
+                false
+            }
+        }
+    }
+
+    private fun setFavouriteButtonDrawable() {
+        if (adViewModel.compactAd.isFavourite) {
             favouriteBtn.setImageResource(R.drawable.ic_star)
         } else {
             favouriteBtn.setImageResource(R.drawable.ic_star_border)
         }
+    }
+
+    private fun extractArguments() {
+        val compactAd = if (requireArguments().containsKey("compactAd")) {
+            requireArguments().getSerializable("compactAd") as CompactAd
+        } else {
+            val ad = requireArguments().getSerializable("ad") as Ad
+
+            val userName = ad.user?.let {
+                "${it.name} ${it.surname}"
+            } ?:run { null }
+            adViewModel.spannedDescription.set(ad.description)
+
+            CompactAd(
+                ad.id,
+                ad.name,
+                ad.shortDescription,
+                ad.beginTime,
+                ad.endTime,
+                ad.userId,
+                userName,
+                ad.organizationId,
+                ad.organization?.name,
+                ad.isFavourite
+            )
+        }
+
+
+        adViewModel.compactAd = compactAd
+        adViewModel.fillAdData()
     }
 }

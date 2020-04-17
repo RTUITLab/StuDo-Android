@@ -76,7 +76,7 @@ class CreateEditResumeFragment: Fragment() {
                         mainActivity().updateStatuses.isNeedToUpdateResumesList = true
 
                         val bundle = Bundle().apply {
-                            putString("resumeId", it.data!!.id)
+                            putSerializable("resume", it.data!!)
                         }
                         findNavController().navigate(R.id.action_resumesListFragment_to_resumeFragment, bundle)
                     } else if (createEditResume is EditResume) {

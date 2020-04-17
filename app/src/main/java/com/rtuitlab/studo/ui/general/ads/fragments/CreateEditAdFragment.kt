@@ -101,7 +101,7 @@ class CreateEditAdFragment: Fragment() {
                         mainActivity().updateStatuses.isNeedToUpdateAdsList = true
 
                         val bundle = Bundle().apply {
-                            putString("adId", it.data!!.id)
+                            putSerializable("ad", it.data!!)
                         }
                         findNavController().navigate(R.id.action_adsListFragment_to_adFragment, bundle)
                     } else if (createEditAd is EditAd) {

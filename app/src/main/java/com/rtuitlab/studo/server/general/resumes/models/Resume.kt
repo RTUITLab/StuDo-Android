@@ -1,6 +1,7 @@
 package com.rtuitlab.studo.server.general.resumes.models
 
 import com.rtuitlab.studo.server.general.users.models.User
+import java.io.Serializable
 
 data class Resume(
     val id: String,
@@ -8,4 +9,4 @@ data class Resume(
     val description: String,
     val userId: String,
     val user: User
-)
+): Serializable

@@ -13,6 +13,8 @@ import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentResumeBinding
 import com.rtuitlab.studo.extensions.mainActivity
 import com.rtuitlab.studo.server.Status
+import com.rtuitlab.studo.server.general.resumes.models.CompactResume
+import com.rtuitlab.studo.server.general.resumes.models.Resume
 import com.rtuitlab.studo.viewmodels.resumes.CreateEditResume
 import com.rtuitlab.studo.viewmodels.resumes.EditResume
 import com.rtuitlab.studo.viewmodels.resumes.ResumeViewModel
@@ -46,10 +48,11 @@ class ResumeFragment: Fragment() {
 
         if (viewModel.currentResumeResource.value?.status != Status.SUCCESS ||
             mainActivity().updateStatuses.isNeedToUpdateResume) {
-            viewModel.resumeId = requireArguments().getString("resumeId")!!
+            extractArguments()
             loadResume()
             mainActivity().updateStatuses.isNeedToUpdateResume = false
         }
+        toggleMenu()
 
         setListeners()
         setObservers()
@@ -63,16 +66,6 @@ class ResumeFragment: Fragment() {
         swipeContainer.setOnRefreshListener {
             loadResume()
         }
-
-        editBtn.setOnClickListener {
-            val bundle = Bundle().apply {
-                putSerializable(
-                    CreateEditResume::class.java.simpleName,
-                    EditResume(viewModel.currentResume.get()!!)
-                )
-            }
-            findNavController().navigate(R.id.action_resumeFragment_to_createEditResumeFragment, bundle)
-        }
     }
 
     private fun setObservers() {
@@ -80,6 +73,7 @@ class ResumeFragment: Fragment() {
             when(it.status) {
                 Status.SUCCESS -> {
                     swipeContainer.isRefreshing = false
+                    toggleMenu()
                 }
                 Status.ERROR -> {
                     swipeContainer.isRefreshing = false
@@ -94,5 +88,49 @@ class ResumeFragment: Fragment() {
 
     private fun loadResume() {
         viewModel.loadResume()
+    }
+
+    private fun toggleMenu() {
+        if (viewModel.isOwnResume && !collapsingToolbar.toolbar.menu.hasVisibleItems()) {
+            collapsingToolbar.toolbar.inflateMenu(R.menu.edit_delete)
+
+            collapsingToolbar.toolbar.setOnMenuItemClickListener {
+                when(it.itemId) {
+                    R.id.action_edit -> {
+                        viewModel.currentResume.get()?.let {
+                            val bundle = Bundle().apply {
+                                putSerializable(
+                                    CreateEditResume::class.java.simpleName,
+                                    EditResume(it)
+                                )
+                            }
+                            findNavController().navigate(R.id.action_resumeFragment_to_createEditResumeFragment, bundle)
+                        }
+                    }
+                    R.id.action_delete -> {
+
+                    }
+                }
+                false
+            }
+        }
+    }
+
+    private fun extractArguments() {
+        val compactResume = if (requireArguments().containsKey("compactResume")) {
+            requireArguments().getSerializable("compactResume") as CompactResume
+        } else {
+            val resume = requireArguments().getSerializable("resume") as Resume
+
+            CompactResume(
+                resume.id,
+                resume.name,
+                resume.description,
+                "${resume.user.name} ${resume.user.surname}"
+            )
+        }
+
+        viewModel.compactResume = compactResume
+        viewModel.fillResumeData()
     }
 }

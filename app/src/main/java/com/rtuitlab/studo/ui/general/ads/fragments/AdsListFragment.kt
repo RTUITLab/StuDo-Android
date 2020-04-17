@@ -13,7 +13,6 @@ import com.rtuitlab.studo.R
 import com.rtuitlab.studo.recyclers.ads.AdsRecyclerAdapter
 import com.rtuitlab.studo.extensions.mainActivity
 import com.rtuitlab.studo.server.Status
-import com.rtuitlab.studo.server.general.ads.models.AdIdWithIsFavourite
 import com.rtuitlab.studo.server.general.ads.models.CompactAd
 import com.rtuitlab.studo.viewmodels.ads.*
 import kotlinx.android.synthetic.main.fragment_recycler_list.*
@@ -27,8 +26,7 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
 
     private var recyclerAdapter: AdsRecyclerAdapter? = null
 
-    private var adsType: AdsType =
-        AllAds
+    private var adsType: AdsType = AllAds
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -140,14 +138,12 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
 
     override fun onAdClicked(compactAd: CompactAd) {
         val bundle = Bundle().apply {
-            putString("adId", compactAd.id)
+            putSerializable("compactAd", compactAd)
         }
         findNavController().navigate(R.id.action_adsListFragment_to_adFragment, bundle)
     }
 
     override fun onFavouriteToggle(compactAd: CompactAd) {
-        viewModel.toggleFavourite(AdIdWithIsFavourite(
-            compactAd.id, compactAd.isFavourite
-        ))
+        viewModel.toggleFavourite(compactAd)
     }
 }

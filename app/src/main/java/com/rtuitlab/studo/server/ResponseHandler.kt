@@ -73,7 +73,7 @@ class ResponseHandler(
     }
 
     private suspend fun tryUpdateToken() {
-        Log.wtf(javaClass.name, "Update refresh token")
+        Log.i(javaClass.name, "Update refresh token")
         val response = authApi.refreshToken(RefreshTokenRequest(accStorage.refreshToken))
         encryptedPrefs.storeUser(response.user)
         encryptedPrefs.storeAccessToken(response.accessToken)

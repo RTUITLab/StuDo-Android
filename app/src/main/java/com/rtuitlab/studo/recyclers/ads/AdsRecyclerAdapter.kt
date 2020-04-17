@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.rtuitlab.studo.R
-import com.rtuitlab.studo.server.general.ads.models.AdIdWithIsFavourite
 import com.rtuitlab.studo.server.general.ads.models.CompactAd
 import kotlinx.android.synthetic.main.view_recycler_ad.view.*
 import kotlinx.coroutines.Dispatchers
@@ -36,10 +35,10 @@ class AdsRecyclerAdapter: RecyclerView.Adapter<AdsRecyclerAdapter.AdHolder>() {
         }
     }
 
-    fun handleFavouriteError(adIdWithIsFavourite: AdIdWithIsFavourite) {
+    fun handleFavouriteError(compactAd: CompactAd) {
         data.forEach {
-            if (it.id == adIdWithIsFavourite.id) {
-                it.isFavourite = adIdWithIsFavourite.isFavourite
+            if (it.id == compactAd.id) {
+                it.isFavourite = compactAd.isFavourite
                 notifyItemChanged(data.indexOf(it))
                 return@forEach
             }

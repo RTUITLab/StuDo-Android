@@ -6,7 +6,6 @@ import com.rtuitlab.studo.account.AccountStorage
 import com.rtuitlab.studo.server.Resource
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.ads.AdsRepository
-import com.rtuitlab.studo.server.general.ads.models.AdIdWithIsFavourite
 import com.rtuitlab.studo.server.general.ads.models.CompactAd
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -45,36 +44,35 @@ class AdsListViewModel(
         }
     }
 
-    private val _favouritesResource =
-        SingleLiveEvent<Resource<AdIdWithIsFavourite>>()
-    val favouritesResource: LiveData<Resource<AdIdWithIsFavourite>> = _favouritesResource
+    private val _favouritesResource = SingleLiveEvent<Resource<CompactAd>>()
+    val favouritesResource: LiveData<Resource<CompactAd>> = _favouritesResource
 
-    fun toggleFavourite(adIdWithIsFavourite: AdIdWithIsFavourite) {
+    fun toggleFavourite(compactAd: CompactAd) {
         viewModelScope.launch {
             _favouritesResource.value = Resource.loading(null)
 
             val response = withContext(Dispatchers.IO) {
-                if (adIdWithIsFavourite.isFavourite) {
-                    adsRepo.addToBookmarks(adIdWithIsFavourite.id)
+                if (compactAd.isFavourite) {
+                    adsRepo.addToBookmarks(compactAd.id)
                 } else {
-                    adsRepo.removeFromBookmarks(adIdWithIsFavourite.id)
+                    adsRepo.removeFromBookmarks(compactAd.id)
                 }
             }
 
             if (response.status == Status.SUCCESS) {
-                _favouritesResource.value = Resource.success(adIdWithIsFavourite)
+                _favouritesResource.value = Resource.success(compactAd)
             } else {
                 val checkResponse =  withContext(Dispatchers.IO) {
-                    adsRepo.getAd(adIdWithIsFavourite.id)
+                    adsRepo.getAd(compactAd.id)
                 }
 
                 if (checkResponse.status == Status.SUCCESS &&
-                    checkResponse.data!!.isFavourite == adIdWithIsFavourite.isFavourite) {
-                    _favouritesResource.value = Resource.success(adIdWithIsFavourite)
+                    checkResponse.data!!.isFavourite == compactAd.isFavourite) {
+                    _favouritesResource.value = Resource.success(compactAd)
                 } else {
                     _favouritesResource.value = Resource.error(
                         response.message!!,
-                        adIdWithIsFavourite.apply { isFavourite = !isFavourite }
+                        compactAd.apply { isFavourite = !isFavourite }
                     )
                 }
             }
