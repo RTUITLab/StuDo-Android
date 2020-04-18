@@ -16,6 +16,7 @@ import com.rtuitlab.studo.ui.general.ads.dialogs.TimeRangeDialog
 import com.rtuitlab.studo.databinding.FragmentCreateEditAdBinding
 import com.rtuitlab.studo.extensions.mainActivity
 import com.rtuitlab.studo.server.Status
+import com.rtuitlab.studo.server.general.ads.models.Ad
 import com.rtuitlab.studo.viewmodels.ads.CreateAd
 import com.rtuitlab.studo.viewmodels.ads.CreateEditAd
 import com.rtuitlab.studo.viewmodels.ads.CreateEditAdViewModel
@@ -99,11 +100,7 @@ class CreateEditAdFragment: Fragment() {
 
                     if (createEditAd == CreateAd) {
                         mainActivity().updateStatuses.isNeedToUpdateAdsList = true
-
-                        val bundle = Bundle().apply {
-                            putSerializable("ad", it.data!!)
-                        }
-                        findNavController().navigate(R.id.action_adsListFragment_to_adFragment, bundle)
+                        navigateToAd(it.data!!)
                     } else if (createEditAd is EditAd) {
                         mainActivity().updateStatuses.isNeedToUpdateAd = true
                         mainActivity().updateStatuses.isNeedToUpdateAdsList = true
@@ -176,5 +173,12 @@ class CreateEditAdFragment: Fragment() {
             viewModel.setTimeRange(beginHour, beginMinute, endHour, endMinute)
         }
         dialog.show(childFragmentManager, null)
+    }
+
+    private fun navigateToAd(ad: Ad) {
+        val bundle = Bundle().apply {
+            putSerializable("ad", ad)
+        }
+        findNavController().navigate(R.id.action_adsListFragment_to_adFragment, bundle)
     }
 }

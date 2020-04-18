@@ -6,7 +6,6 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.navigation.NavDeepLinkBuilder
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.rtuitlab.studo.R
@@ -52,7 +51,7 @@ class AdFragment: Fragment() {
         if (adViewModel.currentAdResource.value?.status != Status.SUCCESS ||
             mainActivity().updateStatuses.isNeedToUpdateAd) {
             extractArguments()
-            loadAd()
+            adViewModel.loadAd()
             mainActivity().updateStatuses.isNeedToUpdateAd = false
         }
         setFavouriteButtonDrawable()
@@ -63,36 +62,13 @@ class AdFragment: Fragment() {
     }
 
     private fun setListeners() {
-        profilePanel.setOnClickListener {
-            if (adViewModel.currentAd.get()?.organizationId == null) { // User`s ad
-                val bundle = Bundle().apply {
-                    putString("userId", adViewModel.currentAd.get()!!.userId)
-                    putSerializable("user", adViewModel.currentAd.get()?.user)
-                }
-                findNavController().navigate(R.id.action_adFragment_to_otherUserFragment, bundle)
-            } else { // Organization`s ad
-                Snackbar.make(requireView(), "Organizations in progress", Snackbar.LENGTH_SHORT).show()
-            }
-        }
+        profilePanel.setOnClickListener { navigateToProfile() }
 
-        commentBtn.setOnClickListener {
-            adViewModel.currentAd.get()?.let {
-                val bundle = Bundle().apply {
-                    putSerializable("ad", it)
-                }
-                findNavController().navigate(R.id.action_adFragment_to_commentsBottomDialog, bundle)
-            }
-        }
-
-        swipeContainer.setOnRefreshListener {
-            loadAd()
-        }
+        commentBtn.setOnClickListener { navigateToComments() }
 
         favouriteBtn.setOnClickListener {
             adViewModel.compactAd.apply { isFavourite = !isFavourite }
-
             setFavouriteButtonDrawable()
-
             adsListViewModel.toggleFavourite(adViewModel.compactAd)
         }
     }
@@ -144,10 +120,6 @@ class AdFragment: Fragment() {
                 Status.LOADING -> {}
             }
         })
-    }
-
-    private fun loadAd() {
-        adViewModel.loadAd()
     }
 
     private fun toggleMenu() {
@@ -204,16 +176,38 @@ class AdFragment: Fragment() {
     }
 
     private fun navigateToEdit() {
-        val bundle = Bundle().apply {
-            putSerializable(
-                CreateEditAd::class.java.simpleName,
-                EditAd(adViewModel.currentAd.get()!!)
-            )
+        adViewModel.currentAd.get()?.let {
+            val bundle = Bundle().apply {
+                putSerializable(
+                    CreateEditAd::class.java.simpleName,
+                    EditAd(it)
+                )
+            }
+            findNavController().navigate(R.id.action_adFragment_to_createEditAdFragment, bundle)
         }
-        findNavController().navigate(
-            R.id.action_adFragment_to_createEditAdFragment,
-            bundle
-        )
+    }
+
+    private fun navigateToComments() {
+        adViewModel.currentAd.get()?.let {
+            val bundle = Bundle().apply {
+                putSerializable("ad", it)
+            }
+            findNavController().navigate(R.id.action_adFragment_to_commentsBottomDialog, bundle)
+        }
+    }
+
+    private fun navigateToProfile() {
+        if (adViewModel.currentAd.get()?.organizationId == null) { // User`s ad
+            adViewModel.currentAd.get()?.let {
+                val bundle = Bundle().apply {
+                    putString("userId", it.userId)
+                    putSerializable("user", it.user)
+                }
+                findNavController().navigate(R.id.action_adFragment_to_otherUserFragment, bundle)
+            }
+        } else { // Organization`s ad
+            Snackbar.make(requireView(), "Organizations in progress", Snackbar.LENGTH_SHORT).show()
+        }
     }
 
     private fun showDeleteConfirmation() {

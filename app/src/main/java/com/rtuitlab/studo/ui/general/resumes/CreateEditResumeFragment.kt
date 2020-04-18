@@ -12,6 +12,7 @@ import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentCreateEditResumeBinding
 import com.rtuitlab.studo.extensions.mainActivity
 import com.rtuitlab.studo.server.Status
+import com.rtuitlab.studo.server.general.resumes.models.Resume
 import com.rtuitlab.studo.viewmodels.resumes.CreateEditResume
 import com.rtuitlab.studo.viewmodels.resumes.CreateEditResumeViewModel
 import com.rtuitlab.studo.viewmodels.resumes.CreateResume
@@ -75,10 +76,7 @@ class CreateEditResumeFragment: Fragment() {
                     if (createEditResume == CreateResume) {
                         mainActivity().updateStatuses.isNeedToUpdateResumesList = true
 
-                        val bundle = Bundle().apply {
-                            putSerializable("resume", it.data!!)
-                        }
-                        findNavController().navigate(R.id.action_resumesListFragment_to_resumeFragment, bundle)
+                        navigateToResume(it.data!!)
                     } else if (createEditResume is EditResume) {
                         mainActivity().updateStatuses.isNeedToUpdateResume = true
                         mainActivity().updateStatuses.isNeedToUpdateResumesList = true
@@ -90,5 +88,12 @@ class CreateEditResumeFragment: Fragment() {
                 Status.LOADING -> {}
             }
         })
+    }
+
+    private fun navigateToResume(resume: Resume) {
+        val bundle = Bundle().apply {
+            putSerializable("resume", resume)
+        }
+        findNavController().navigate(R.id.action_resumesListFragment_to_resumeFragment, bundle)
     }
 }

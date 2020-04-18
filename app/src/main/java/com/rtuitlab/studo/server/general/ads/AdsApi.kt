@@ -26,13 +26,13 @@ interface AdsApi {
 
 
     @GET("ad/bookmarks")
-    suspend fun getBookmarkedAds(): List<CompactAd>
+    suspend fun getFavouritesAds(): List<CompactAd>
 
     @POST("ad/bookmarks/{adId}")
-    suspend fun addToBookmarks(@Path("adId") adId : String)
+    suspend fun addToFavourites(@Path("adId") adId : String)
 
     @DELETE("ad/bookmarks/{adId}")
-    suspend fun removeFromBookmarks(@Path("adId") adId : String)
+    suspend fun removeFromFavourites(@Path("adId") adId : String)
 
 
 

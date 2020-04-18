@@ -75,13 +75,9 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
     }
 
     private fun setListeners() {
-        swipeContainer.setOnRefreshListener {
-            loadResumes()
-        }
+        swipeContainer.setOnRefreshListener { loadResumes() }
 
-        createBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_resumesListFragment_to_createEditResumeFragment)
-        }
+        createBtn.setOnClickListener { navigateToCreateResume() }
     }
 
     private fun setObservers() {
@@ -113,6 +109,14 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
     }
 
     override fun onResumeClick(compactResume: CompactResume) {
+        navigateToResume(compactResume)
+    }
+
+    private fun navigateToCreateResume() {
+        findNavController().navigate(R.id.action_resumesListFragment_to_createEditResumeFragment)
+    }
+
+    private fun navigateToResume(compactResume: CompactResume) {
         val bundle = Bundle().apply {
             putSerializable("compactResume", compactResume)
         }

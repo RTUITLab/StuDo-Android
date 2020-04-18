@@ -46,7 +46,7 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
             AllAds -> {
                 collapsingToolbar.title = getString(R.string.title_ads)
             }
-            BookmarkedAds -> {
+            FavouritesAds -> {
                 collapsingToolbar.title = getString(R.string.favourites)
                 mainActivity().enableNavigateButton(collapsingToolbar.toolbar)
                 createBtn.hide()
@@ -82,13 +82,9 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
     }
 
     private fun setListeners() {
-        swipeContainer.setOnRefreshListener {
-            loadAds()
-        }
+        swipeContainer.setOnRefreshListener { loadAds() }
 
-        createBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_adsListFragment_to_createEditAdFragment)
-        }
+        createBtn.setOnClickListener { navigateToCreateAd() }
     }
 
     private fun setObservers() {
@@ -137,13 +133,21 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
     }
 
     override fun onAdClicked(compactAd: CompactAd) {
-        val bundle = Bundle().apply {
-            putSerializable("compactAd", compactAd)
-        }
-        findNavController().navigate(R.id.action_adsListFragment_to_adFragment, bundle)
+        navigateToAd(compactAd)
     }
 
     override fun onFavouriteToggle(compactAd: CompactAd) {
         viewModel.toggleFavourite(compactAd)
+    }
+
+    private fun navigateToCreateAd() {
+        findNavController().navigate(R.id.action_adsListFragment_to_createEditAdFragment)
+    }
+
+    private fun navigateToAd(compactAd: CompactAd) {
+        val bundle = Bundle().apply {
+            putSerializable("compactAd", compactAd)
+        }
+        findNavController().navigate(R.id.action_adsListFragment_to_adFragment, bundle)
     }
 }

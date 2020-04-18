@@ -15,7 +15,7 @@ import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentProfileBinding
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.viewmodels.ads.AdsType
-import com.rtuitlab.studo.viewmodels.ads.BookmarkedAds
+import com.rtuitlab.studo.viewmodels.ads.FavouritesAds
 import com.rtuitlab.studo.viewmodels.ads.MyAds
 import com.rtuitlab.studo.viewmodels.resumes.MyResumes
 import com.rtuitlab.studo.viewmodels.resumes.ResumesType
@@ -65,52 +65,62 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setMenuListener() {
-        profilePanel.setOnClickListener {
-            val extras = FragmentNavigatorExtras(
-                avatarView to "avatarView"
-            )
-            findNavController().navigate(
-                R.id.action_profileFragment_to_accountSettingsFragment, null, null, extras
-            )
-        }
+        profilePanel.setOnClickListener { navigateToProfile() }
 
         profileList.setOnMenuItemClickListener (
-            onAds = {
-                val bundle = Bundle().apply {
-                    putSerializable(
-                        AdsType::class.java.simpleName,
-                        MyAds
-                    )
-                }
-                findNavController().navigate(R.id.action_profileFragment_to_ads, bundle)
-            },
-            onResumes = {
-                val bundle = Bundle().apply {
-                    putSerializable(
-                        ResumesType::class.java.simpleName,
-                        MyResumes
-                    )
-                }
-                findNavController().navigate(R.id.action_profileFragment_to_resumes, bundle)
-            },
-            onBookmarks = {
-                val bundle = Bundle().apply {
-                    putSerializable(
-                        AdsType::class.java.simpleName,
-                        BookmarkedAds
-                    )
-                }
-                findNavController().navigate(R.id.action_profileFragment_to_ads, bundle)
-            },
+            onAds = { navigateToAds() },
+            onResumes = { navigateToResumes() },
+            onFavourites = { navigateToFavourites() },
             onOrganizations = {
                 Snackbar.make(requireView(), "WORK IN PROGRESS", Snackbar.LENGTH_SHORT).show()
             },
-            onSettings = {
-                findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)
-            },
+            onSettings = { navigateToSettings() },
             onAbout = {
                 Snackbar.make(requireView(), "ABOUT", Snackbar.LENGTH_SHORT).show()
             }
         )
+    }
+
+    private fun navigateToProfile() {
+        val extras = FragmentNavigatorExtras(
+            avatarView to "avatarView"
+        )
+        findNavController().navigate(
+            R.id.action_profileFragment_to_accountSettingsFragment, null, null, extras
+        )
+    }
+
+    private fun navigateToAds() {
+        val bundle = Bundle().apply {
+            putSerializable(
+                AdsType::class.java.simpleName,
+                MyAds
+            )
+        }
+        findNavController().navigate(R.id.action_profileFragment_to_ads, bundle)
+    }
+
+    private fun navigateToResumes() {
+        val bundle = Bundle().apply {
+            putSerializable(
+                ResumesType::class.java.simpleName,
+                MyResumes
+            )
+        }
+        findNavController().navigate(R.id.action_profileFragment_to_resumes, bundle)
+    }
+
+    private fun navigateToFavourites() {
+        val bundle = Bundle().apply {
+            putSerializable(
+                AdsType::class.java.simpleName,
+                FavouritesAds
+            )
+        }
+        findNavController().navigate(R.id.action_profileFragment_to_ads, bundle)
+    }
+
+    private fun navigateToSettings() {
+        findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)
     }
 }

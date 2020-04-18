@@ -57,13 +57,13 @@ class ProfileListView @JvmOverloads constructor(
     }
 
     private enum class MenuItem {
-        ADS, RESUMES, BOOKMARKS, ORGANIZATIONS, SETTINGS, ABOUT
+        ADS, RESUMES, FAVOURITES, ORGANIZATIONS, SETTINGS, ABOUT
     }
 
     fun setOnMenuItemClickListener(
         onAds: () -> Unit = funcStub,
         onResumes: () -> Unit = funcStub,
-        onBookmarks: () -> Unit = funcStub,
+        onFavourites: () -> Unit = funcStub,
         onOrganizations: () -> Unit = funcStub,
         onSettings: () -> Unit = funcStub,
         onAbout: () -> Unit = funcStub
@@ -72,7 +72,7 @@ class ProfileListView @JvmOverloads constructor(
             when(position) {
                 MenuItem.ADS.ordinal -> { onAds.invoke() }
                 MenuItem.RESUMES.ordinal -> { onResumes.invoke() }
-                MenuItem.BOOKMARKS.ordinal -> { onBookmarks.invoke() }
+                MenuItem.FAVOURITES.ordinal -> { onFavourites.invoke() }
                 MenuItem.ORGANIZATIONS.ordinal -> { onOrganizations.invoke() }
                 MenuItem.SETTINGS.ordinal -> { onSettings.invoke() }
                 MenuItem.ABOUT.ordinal -> { onAbout.invoke() }

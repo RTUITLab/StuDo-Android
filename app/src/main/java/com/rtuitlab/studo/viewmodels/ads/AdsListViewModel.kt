@@ -14,7 +14,7 @@ import java.io.Serializable
 
 sealed class AdsType : Serializable
 object AllAds: AdsType()
-object BookmarkedAds : AdsType()
+object FavouritesAds : AdsType()
 object MyAds: AdsType()
 data class UserAds(val userId: String): AdsType()
 
@@ -34,7 +34,7 @@ class AdsListViewModel(
             val response = withContext(Dispatchers.IO) {
                 when(adsType) {
                     AllAds -> adsRepo.getAllAds()
-                    BookmarkedAds -> adsRepo.getBookmarkedAds()
+                    FavouritesAds -> adsRepo.getFavouritesAds()
                     is MyAds -> adsRepo.getUserAds(accStorage.user.id)
                     is UserAds -> adsRepo.getUserAds(adsType.userId)
                 }
@@ -53,9 +53,9 @@ class AdsListViewModel(
 
             val response = withContext(Dispatchers.IO) {
                 if (compactAd.isFavourite) {
-                    adsRepo.addToBookmarks(compactAd.id)
+                    adsRepo.addToFavourites(compactAd.id)
                 } else {
-                    adsRepo.removeFromBookmarks(compactAd.id)
+                    adsRepo.removeFromFavourites(compactAd.id)
                 }
             }
 

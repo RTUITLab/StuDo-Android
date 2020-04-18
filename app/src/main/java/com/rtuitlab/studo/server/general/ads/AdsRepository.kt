@@ -1,6 +1,5 @@
 package com.rtuitlab.studo.server.general.ads
 
-import android.util.Log
 import com.rtuitlab.studo.server.Resource
 import com.rtuitlab.studo.server.ResponseHandler
 import com.rtuitlab.studo.server.general.ads.models.*
@@ -59,7 +58,6 @@ class AdsRepository(
         endTime: String,
         organizationId: String? = null
     ): Resource<Ad> {
-        Log.wtf("Create ad", "$beginTime - $endTime")
         return try {
             responseHandler.handleSuccess(adsApi.createAd(CreateAdRequest(
                 name, description, shortDescription, beginTime, endTime, organizationId
@@ -111,39 +109,39 @@ class AdsRepository(
 
 
 
-    suspend fun getBookmarkedAds(): Resource<List<CompactAd>> {
+    suspend fun getFavouritesAds(): Resource<List<CompactAd>> {
         return try {
-            responseHandler.handleSuccess(adsApi.getBookmarkedAds())
+            responseHandler.handleSuccess(adsApi.getFavouritesAds())
         } catch (e: Exception) {
             val errorResource: Resource<List<CompactAd>> = responseHandler.handleException(e)
             if (errorResource.message == responseHandler.retryError) {
-                getBookmarkedAds()
+                getFavouritesAds()
             } else {
                 errorResource
             }
         }
     }
 
-    suspend fun addToBookmarks(adId: String): Resource<Unit> {
+    suspend fun addToFavourites(adId: String): Resource<Unit> {
         return try {
-            responseHandler.handleSuccess(adsApi.addToBookmarks(adId))
+            responseHandler.handleSuccess(adsApi.addToFavourites(adId))
         } catch (e: Exception) {
             val errorResource: Resource<Unit> = responseHandler.handleException(e)
             if (errorResource.message == responseHandler.retryError) {
-                addToBookmarks(adId)
+                addToFavourites(adId)
             } else {
                 errorResource
             }
         }
     }
 
-    suspend fun removeFromBookmarks(adId: String): Resource<Unit> {
+    suspend fun removeFromFavourites(adId: String): Resource<Unit> {
         return try {
-            responseHandler.handleSuccess(adsApi.removeFromBookmarks(adId))
+            responseHandler.handleSuccess(adsApi.removeFromFavourites(adId))
         } catch (e: Exception) {
             val errorResource: Resource<Unit> = responseHandler.handleException(e)
             if (errorResource.message == responseHandler.retryError) {
-                removeFromBookmarks(adId)
+                removeFromFavourites(adId)
             } else {
                 errorResource
             }

@@ -50,7 +50,7 @@ class ResumeFragment: Fragment() {
         if (viewModel.currentResumeResource.value?.status != Status.SUCCESS ||
             mainActivity().updateStatuses.isNeedToUpdateResume) {
             extractArguments()
-            loadResume()
+            viewModel.loadResume()
             mainActivity().updateStatuses.isNeedToUpdateResume = false
         }
         toggleMenu()
@@ -60,17 +60,7 @@ class ResumeFragment: Fragment() {
     }
 
     private fun setListeners() {
-        profilePanel.setOnClickListener {
-            val bundle = Bundle().apply {
-                putString("userId", viewModel.currentResume.get()!!.userId)
-                putSerializable("user", viewModel.currentResume.get()?.user)
-            }
-            findNavController().navigate(R.id.action_resumeFragment_to_otherUserFragment2, bundle)
-        }
-
-        swipeContainer.setOnRefreshListener {
-            loadResume()
-        }
+        profilePanel.setOnClickListener { navigateToProfile() }
     }
 
     private fun setObservers() {
@@ -102,10 +92,6 @@ class ResumeFragment: Fragment() {
                 Status.LOADING -> {}
             }
         })
-    }
-
-    private fun loadResume() {
-        viewModel.loadResume()
     }
 
     private fun toggleMenu() {
@@ -143,13 +129,25 @@ class ResumeFragment: Fragment() {
     }
 
     private fun navigateToEdit() {
-        val bundle = Bundle().apply {
-            putSerializable(
-                CreateEditResume::class.java.simpleName,
-                EditResume(viewModel.currentResume.get()!!)
-            )
+        viewModel.currentResume.get()?.let {
+            val bundle = Bundle().apply {
+                putSerializable(
+                    CreateEditResume::class.java.simpleName,
+                    EditResume(it)
+                )
+            }
+            findNavController().navigate(R.id.action_resumeFragment_to_createEditResumeFragment, bundle)
         }
-        findNavController().navigate(R.id.action_resumeFragment_to_createEditResumeFragment, bundle)
+    }
+
+    private fun navigateToProfile() {
+        viewModel.currentResume.get()?.let {
+            val bundle = Bundle().apply {
+                putString("userId", it.userId)
+                putSerializable("user", it.user)
+            }
+            findNavController().navigate(R.id.action_resumeFragment_to_otherUserFragment2, bundle)
+        }
     }
 
     private fun showDeleteConfirmation() {
