@@ -9,6 +9,7 @@ import com.rtuitlab.studo.viewmodels.resumes.CreateEditResumeViewModel
 import com.rtuitlab.studo.viewmodels.resumes.ResumeViewModel
 import com.rtuitlab.studo.viewmodels.resumes.ResumesListViewModel
 import com.rtuitlab.studo.viewmodels.users.AccountChangesDialogsViewModel
+import com.rtuitlab.studo.viewmodels.users.OtherUserViewModel
 import com.rtuitlab.studo.viewmodels.users.ProfileViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -23,7 +24,12 @@ val viewModelsModule = module {
         )
     }
 
-    viewModel { MainViewModel(get(), get()) }
+    viewModel {
+        MainViewModel(
+            get(),
+            get()
+        )
+    }
 
     viewModel {
         AdsListViewModel(
@@ -31,6 +37,7 @@ val viewModelsModule = module {
             get()
         )
     }
+
     viewModel {
         AdViewModel(
             androidApplication(),
@@ -39,6 +46,7 @@ val viewModelsModule = module {
             get()
         )
     }
+
     viewModel {
         CreateEditAdViewModel(
             androidApplication(),
@@ -46,7 +54,12 @@ val viewModelsModule = module {
             get()
         )
     }
-    viewModel { CommentsViewModel(get()) }
+
+    viewModel {
+        CommentsViewModel(
+            get()
+        )
+    }
 
     viewModel {
         ResumesListViewModel(
@@ -54,18 +67,19 @@ val viewModelsModule = module {
             get()
         )
     }
+
     viewModel {
         ResumeViewModel(
             get(),
             get()
         )
     }
+
     viewModel {
         CreateEditResumeViewModel(
             get()
         )
     }
-
 
     viewModel {
         ProfileViewModel(
@@ -75,8 +89,15 @@ val viewModelsModule = module {
             get()
         )
     }
+
     viewModel {
         AccountChangesDialogsViewModel(
+            get()
+        )
+    }
+
+    viewModel {
+        OtherUserViewModel(
             get()
         )
     }

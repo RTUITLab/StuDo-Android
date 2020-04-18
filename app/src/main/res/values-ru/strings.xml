@@ -76,4 +76,6 @@
     <string name="delete_resume_confirmation">Вы хотите удалить резюме?</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
+    <string name="user_ads">Объявления пользователя</string>
+    <string name="user_resumes">Резюме пользователя</string>
 </resources>

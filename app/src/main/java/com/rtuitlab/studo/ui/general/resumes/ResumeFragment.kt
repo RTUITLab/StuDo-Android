@@ -61,7 +61,11 @@ class ResumeFragment: Fragment() {
 
     private fun setListeners() {
         profilePanel.setOnClickListener {
-
+            val bundle = Bundle().apply {
+                putString("userId", viewModel.currentResume.get()!!.userId)
+                putSerializable("user", viewModel.currentResume.get()?.user)
+            }
+            findNavController().navigate(R.id.action_resumeFragment_to_otherUserFragment2, bundle)
         }
 
         swipeContainer.setOnRefreshListener {

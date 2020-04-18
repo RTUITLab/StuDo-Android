@@ -27,6 +27,19 @@ class UserRepository (
         }
     }
 
+    suspend fun loadUser(userId: String): Resource<User> {
+        return try {
+            responseHandler.handleSuccess(userApi.getUser(userId))
+        } catch (e: Exception) {
+            val errorResource: Resource<User> = responseHandler.handleException(e)
+            if (errorResource.message == responseHandler.retryError) {
+                loadCurrentUser()
+            } else {
+                errorResource
+            }
+        }
+    }
+
     suspend fun changeUserInfo(name: String, surname: String, cardNumber: String): Resource<User> {
         return try {
             responseHandler.handleSuccess(userApi.changeUserInfo(

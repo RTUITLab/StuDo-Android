@@ -8,7 +8,6 @@ import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.BindingAdapter
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputLayout
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.custom_views.AvatarView
@@ -36,15 +35,6 @@ fun EditText.setAfterTextChangedListener(func: () -> Unit) {
         doAfterTextChanged {
             func.invoke()
         }
-    }
-}
-
-@BindingAdapter("isShow")
-fun FloatingActionButton.isShow(isShow: Boolean) {
-    if (isShow) {
-        this.show()
-    } else {
-        this.hide()
     }
 }
 

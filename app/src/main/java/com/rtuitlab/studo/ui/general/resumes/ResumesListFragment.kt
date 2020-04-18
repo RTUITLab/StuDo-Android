@@ -50,7 +50,7 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
                 mainActivity().enableNavigateButton(collapsingToolbar.toolbar)
             }
             is UserResumes -> {
-                // TODO - add title in toolbar
+                collapsingToolbar.title = getString(R.string.user_resumes)
                 mainActivity().enableNavigateButton(collapsingToolbar.toolbar)
                 createBtn.hide()
             }

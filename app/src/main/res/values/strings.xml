@@ -79,4 +79,6 @@
     <string name="delete_resume_confirmation">Do you want to delete a resume?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="user_ads">User ads</string>
+    <string name="user_resumes">User resumes</string>
 </resources>

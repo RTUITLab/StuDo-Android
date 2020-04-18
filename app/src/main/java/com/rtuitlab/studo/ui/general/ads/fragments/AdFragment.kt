@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.NavDeepLinkBuilder
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.rtuitlab.studo.R
@@ -64,7 +65,11 @@ class AdFragment: Fragment() {
     private fun setListeners() {
         profilePanel.setOnClickListener {
             if (adViewModel.currentAd.get()?.organizationId == null) { // User`s ad
-
+                val bundle = Bundle().apply {
+                    putString("userId", adViewModel.currentAd.get()!!.userId)
+                    putSerializable("user", adViewModel.currentAd.get()?.user)
+                }
+                findNavController().navigate(R.id.action_adFragment_to_otherUserFragment, bundle)
             } else { // Organization`s ad
                 Snackbar.make(requireView(), "Organizations in progress", Snackbar.LENGTH_SHORT).show()
             }
