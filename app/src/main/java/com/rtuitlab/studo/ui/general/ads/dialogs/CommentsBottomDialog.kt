@@ -5,6 +5,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.recyclers.comments.CommentsRecyclerAdapter
@@ -16,6 +17,7 @@ import com.rtuitlab.studo.ui.general.YesNoDialog
 import com.rtuitlab.studo.viewmodels.ads.CommentsViewModel
 import kotlinx.android.synthetic.main.fragment_comments.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.lang.Exception
 
 
 class CommentsBottomDialog: BottomSheetDialogFragment(), CommentsRecyclerAdapter.OnCommentClickListener {
@@ -120,13 +122,20 @@ class CommentsBottomDialog: BottomSheetDialogFragment(), CommentsRecyclerAdapter
     }
 
     override fun onNavigateToProfile(comment: Comment) {
-        Toast.makeText(requireContext(), "Navigate: ${comment.text}", Toast.LENGTH_SHORT).show()
+        val bundle = Bundle().apply {
+            putString("userId", comment.authorId)
+        }
+        try {
+            findNavController().navigate(R.id.action_commentsBottomDialog_to_other_user, bundle)
+        } catch (e: Exception) {
+            findNavController().navigate(R.id.otherUserFragment, bundle)
+        }
     }
 
     override fun onDeleteComment(comment: Comment) {
         val dialog = YesNoDialog
             .getInstance(getString(R.string.delete_comment_confirmation), object : YesNoDialog.OnYesClickListener{
-                override fun onYesClicked() {
+                override fun onYesClick() {
                     viewModel.deleteComment(comment.id)
                 }
             })

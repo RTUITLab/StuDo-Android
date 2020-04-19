@@ -218,7 +218,7 @@ class AdFragment: Fragment() {
     private fun showDeleteConfirmation() {
         val dialog = YesNoDialog
             .getInstance(getString(R.string.delete_ad_confirmation), object : YesNoDialog.OnYesClickListener{
-                override fun onYesClicked() {
+                override fun onYesClick() {
                     adViewModel.deleteAd()
                 }
             })

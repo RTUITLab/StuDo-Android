@@ -40,12 +40,12 @@ class YesNoDialog: DialogFragment() {
             .setTitle(title)
             .setNegativeButton(R.string.no, null)
             .setPositiveButton(R.string.yes) { _, _ ->
-                listener.onYesClicked()
+                listener.onYesClick()
             }
             .create()
     }
 
     interface OnYesClickListener: Serializable {
-        fun onYesClicked()
+        fun onYesClick()
     }
 }

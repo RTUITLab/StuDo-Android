@@ -158,7 +158,7 @@ class ResumeFragment: Fragment() {
     private fun showDeleteConfirmation() {
         val dialog = YesNoDialog
             .getInstance(getString(R.string.delete_resume_confirmation), object : YesNoDialog.OnYesClickListener{
-                override fun onYesClicked() {
+                override fun onYesClick() {
                     viewModel.deleteResume()
                 }
             })

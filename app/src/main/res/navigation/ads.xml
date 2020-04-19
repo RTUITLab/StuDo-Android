@@ -42,6 +42,10 @@
         android:id="@+id/commentsBottomDialog"
         android:name="com.rtuitlab.studo.ui.general.ads.dialogs.CommentsBottomDialog"
         android:label="CommentsBottomDialog"
-        tools:layout="@layout/fragment_comments"/>
+        tools:layout="@layout/fragment_comments">
+        <action
+            android:id="@+id/action_commentsBottomDialog_to_other_user"
+            app:destination="@id/other_user" />
+    </dialog>
     <include app:graph="@navigation/other_user" />
 </navigation>
