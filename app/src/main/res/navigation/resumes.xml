@@ -32,16 +32,8 @@
             android:id="@+id/action_resumeFragment_to_createEditResumeFragment"
             app:destination="@id/createEditResumeFragment" />
         <action
-            android:id="@+id/action_resumeFragment_to_otherUserFragment2"
-            app:destination="@id/otherUserFragment2" />
+            android:id="@+id/action_resumeFragment_to_other_user"
+            app:destination="@id/other_user" />
     </fragment>
-    <fragment
-        android:id="@+id/otherUserFragment2"
-        android:name="com.rtuitlab.studo.ui.general.users.fragments.OtherUserFragment"
-        android:label="OtherUserFragment"
-        tools:layout="@layout/fragment_other_user">
-        <action
-            android:id="@+id/action_otherUserFragment2_to_resumesListFragment"
-            app:destination="@id/resumesListFragment" />
-    </fragment>
+    <include app:graph="@navigation/other_user" />
 </navigation>

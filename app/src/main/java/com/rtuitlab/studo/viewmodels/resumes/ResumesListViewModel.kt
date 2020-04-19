@@ -16,7 +16,7 @@ import java.io.Serializable
 
 sealed class ResumesType: Serializable
 object AllResumes: ResumesType()
-object MyResumes: ResumesType()
+object OwnResumes: ResumesType()
 data class UserResumes(val userId: String): ResumesType()
 
 class ResumesListViewModel(
@@ -35,7 +35,7 @@ class ResumesListViewModel(
             val response = withContext(Dispatchers.IO) {
                 when(resumesType) {
                     AllResumes -> resumesRepo.getAllResumes()
-                    MyResumes -> resumesRepo.getUserResumes(accStorage.user.id)
+                    OwnResumes -> resumesRepo.getUserResumes(accStorage.user.id)
                     is UserResumes -> resumesRepo.getUserResumes(resumesType.userId)
                 }
             }

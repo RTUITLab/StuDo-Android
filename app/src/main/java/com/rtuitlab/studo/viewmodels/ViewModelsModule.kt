@@ -98,6 +98,7 @@ val viewModelsModule = module {
 
     viewModel {
         OtherUserViewModel(
+            get(),
             get()
         )
     }

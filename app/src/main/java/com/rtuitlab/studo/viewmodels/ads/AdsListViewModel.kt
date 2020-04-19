@@ -15,7 +15,7 @@ import java.io.Serializable
 sealed class AdsType : Serializable
 object AllAds: AdsType()
 object FavouritesAds : AdsType()
-object MyAds: AdsType()
+object OwnAds: AdsType()
 data class UserAds(val userId: String): AdsType()
 
 class AdsListViewModel(
@@ -35,7 +35,7 @@ class AdsListViewModel(
                 when(adsType) {
                     AllAds -> adsRepo.getAllAds()
                     FavouritesAds -> adsRepo.getFavouritesAds()
-                    is MyAds -> adsRepo.getUserAds(accStorage.user.id)
+                    is OwnAds -> adsRepo.getUserAds(accStorage.user.id)
                     is UserAds -> adsRepo.getUserAds(adsType.userId)
                 }
             }

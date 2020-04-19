@@ -23,6 +23,7 @@ import kotlinx.android.synthetic.main.fragment_resume.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.lang.Exception
 
 class ResumeFragment: Fragment() {
 
@@ -146,7 +147,11 @@ class ResumeFragment: Fragment() {
                 putString("userId", it.userId)
                 putSerializable("user", it.user)
             }
-            findNavController().navigate(R.id.action_resumeFragment_to_otherUserFragment2, bundle)
+            try {
+                findNavController().navigate(R.id.action_resumeFragment_to_other_user, bundle)
+            } catch (e: Exception) {
+                findNavController().navigate(R.id.otherUserFragment, bundle)
+            }
         }
     }
 

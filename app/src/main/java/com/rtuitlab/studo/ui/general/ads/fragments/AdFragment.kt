@@ -23,6 +23,7 @@ import kotlinx.android.synthetic.main.fragment_ad.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.lang.Exception
 
 class AdFragment: Fragment() {
 
@@ -203,7 +204,11 @@ class AdFragment: Fragment() {
                     putString("userId", it.userId)
                     putSerializable("user", it.user)
                 }
-                findNavController().navigate(R.id.action_adFragment_to_otherUserFragment, bundle)
+                try {
+                    findNavController().navigate(R.id.action_adFragment_to_other_user, bundle)
+                } catch (e: Exception) {
+                    findNavController().navigate(R.id.otherUserFragment, bundle)
+                }
             }
         } else { // Organization`s ad
             Snackbar.make(requireView(), "Organizations in progress", Snackbar.LENGTH_SHORT).show()

@@ -45,7 +45,7 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
             AllResumes -> {
                 collapsingToolbar.title = getString(R.string.title_resumes)
             }
-            is MyResumes -> {
+            is OwnResumes -> {
                 collapsingToolbar.title = getString(R.string.my_resumes)
                 mainActivity().enableNavigateButton(collapsingToolbar.toolbar)
             }

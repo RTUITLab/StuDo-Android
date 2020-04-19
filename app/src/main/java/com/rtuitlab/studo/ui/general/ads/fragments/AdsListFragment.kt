@@ -51,7 +51,7 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
                 mainActivity().enableNavigateButton(collapsingToolbar.toolbar)
                 createBtn.hide()
             }
-            is MyAds -> {
+            is OwnAds -> {
                 collapsingToolbar.title = getString(R.string.my_ads)
                 mainActivity().enableNavigateButton(collapsingToolbar.toolbar)
             }

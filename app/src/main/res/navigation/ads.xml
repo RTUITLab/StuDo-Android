@@ -30,8 +30,8 @@
             android:id="@+id/action_adFragment_to_commentsBottomDialog"
             app:destination="@id/commentsBottomDialog" />
         <action
-            android:id="@+id/action_adFragment_to_otherUserFragment"
-            app:destination="@id/otherUserFragment" />
+            android:id="@+id/action_adFragment_to_other_user"
+            app:destination="@id/other_user" />
     </fragment>
     <fragment
         android:id="@+id/createEditAdFragment"
@@ -43,13 +43,5 @@
         android:name="com.rtuitlab.studo.ui.general.ads.dialogs.CommentsBottomDialog"
         android:label="CommentsBottomDialog"
         tools:layout="@layout/fragment_comments"/>
-    <fragment
-        android:id="@+id/otherUserFragment"
-        android:name="com.rtuitlab.studo.ui.general.users.fragments.OtherUserFragment"
-        android:label="OtherUserFragment"
-        tools:layout="@layout/fragment_other_user">
-        <action
-            android:id="@+id/action_otherUserFragment_to_adsListFragment"
-            app:destination="@id/adsListFragment" />
-    </fragment>
+    <include app:graph="@navigation/other_user" />
 </navigation>

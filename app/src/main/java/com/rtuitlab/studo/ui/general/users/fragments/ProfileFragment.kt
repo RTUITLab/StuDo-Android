@@ -16,8 +16,8 @@ import com.rtuitlab.studo.databinding.FragmentProfileBinding
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.viewmodels.ads.AdsType
 import com.rtuitlab.studo.viewmodels.ads.FavouritesAds
-import com.rtuitlab.studo.viewmodels.ads.MyAds
-import com.rtuitlab.studo.viewmodels.resumes.MyResumes
+import com.rtuitlab.studo.viewmodels.ads.OwnAds
+import com.rtuitlab.studo.viewmodels.resumes.OwnResumes
 import com.rtuitlab.studo.viewmodels.resumes.ResumesType
 import com.rtuitlab.studo.viewmodels.users.ProfileViewModel
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -94,7 +94,7 @@ class ProfileFragment : Fragment() {
         val bundle = Bundle().apply {
             putSerializable(
                 AdsType::class.java.simpleName,
-                MyAds
+                OwnAds
             )
         }
         findNavController().navigate(R.id.action_profileFragment_to_ads, bundle)
@@ -104,7 +104,7 @@ class ProfileFragment : Fragment() {
         val bundle = Bundle().apply {
             putSerializable(
                 ResumesType::class.java.simpleName,
-                MyResumes
+                OwnResumes
             )
         }
         findNavController().navigate(R.id.action_profileFragment_to_resumes, bundle)
