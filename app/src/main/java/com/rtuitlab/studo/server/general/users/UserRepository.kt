@@ -18,12 +18,7 @@ class UserRepository (
         return try {
             responseHandler.handleSuccess(userApi.getUser(accStorage.user.id))
         } catch (e: Exception) {
-            val errorResource: Resource<User> = responseHandler.handleException(e)
-            if (errorResource.message == responseHandler.retryError) {
-                loadCurrentUser()
-            } else {
-                errorResource
-            }
+            responseHandler.handleException(e)
         }
     }
 
@@ -31,12 +26,7 @@ class UserRepository (
         return try {
             responseHandler.handleSuccess(userApi.getUser(userId))
         } catch (e: Exception) {
-            val errorResource: Resource<User> = responseHandler.handleException(e)
-            if (errorResource.message == responseHandler.retryError) {
-                loadCurrentUser()
-            } else {
-                errorResource
-            }
+            responseHandler.handleException(e)
         }
     }
 
@@ -47,12 +37,7 @@ class UserRepository (
                     accStorage.user.id, name, surname, cardNumber
             )))
         } catch (e: Exception) {
-            val errorResource: Resource<User> = responseHandler.handleException(e)
-            if (errorResource.message == responseHandler.retryError) {
-                changeUserInfo(name, surname, cardNumber)
-            } else {
-                errorResource
-            }
+            responseHandler.handleException(e)
         }
     }
 
@@ -62,12 +47,7 @@ class UserRepository (
                 accStorage.user.id, oldEmail, newEmail
             )))
         } catch (e: Exception) {
-            val errorResource: Resource<Unit> = responseHandler.handleException(e)
-            if (errorResource.message == responseHandler.retryError) {
-                changeEmail(oldEmail, newEmail)
-            } else {
-                errorResource
-            }
+            responseHandler.handleException(e)
         }
     }
 
@@ -77,12 +57,7 @@ class UserRepository (
                 accStorage.user.id, oldPassword, newPassword
             )))
         } catch (e: Exception) {
-            val errorResource: Resource<Unit> = responseHandler.handleException(e)
-            if (errorResource.message == responseHandler.retryError) {
-                changePassword(oldPassword, newPassword)
-            } else {
-                errorResource
-            }
+            responseHandler.handleException(e)
         }
     }
 }

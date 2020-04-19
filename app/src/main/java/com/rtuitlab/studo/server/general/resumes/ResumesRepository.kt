@@ -16,12 +16,7 @@ class ResumesRepository (
         return try {
             responseHandler.handleSuccess(resumesApi.getAllResumes())
         } catch (e: Exception) {
-            val errorResource: Resource<List<CompactResume>> = responseHandler.handleException(e)
-            if (errorResource.message == responseHandler.retryError) {
-                getAllResumes()
-            } else {
-                errorResource
-            }
+            responseHandler.handleException(e)
         }
     }
 
@@ -29,12 +24,7 @@ class ResumesRepository (
         return try {
             responseHandler.handleSuccess(resumesApi.getResume(resumeId))
         } catch (e: Exception) {
-            val errorResource: Resource<Resume> = responseHandler.handleException(e)
-            if (errorResource.message == responseHandler.retryError) {
-                getResume(resumeId)
-            } else {
-                errorResource
-            }
+            responseHandler.handleException(e)
         }
     }
 
@@ -42,12 +32,7 @@ class ResumesRepository (
         return try {
             responseHandler.handleSuccess(resumesApi.getUserResumes(userId))
         } catch (e: Exception) {
-            val errorResource: Resource<List<CompactResume>> = responseHandler.handleException(e)
-            if (errorResource.message == responseHandler.retryError) {
-                getUserResumes(userId)
-            } else {
-                errorResource
-            }
+            responseHandler.handleException(e)
         }
     }
 
@@ -59,12 +44,7 @@ class ResumesRepository (
                 name, description
             )))
         } catch (e: Exception) {
-            val errorResource: Resource<Resume> = responseHandler.handleException(e)
-            if (errorResource.message == responseHandler.retryError) {
-                createResume(name, description)
-            } else {
-                errorResource
-            }
+            responseHandler.handleException(e)
         }
     }
 
@@ -74,12 +54,7 @@ class ResumesRepository (
                 id, name, description
             )))
         } catch (e: Exception) {
-            val errorResource: Resource<Resume> = responseHandler.handleException(e)
-            if (errorResource.message == responseHandler.retryError) {
-                editResume(id, name, description)
-            } else {
-                errorResource
-            }
+            responseHandler.handleException(e)
         }
     }
 
@@ -87,12 +62,7 @@ class ResumesRepository (
         return try {
             responseHandler.handleSuccess(resumesApi.deleteResume(resumeId))
         } catch (e: Exception) {
-            val errorResource: Resource<Unit> = responseHandler.handleException(e)
-            if (errorResource.message == responseHandler.retryError) {
-                deleteResume(resumeId)
-            } else {
-                errorResource
-            }
+            responseHandler.handleException(e)
         }
     }
 }

@@ -1,9 +1,11 @@
 package com.rtuitlab.studo.account
 
-import android.util.Log
+import com.auth0.android.jwt.JWT
 import com.rtuitlab.studo.persistence.EncryptedPreferences
+import com.rtuitlab.studo.server.auth.models.UserLoginResponse
 import com.rtuitlab.studo.server.general.users.models.User
 import org.koin.dsl.module
+import java.util.*
 
 val accountStoreModule = module {
     single { AccountStorage(get()) }
@@ -13,10 +15,10 @@ class AccountStorage(
     private val preferences: EncryptedPreferences
 ) {
     lateinit var user: User
-    private set
+        private set
 
     lateinit var accessToken: String
-    private set
+        private set
 
     lateinit var refreshToken: String
         private set
@@ -25,7 +27,7 @@ class AccountStorage(
         return tryLoadData()
     }
 
-    fun tryLoadData(): Boolean {
+    private fun tryLoadData(): Boolean {
         preferences.getUser()?.let {
             user = it
         } ?:run {
@@ -33,7 +35,6 @@ class AccountStorage(
         }
         preferences.getAccessToken()?.let {
             accessToken = it
-            Log.i("Access Token", it)
         } ?:run {
             return false
         }
@@ -44,4 +45,21 @@ class AccountStorage(
         }
         return true
     }
+
+    fun updateUserData(newUserData: UserLoginResponse) {
+        preferences.storeUser(newUserData.user)
+        preferences.storeAccessToken(newUserData.accessToken)
+        preferences.storeRefreshToken(newUserData.refreshToken)
+        user = newUserData.user
+        accessToken = newUserData.accessToken
+        refreshToken = newUserData.refreshToken
+    }
+
+    fun removeUserData() = preferences.removeUserData()
+
+    fun isAccessTokenValid() = isTokenValid(accessToken)
+
+    fun isRefreshTokenValid() = isTokenValid(refreshToken)
+
+    private fun isTokenValid(token: String) = JWT(token).expiresAt?.after(Date()) ?: false
 }
