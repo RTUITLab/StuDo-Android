@@ -24,24 +24,39 @@ class CommentsViewModel(
 
     val isValid = ObservableBoolean(false)
 
-    private val _commentResource =
+    private val _createCommentResource =
         SingleLiveEvent<Resource<Comment>>()
-    val commentResource: LiveData<Resource<Comment>> = _commentResource
+    val createCommentResource: LiveData<Resource<Comment>> = _createCommentResource
 
     fun createComment() {
         viewModelScope.launch {
-            _commentResource.value = Resource.loading(null)
+            _createCommentResource.value = Resource.loading(null)
 
             val response = withContext(Dispatchers.IO) {
                 adsRepo.createComment(ad.id, commentText.get()!!)
             }
 
-            _commentResource.value = response
+            _createCommentResource.value = response
         }
     }
 
     fun checkData() {
         commentText.set(commentText.get()?.trimStart())
         isValid.set(!commentText.get().isNullOrBlank())
+    }
+
+    private val _deleteCommentResource = SingleLiveEvent<Resource<String>>()
+    val deleteCommentResource: LiveData<Resource<String>> = _deleteCommentResource
+
+    fun deleteComment(commentId: String) {
+        viewModelScope.launch {
+            _deleteCommentResource.value = Resource.loading(null)
+
+            val response = withContext(Dispatchers.IO) {
+                adsRepo.deleteComment(ad.id, commentId)
+            }
+
+            _deleteCommentResource.value = response
+        }
     }
 }

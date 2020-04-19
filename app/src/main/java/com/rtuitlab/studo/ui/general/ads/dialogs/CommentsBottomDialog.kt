@@ -1,9 +1,7 @@
 package com.rtuitlab.studo.ui.general.ads.dialogs
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -14,12 +12,13 @@ import com.rtuitlab.studo.databinding.FragmentCommentsBinding
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.ads.models.Ad
 import com.rtuitlab.studo.server.general.ads.models.Comment
+import com.rtuitlab.studo.ui.general.YesNoDialog
 import com.rtuitlab.studo.viewmodels.ads.CommentsViewModel
 import kotlinx.android.synthetic.main.fragment_comments.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class CommentsBottomDialog: BottomSheetDialogFragment() {
+class CommentsBottomDialog: BottomSheetDialogFragment(), CommentsRecyclerAdapter.OnCommentClickListener {
 
     private val viewModel: CommentsViewModel by viewModel()
 
@@ -58,10 +57,10 @@ class CommentsBottomDialog: BottomSheetDialogFragment() {
     }
 
     private fun initRecyclerView() {
-        recyclerAdapter =
-            CommentsRecyclerAdapter(
-                commentsMutableList.toList()
-            )
+        registerForContextMenu(commentRV)
+        recyclerAdapter = CommentsRecyclerAdapter(commentsMutableList.toList()).apply {
+            setOnCommentClickListener(this@CommentsBottomDialog)
+        }
         commentRV.adapter = recyclerAdapter
     }
 
@@ -72,7 +71,7 @@ class CommentsBottomDialog: BottomSheetDialogFragment() {
     }
 
     private fun setObservers() {
-        viewModel.commentResource.observe(viewLifecycleOwner, Observer {
+        viewModel.createCommentResource.observe(viewLifecycleOwner, Observer {
             when(it.status) {
                 Status.SUCCESS -> {
                     addComment(it.data!!)
@@ -83,6 +82,28 @@ class CommentsBottomDialog: BottomSheetDialogFragment() {
                 }
                 Status.LOADING -> {}
             }
+        })
+
+        viewModel.deleteCommentResource.observe(viewLifecycleOwner, Observer {
+            when(it.status) {
+                Status.SUCCESS -> {
+                    deleteComment(it.data!!)
+                }
+                Status.ERROR -> {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+                Status.LOADING -> {}
+            }
+        })
+    }
+
+    private fun deleteComment(commentId: String) {
+        commentsMutableList.removeAll{ comment -> comment.id == commentId}
+
+        recyclerAdapter?.updateData(commentsMutableList.toList())
+
+        requireArguments().putSerializable("ad", viewModel.ad.apply {
+            comments = commentsMutableList
         })
     }
 
@@ -96,5 +117,19 @@ class CommentsBottomDialog: BottomSheetDialogFragment() {
         requireArguments().putSerializable("ad", viewModel.ad.apply {
             comments = commentsMutableList
         })
+    }
+
+    override fun onNavigateToProfile(comment: Comment) {
+        Toast.makeText(requireContext(), "Navigate: ${comment.text}", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDeleteComment(comment: Comment) {
+        val dialog = YesNoDialog
+            .getInstance(getString(R.string.delete_comment_confirmation), object : YesNoDialog.OnYesClickListener{
+                override fun onYesClicked() {
+                    viewModel.deleteComment(comment.id)
+                }
+            })
+        dialog.show(childFragmentManager, null)
     }
 }

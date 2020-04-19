@@ -60,16 +60,6 @@ class AdsRecyclerAdapter: RecyclerView.Adapter<AdsRecyclerAdapter.AdHolder>() {
         private val descTV: TextView = view.desc
         private val favouriteIV: ImageView = view.favouriteBtn
 
-        fun bind(compactAd: CompactAd) {
-            nameTV.text = compactAd.name
-            descTV.text = compactAd.shortDescription
-            if (compactAd.isFavourite) {
-                favouriteIV.setImageResource(R.drawable.ic_star)
-            } else {
-                favouriteIV.setImageResource(R.drawable.ic_star_border)
-            }
-        }
-
         init {
             view.setOnClickListener {
                 clickListener?.onAdClicked(data[adapterPosition])
@@ -81,9 +71,19 @@ class AdsRecyclerAdapter: RecyclerView.Adapter<AdsRecyclerAdapter.AdHolder>() {
                 clickListener?.onFavouriteToggle(compactAd)
             }
         }
+
+        fun bind(compactAd: CompactAd) {
+            nameTV.text = compactAd.name
+            descTV.text = compactAd.shortDescription
+            if (compactAd.isFavourite) {
+                favouriteIV.setImageResource(R.drawable.ic_star)
+            } else {
+                favouriteIV.setImageResource(R.drawable.ic_star_border)
+            }
+        }
     }
 
-    fun setOnAdClickListener(onAdClickListener: OnAdClickListener?) {
+    fun setOnAdClickListener(onAdClickListener: OnAdClickListener) {
         clickListener = onAdClickListener
     }
 

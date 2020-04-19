@@ -78,4 +78,6 @@
     <string name="no">Нет</string>
     <string name="user_ads">Объявления пользователя</string>
     <string name="user_resumes">Резюме пользователя</string>
+    <string name="user_profile">Профиль пользователя</string>
+    <string name="delete_comment_confirmation">Вы хотите удалить комментарий?</string>
 </resources>

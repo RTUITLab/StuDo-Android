@@ -51,17 +51,17 @@ class ResumesRecyclerAdapter: RecyclerView.Adapter<ResumesRecyclerAdapter.Resume
         private val description: TextView = view.desc
         private val avatarView: AvatarView = view.avatarView
 
+        init {
+            view.setOnClickListener {
+                clickListener?.onResumeClick(data[adapterPosition])
+            }
+        }
+
         fun bind(compactResume: CompactResume) {
             this.name.text = compactResume.name
             this.description.text = compactResume.description
             val userName = compactResume.userName.split(" ")
             this.avatarView.text = "${userName[0].first()}${userName[1].first()}"
-        }
-
-        init {
-            view.setOnClickListener {
-                clickListener?.onResumeClick(data[adapterPosition])
-            }
         }
     }
 

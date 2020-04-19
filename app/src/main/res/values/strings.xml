@@ -81,4 +81,6 @@
     <string name="no">No</string>
     <string name="user_ads">User ads</string>
     <string name="user_resumes">User resumes</string>
+    <string name="user_profile">User profile</string>
+    <string name="delete_comment_confirmation">Do you want to delete a comment?</string>
 </resources>
