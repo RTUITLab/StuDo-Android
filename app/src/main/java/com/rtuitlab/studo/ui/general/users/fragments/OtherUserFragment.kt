@@ -1,6 +1,8 @@
 package com.rtuitlab.studo.ui.general.users.fragments
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -66,6 +68,7 @@ class OtherUserFragment: Fragment() {
     }
 
     private fun setListeners() {
+        emailTV.setOnClickListener { sendEmail() }
         adsTV.setOnClickListener { navigateToAds() }
         resumesTV.setOnClickListener { navigateToResumes() }
     }
@@ -113,5 +116,11 @@ class OtherUserFragment: Fragment() {
         (requireArguments().getSerializable("user") as? User)?.let {
             viewModel.fillUserData(it)
         }
+    }
+
+    private fun sendEmail() {
+        val emailUri = Uri.fromParts("mailto", viewModel.userEmail.get(), null)
+        val emailIntent = Intent(Intent.ACTION_SENDTO, emailUri)
+        startActivity(Intent.createChooser(emailIntent, getString(R.string.send_email)))
     }
 }

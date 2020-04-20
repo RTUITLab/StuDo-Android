@@ -31,13 +31,13 @@ class AuthViewModel(
     var surname = ""
     val surnameError = ObservableField("")
 
-    var email = "almostroll@yandex.ru"
+    var email = ""
     val emailError = ObservableField("")
 
     var cardNumber = ""
     val cardNumberError = ObservableField("")
 
-    var password = "123456"
+    var password = ""
     val passwordError = ObservableField("")
 
     var confirmPassword = ""

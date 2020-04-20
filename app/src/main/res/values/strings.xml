@@ -57,7 +57,7 @@
     <string name="create_ad">Creating ad</string>
     <string name="edit_ad">Editing ad</string>
     <string name="title_hint"><font size="24">Title</font></string>
-    <string name="short_desc_hint">Short description (optional)</string>
+    <string name="short_desc_hint">Short description</string>
     <string name="desc">Description</string>
     <string name="only_date">Only date</string>
     <string name="not_selected">Not selected</string>
@@ -83,4 +83,5 @@
     <string name="user_resumes">User resumes</string>
     <string name="user_profile">User profile</string>
     <string name="delete_comment_confirmation">Do you want to delete a comment?</string>
+    <string name="send_email">Send email…</string>
 </resources>
