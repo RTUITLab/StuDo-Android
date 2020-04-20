@@ -26,20 +26,19 @@ import com.rtuitlab.studo.viewmodels.ads.CreateEditAd
 import com.rtuitlab.studo.viewmodels.ads.CreateEditAdViewModel
 import com.rtuitlab.studo.viewmodels.ads.EditAd
 import com.yydcdut.markdown.MarkdownProcessor
-import com.yydcdut.markdown.syntax.edit.EditFactory
 import kotlinx.android.synthetic.main.fragment_create_edit_ad.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.view.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import org.koin.android.ext.android.getKoin
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.qualifier.named
 import java.util.*
 
 class CreateEditAdFragment: Fragment() {
 
     private val viewModel: CreateEditAdViewModel by viewModel()
+
+    private val markdownProcessor: MarkdownProcessor = getKoin().get(named("edit"))
 
     private var createEditAd: CreateEditAd =
         CreateAd
@@ -84,7 +83,7 @@ class CreateEditAdFragment: Fragment() {
         }
         mainActivity().enableNavigateButton(collapsingToolbar.toolbar)
 
-        initMarkdown()
+        markdownProcessor.live(descEdit)
 
         checkSwitch(timeSwitch.isChecked)
 
@@ -136,17 +135,6 @@ class CreateEditAdFragment: Fragment() {
             timeTV.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_time, 0, 0, 0)
         }
         viewModel.checkData()
-    }
-
-    private fun initMarkdown() {
-        MainScope().launch {
-            val markdownProcessor = withContext(Dispatchers.Default) {
-                MarkdownProcessor(requireContext()).apply {
-                    factory(EditFactory.create())
-                }
-            }
-            markdownProcessor.live(descEdit)
-        }
     }
 
     private fun showDateRangePickerDialog() {

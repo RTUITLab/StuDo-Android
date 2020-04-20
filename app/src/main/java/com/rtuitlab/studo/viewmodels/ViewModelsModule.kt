@@ -13,6 +13,7 @@ import com.rtuitlab.studo.viewmodels.users.OtherUserViewModel
 import com.rtuitlab.studo.viewmodels.users.ProfileViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val viewModelsModule = module {
@@ -43,7 +44,8 @@ val viewModelsModule = module {
             androidApplication(),
             get(),
             get(),
-            get()
+            get(),
+            get((named("text")))
         )
     }
 

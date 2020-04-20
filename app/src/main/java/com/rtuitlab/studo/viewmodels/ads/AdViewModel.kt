@@ -15,7 +15,6 @@ import com.rtuitlab.studo.server.general.ads.AdsRepository
 import com.rtuitlab.studo.server.general.ads.models.Ad
 import com.rtuitlab.studo.server.general.ads.models.CompactAd
 import com.yydcdut.markdown.MarkdownProcessor
-import com.yydcdut.markdown.syntax.text.TextFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -24,7 +23,8 @@ class AdViewModel(
     app: Application,
     private val adsRepo: AdsRepository,
     private val accStorage: AccountStorage,
-    private val dateTimeFormatter: DateTimeFormatter
+    private val dateTimeFormatter: DateTimeFormatter,
+    private val markdownTextProcessor: MarkdownProcessor
 ): AndroidViewModel(app) {
 
     lateinit var compactAd: CompactAd
@@ -99,10 +99,8 @@ class AdViewModel(
         title.set(ad.name)
         compactAd.isFavourite = ad.isFavourite
 
-        viewModelScope.launch(Dispatchers.Default) {
-            val markdownProcessor = MarkdownProcessor(getApplication())
-            markdownProcessor.factory(TextFactory.create())
-            spannedDescription.set(markdownProcessor.parse(ad.description))
+        viewModelScope.launch(Dispatchers.IO) {
+            spannedDescription.set(markdownTextProcessor.parse(ad.description))
         }
 
         ad.user?.let{ // User`s ad
