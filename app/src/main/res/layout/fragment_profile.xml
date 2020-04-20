@@ -82,10 +82,16 @@
 
                     </LinearLayout>
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="?android:attr/colorButtonNormal"/>
+
                     <com.rtuitlab.studo.custom_views.ProfileListView
                         android:id="@+id/profileList"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="8dp"/>
 
                 </LinearLayout>
 

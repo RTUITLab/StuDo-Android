@@ -7,11 +7,6 @@
     android:background="?android:attr/selectableItemBackground"
     android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:attr/colorButtonNormal"/>
-
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"

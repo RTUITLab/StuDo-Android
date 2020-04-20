@@ -76,7 +76,7 @@
                                     android:autofillHints="name"
                                     android:inputType="textCapWords"
                                     android:text="@={viewModel.name}"
-                                    app:bindAfterTextChanged="@{viewModel::checkUserData}"/>
+                                    app:bindAfterTextChanged="@{viewModel::checkUserData}" />
                             </com.google.android.material.textfield.TextInputLayout>
 
                             <com.google.android.material.textfield.TextInputLayout
@@ -94,7 +94,7 @@
                                     android:autofillHints="surname"
                                     android:inputType="textCapWords"
                                     android:text="@={viewModel.surname}"
-                                    app:bindAfterTextChanged="@{viewModel::checkUserData}"/>
+                                    app:bindAfterTextChanged="@{viewModel::checkUserData}" />
                             </com.google.android.material.textfield.TextInputLayout>
 
                             <com.google.android.material.textfield.TextInputLayout
@@ -111,27 +111,38 @@
                                     android:autofillHints="card number"
                                     android:inputType="textCapCharacters"
                                     android:text="@={viewModel.cardNumber}"
-                                    app:bindAfterTextChanged="@{viewModel::checkUserData}"/>
+                                    app:bindAfterTextChanged="@{viewModel::checkUserData}" />
                             </com.google.android.material.textfield.TextInputLayout>
 
                         </LinearLayout>
 
+                        <View
+                            android:id="@+id/separator"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="16dp"
+                            android:background="?android:attr/colorButtonNormal"
+                            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+                            tools:layout_editor_absoluteX="16dp" />
+
                         <Button
                             android:id="@+id/changeEmailBtn"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
                             android:text="@string/change_email"
-                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+                            app:layout_constraintTop_toBottomOf="@+id/separator" />
 
                         <Button
                             android:id="@+id/changePasswordBtn"
-                            android:layout_width="0dp"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/change_password"
-                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/logoutBtn"
+                            app:layout_constraintHorizontal_chainStyle="spread_inside"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/changeEmailBtn" />
 
@@ -143,8 +154,9 @@
                             android:text="@string/logout"
                             android:textColor="@android:color/holo_red_dark"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/changePasswordBtn" />
+                            app:layout_constraintHorizontal_chainStyle="spread_inside"
+                            app:layout_constraintStart_toEndOf="@+id/changePasswordBtn"
+                            app:layout_constraintTop_toTopOf="@+id/changePasswordBtn" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
