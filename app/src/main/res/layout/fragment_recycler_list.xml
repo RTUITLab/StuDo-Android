@@ -33,6 +33,7 @@
         app:layout_anchor="@id/swipeContainer"
         app:layout_anchorGravity="bottom|end"
         app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
-        android:visibility="visible"/>
+        android:visibility="visible"
+        android:transitionName="create_shared_container"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

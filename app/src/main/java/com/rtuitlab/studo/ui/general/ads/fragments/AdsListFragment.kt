@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.rtuitlab.studo.R
@@ -141,7 +142,13 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
     }
 
     private fun navigateToCreateAd() {
-        findNavController().navigate(R.id.action_adsListFragment_to_createEditAdFragment)
+        val extras = FragmentNavigatorExtras(createBtn to "create_shared_container")
+        findNavController().navigate(
+            R.id.action_adsListFragment_to_createEditAdFragment,
+            null,
+            null,
+            extras
+        )
     }
 
     private fun navigateToAd(compactAd: CompactAd) {

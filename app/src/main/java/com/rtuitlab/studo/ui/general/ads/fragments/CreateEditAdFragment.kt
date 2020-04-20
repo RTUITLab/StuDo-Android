@@ -12,6 +12,7 @@ import com.github.razir.progressbutton.attachTextChangeAnimator
 import com.github.razir.progressbutton.bindProgressButton
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.transition.MaterialContainerTransform
 import com.rtuitlab.studo.utils.DateRangeValidator
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.ui.general.ads.dialogs.TimeRangeDialog
@@ -42,6 +43,11 @@ class CreateEditAdFragment: Fragment() {
 
     private var createEditAd: CreateEditAd =
         CreateAd
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedElementEnterTransition = MaterialContainerTransform()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

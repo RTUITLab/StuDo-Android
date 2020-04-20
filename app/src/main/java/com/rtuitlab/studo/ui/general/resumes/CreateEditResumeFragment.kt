@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.transition.MaterialContainerTransform
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentCreateEditResumeBinding
 import com.rtuitlab.studo.extensions.hideProgress
@@ -30,6 +31,11 @@ class CreateEditResumeFragment: Fragment() {
 
     private var createEditResume: CreateEditResume =
         CreateResume
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedElementEnterTransition = MaterialContainerTransform()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

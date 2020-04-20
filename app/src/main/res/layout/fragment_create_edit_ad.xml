@@ -14,6 +14,7 @@
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:transitionName="create_shared_container"
         tools:context=".ui.general.users.fragments.ProfileFragment">
 
         <include layout="@layout/view_collapsing_toolbar"/>

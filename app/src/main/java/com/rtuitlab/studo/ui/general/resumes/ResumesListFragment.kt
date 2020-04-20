@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.recyclers.resumes.ResumesRecyclerAdapter
@@ -113,7 +114,13 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
     }
 
     private fun navigateToCreateResume() {
-        findNavController().navigate(R.id.action_resumesListFragment_to_createEditResumeFragment)
+        val extras = FragmentNavigatorExtras(createBtn to "create_shared_container")
+        findNavController().navigate(
+            R.id.action_resumesListFragment_to_createEditResumeFragment,
+            null,
+            null,
+            extras
+        )
     }
 
     private fun navigateToResume(compactResume: CompactResume) {
