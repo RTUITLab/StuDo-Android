@@ -4,15 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.rtuitlab.studo.R
 import kotlinx.android.synthetic.main.dialog_time_range_picker.*
 import kotlinx.android.synthetic.main.view_time_picker.view.timePicker
 
-class TimeRangeDialog: DialogFragment() {
+class TimeRangeDialog: BottomSheetDialogFragment() {
 
     private val timeTag = "times"
     private val nextTag = "next"
