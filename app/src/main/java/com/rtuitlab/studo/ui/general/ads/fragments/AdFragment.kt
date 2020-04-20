@@ -112,13 +112,16 @@ class AdFragment: Fragment() {
         adViewModel.deleteAdResource.observe(viewLifecycleOwner, Observer {
             when(it.status) {
                 Status.SUCCESS -> {
+                    swipeContainer.isRefreshing = false
                     mainActivity().updateStatuses.isNeedToUpdateResumesList = true
                     requireActivity().onBackPressed()
                 }
                 Status.ERROR -> {
+                    swipeContainer.isRefreshing = false
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
-                Status.LOADING -> {}
+                Status.LOADING -> {
+                    swipeContainer.isRefreshing = true}
             }
         })
     }

@@ -1,11 +1,11 @@
 package com.rtuitlab.studo.utils
 
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
-import androidx.core.widget.addTextChangedListener
-import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.BindingAdapter
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.textfield.TextInputLayout
@@ -31,11 +31,13 @@ fun AvatarView.setText(text: String) {
 
 @BindingAdapter("bindAfterTextChanged")
 fun EditText.setAfterTextChangedListener(func: () -> Unit) {
-    this.addTextChangedListener {
-        doAfterTextChanged {
+    this.addTextChangedListener(object : TextWatcher {
+        override fun beforeTextChanged(text: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) {}
+        override fun afterTextChanged(s: Editable?) {
             func.invoke()
         }
-    }
+    })
 }
 
 @BindingAdapter("isShow")

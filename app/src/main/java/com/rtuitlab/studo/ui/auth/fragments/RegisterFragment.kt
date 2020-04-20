@@ -8,9 +8,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import com.github.razir.progressbutton.attachTextChangeAnimator
+import com.github.razir.progressbutton.bindProgressButton
 import com.google.android.material.snackbar.Snackbar
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentRegisterBinding
+import com.rtuitlab.studo.extensions.hideProgress
+import com.rtuitlab.studo.extensions.showProgress
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.viewmodels.auth.AuthViewModel
 import kotlinx.android.synthetic.main.fragment_register.*
@@ -32,6 +36,8 @@ class RegisterFragment : Fragment() {
             false
         )
         binding.viewModel = viewModel
+        bindProgressButton(binding.registerBtn)
+        binding.registerBtn.attachTextChangeAnimator()
         return binding.root
     }
 
@@ -46,7 +52,6 @@ class RegisterFragment : Fragment() {
         if (!requireActivity().isChangingConfigurations) {
             viewModel.clearErrors()
         }
-//        registerBtn.dispose()
     }
 
     private fun setListeners() {
@@ -59,16 +64,15 @@ class RegisterFragment : Fragment() {
         viewModel.registerResource.observe(viewLifecycleOwner, Observer {
             when(it.status) {
                 Status.SUCCESS -> {
-//                    registerBtn.revertAnimation()
                     Snackbar.make(requireView(), getString(R.string.email_verification), Snackbar.LENGTH_LONG).show()
                     loginLink.performClick()
                 }
                 Status.ERROR -> {
-//                    registerBtn.revertAnimation()
+                    registerBtn.hideProgress(R.string.create_account)
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
                 Status.LOADING -> {
-//                    registerBtn.startAnimation()
+                    registerBtn.showProgress()
                 }
             }
         })

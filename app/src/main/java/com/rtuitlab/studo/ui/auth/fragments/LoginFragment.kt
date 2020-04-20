@@ -10,9 +10,13 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.github.razir.progressbutton.attachTextChangeAnimator
+import com.github.razir.progressbutton.bindProgressButton
 import com.google.android.material.snackbar.Snackbar
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentLoginBinding
+import com.rtuitlab.studo.extensions.hideProgress
+import com.rtuitlab.studo.extensions.showProgress
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.ui.general.MainActivity
 import com.rtuitlab.studo.viewmodels.auth.AuthViewModel
@@ -36,6 +40,8 @@ class LoginFragment : Fragment() {
             false
         )
         binding.viewModel = viewModel
+        bindProgressButton(binding.loginBtn)
+        binding.loginBtn.attachTextChangeAnimator()
         return binding.root
     }
 
@@ -50,7 +56,6 @@ class LoginFragment : Fragment() {
         if (!requireActivity().isChangingConfigurations) {
             viewModel.clearErrors()
         }
-//        loginBtn.dispose()
     }
 
     private fun setListeners() {
@@ -67,16 +72,15 @@ class LoginFragment : Fragment() {
         viewModel.loginResource.observe(viewLifecycleOwner, Observer {
             when(it.status) {
                 Status.SUCCESS -> {
-//                    loginBtn.revertAnimation()
                     startActivity(Intent(requireActivity(), MainActivity::class.java))
                     requireActivity().finish()
                 }
                 Status.ERROR -> {
-//                    loginBtn.revertAnimation()
+                    loginBtn.hideProgress(R.string.login)
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
                 Status.LOADING -> {
-//                    loginBtn.startAnimation()
+                    loginBtn.showProgress()
                 }
             }
         })
@@ -84,15 +88,15 @@ class LoginFragment : Fragment() {
         viewModel.resetResource.observe(viewLifecycleOwner, Observer {
             when(it.status) {
                 Status.SUCCESS -> {
-//                    loginBtn.revertAnimation()
+                    loginBtn.hideProgress(R.string.login)
                     Snackbar.make(requireView(), getString(R.string.check_email_to_reset), Snackbar.LENGTH_LONG).show()
                 }
                 Status.ERROR -> {
-//                    loginBtn.revertAnimation()
+                    loginBtn.hideProgress(R.string.login)
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
                 Status.LOADING -> {
-//                    loginBtn.startAnimation()
+                    loginBtn.showProgress()
                 }
             }
         })

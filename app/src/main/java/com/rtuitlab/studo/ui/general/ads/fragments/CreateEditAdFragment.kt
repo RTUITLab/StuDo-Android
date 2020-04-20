@@ -8,13 +8,17 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.github.razir.progressbutton.attachTextChangeAnimator
+import com.github.razir.progressbutton.bindProgressButton
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.rtuitlab.studo.utils.DateRangeValidator
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.ui.general.ads.dialogs.TimeRangeDialog
 import com.rtuitlab.studo.databinding.FragmentCreateEditAdBinding
+import com.rtuitlab.studo.extensions.hideProgress
 import com.rtuitlab.studo.extensions.mainActivity
+import com.rtuitlab.studo.extensions.showProgress
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.ads.models.Ad
 import com.rtuitlab.studo.viewmodels.ads.CreateAd
@@ -55,6 +59,8 @@ class CreateEditAdFragment: Fragment() {
             false
         )
         binding.viewModel = viewModel
+        bindProgressButton(binding.doneBtn)
+        binding.doneBtn.attachTextChangeAnimator()
         return binding.root
     }
 
@@ -107,9 +113,16 @@ class CreateEditAdFragment: Fragment() {
                     }
                 }
                 Status.ERROR -> {
+                    if (createEditAd == CreateAd) {
+                        doneBtn.hideProgress(R.string.create)
+                    } else if (createEditAd is EditAd) {
+                        doneBtn.hideProgress(R.string.save)
+                    }
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
-                Status.LOADING -> {}
+                Status.LOADING -> {
+                    doneBtn.showProgress()
+                }
             }
         })
     }

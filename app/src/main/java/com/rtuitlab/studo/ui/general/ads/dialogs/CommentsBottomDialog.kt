@@ -76,13 +76,17 @@ class CommentsBottomDialog: BottomSheetDialogFragment(), CommentsRecyclerAdapter
         viewModel.createCommentResource.observe(viewLifecycleOwner, Observer {
             when(it.status) {
                 Status.SUCCESS -> {
+                    viewModel.isValid.set(true)
                     addComment(it.data!!)
                     viewModel.commentText.set("")
                 }
                 Status.ERROR -> {
+                    viewModel.isValid.set(true)
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
-                Status.LOADING -> {}
+                Status.LOADING -> {
+                    viewModel.isValid.set(false)
+                }
             }
         })
 

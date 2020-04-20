@@ -10,7 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentCreateEditResumeBinding
+import com.rtuitlab.studo.extensions.hideProgress
 import com.rtuitlab.studo.extensions.mainActivity
+import com.rtuitlab.studo.extensions.showProgress
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.resumes.models.Resume
 import com.rtuitlab.studo.viewmodels.resumes.CreateEditResume
@@ -83,9 +85,16 @@ class CreateEditResumeFragment: Fragment() {
                     }
                 }
                 Status.ERROR -> {
+                    if (createEditResume == CreateResume) {
+                        doneBtn.hideProgress(R.string.create)
+                    } else if (createEditResume is EditResume) {
+                        doneBtn.hideProgress(R.string.save)
+                    }
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
-                Status.LOADING -> {}
+                Status.LOADING -> {
+                    doneBtn.showProgress()
+                }
             }
         })
     }

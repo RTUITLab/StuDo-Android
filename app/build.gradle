@@ -112,4 +112,8 @@ dependencies {
     // JWT decode
     def jwt_decode_version = "2.0.0"
     implementation "com.auth0.android:jwtdecode:$jwt_decode_version"
+
+    // Progress buttons
+    def progress_buttons_version = "2.1.0"
+    implementation "com.github.razir.progressbutton:progressbutton:$progress_buttons_version"
 }
