@@ -1,10 +1,5 @@
 <resources>
 
-    <style name="AppTheme.Launcher">
-        <item name="android:windowBackground">@drawable/splash_screen</item>
-        <item name="colorPrimaryDark">?android:attr/colorBackground</item>
-    </style>
-
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -14,7 +9,11 @@
         <item name="colorOnSecondary">?android:attr/colorBackground</item>
         <item name="preferenceTheme">@style/AppTheme.SettingsTheme</item>
         <item name="materialCalendarFullscreenTheme">@style/CustomThemeOverlay_MaterialCalendar_Fullscreen</item>
-        <item name="bottomSheetDialogTheme">@style/ReaderBottomSheetDialog</item>
+    </style>
+
+    <style name="AppTheme.Launcher">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+        <item name="colorPrimaryDark">?android:attr/colorBackground</item>
     </style>
 
     <style name="AuthTitleTextColor" parent="AppTheme">
@@ -33,19 +32,6 @@
     <style name="Custom_MaterialCalendar.Fullscreen"
         parent="@style/Widget.MaterialComponents.MaterialCalendar.Fullscreen">
         <item name="android:windowFullscreen">false</item>
-    </style>
-
-    <style name="ReaderBottomSheetDialog" parent="Theme.MaterialComponents.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorOnSecondary">@android:color/white</item>
-        <item name="colorOnPrimary">@android:color/white</item>
-    </style>
-
-    <style name="BottomSheetStyle" parent="Widget.MaterialComponents.BottomSheet.Modal">
-        <item name="behavior_peekHeight">512dp</item>
     </style>
 
 </resources>

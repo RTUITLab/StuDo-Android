@@ -83,6 +83,5 @@
     <string name="send_email">Отправить письмо…</string>
     <string name="empty_ads">Нет объявлений</string>
     <string name="empty_resumes">Нет резюме</string>
-    <string name="empty_comments">Пока нет комментариев</string>
     <string name="empty_favourites">Нет закладок</string>
 </resources>

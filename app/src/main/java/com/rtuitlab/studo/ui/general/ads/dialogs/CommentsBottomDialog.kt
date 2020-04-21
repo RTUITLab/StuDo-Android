@@ -100,17 +100,7 @@ class CommentsBottomDialog: BottomSheetDialogFragment(), CommentsRecyclerAdapter
         recyclerAdapter = CommentsRecyclerAdapter(commentsMutableList.toList()).apply {
             setOnCommentClickListener(this@CommentsBottomDialog)
         }
-        checkListEmpty(commentsMutableList)
         commentRV.adapter = recyclerAdapter
-    }
-
-    private fun checkListEmpty(list: List<Any>) {
-        if (list.isEmpty()) {
-            emptyNotifier.text = getString(R.string.empty_comments)
-            emptyNotifier.visibility = View.VISIBLE
-        } else {
-            emptyNotifier.visibility = View.GONE
-        }
     }
 
     private fun deleteComment(commentId: String) {
