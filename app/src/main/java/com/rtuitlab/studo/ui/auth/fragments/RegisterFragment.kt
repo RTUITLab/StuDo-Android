@@ -64,7 +64,11 @@ class RegisterFragment : Fragment() {
         viewModel.registerResource.observe(viewLifecycleOwner, Observer {
             when(it.status) {
                 Status.SUCCESS -> {
-                    Snackbar.make(requireView(), getString(R.string.email_verification), Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(
+                        requireActivity().window.decorView.rootView,
+                        getString(R.string.email_verification),
+                        Snackbar.LENGTH_LONG
+                    ).show()
                     loginLink.performClick()
                 }
                 Status.ERROR -> {
