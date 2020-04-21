@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
 	) : Serializable
 
 	override fun onCreate(savedInstanceState: Bundle?) {
+		setTheme(R.style.AppTheme)
 		viewModel.checkTheme()
 		super.onCreate(savedInstanceState)
 		paintStatusBar()
