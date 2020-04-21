@@ -81,4 +81,8 @@
     <string name="user_profile">Профиль пользователя</string>
     <string name="delete_comment_confirmation">Вы хотите удалить комментарий?</string>
     <string name="send_email">Отправить письмо…</string>
+    <string name="empty_ads">Нет объявлений</string>
+    <string name="empty_resumes">Нет резюме</string>
+    <string name="empty_comments">Пока нет комментариев</string>
+    <string name="empty_favourites">Нет закладок</string>
 </resources>

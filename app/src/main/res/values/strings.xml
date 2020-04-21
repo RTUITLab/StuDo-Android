@@ -84,4 +84,8 @@
     <string name="user_profile">User profile</string>
     <string name="delete_comment_confirmation">Do you want to delete a comment?</string>
     <string name="send_email">Send email…</string>
+    <string name="empty_ads">No ads</string>
+    <string name="empty_resumes">No resumes</string>
+    <string name="empty_comments">No comments yet</string>
+    <string name="empty_favourites">No favourites</string>
 </resources>

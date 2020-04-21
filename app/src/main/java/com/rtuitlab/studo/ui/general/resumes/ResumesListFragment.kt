@@ -65,6 +65,7 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
             mainActivity().updateStatuses.isNeedToUpdateResumesList = false
         } else {
             recyclerAdapter?.data = resumesListViewModel.resumesListResource.value!!.data!!
+            checkListEmpty(resumesListViewModel.resumesListResource.value!!.data!!)
         }
 
         setListeners()
@@ -86,7 +87,8 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
             when(it.status) {
                 Status.SUCCESS -> {
                     swipeContainer.isRefreshing = false
-                    recyclerAdapter?.data = it.data!!
+                    checkListEmpty(it.data!!)
+                    recyclerAdapter?.data = it.data
                 }
                 Status.ERROR -> {
                     swipeContainer.isRefreshing = false
@@ -107,6 +109,15 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
             }
         }
         recyclerView.adapter = recyclerAdapter
+    }
+
+    private fun checkListEmpty(list: List<Any>) {
+        if (list.isEmpty()) {
+            emptyNotifier.text = getString(R.string.empty_resumes)
+            emptyNotifier.visibility = View.VISIBLE
+        } else {
+            emptyNotifier.visibility = View.GONE
+        }
     }
 
     override fun onResumeClick(compactResume: CompactResume) {
