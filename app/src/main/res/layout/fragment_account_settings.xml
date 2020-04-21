@@ -48,25 +48,10 @@
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="16dp"
                             android:transitionName="avatarView"
+                            app:avatarTextColor="?attr/colorOnSecondary"
                             app:bindText="@{viewModel.userInitials}"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
-
-                        <!--                        <LinearLayout-->
-                        <!--                            android:id="@+id/linearLayout"-->
-                        <!--                            android:layout_width="0dp"-->
-                        <!--                            android:layout_height="wrap_content"-->
-                        <!--                            android:layout_marginStart="16dp"-->
-                        <!--                            android:layout_marginEnd="16dp"-->
-                        <!--                            android:orientation="vertical"-->
-                        <!--                            app:layout_constraintBottom_toBottomOf="@+id/avatarView"-->
-                        <!--                            app:layout_constraintEnd_toEndOf="parent"-->
-                        <!--                            app:layout_constraintStart_toEndOf="@+id/avatarView"-->
-                        <!--                            app:layout_constraintTop_toTopOf="@+id/avatarView">-->
-
-                        <!--                            -->
-
-                        <!--                        </LinearLayout>-->
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/nameInput"

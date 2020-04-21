@@ -22,7 +22,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             app:avatarBackgroundColor="@color/colorPrimary"
-            app:avatarTextColor="@android:color/white"
+            app:avatarTextColor="?attr/colorOnSecondary"
             app:layout_constraintBottom_toBottomOf="@+id/title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/title" />

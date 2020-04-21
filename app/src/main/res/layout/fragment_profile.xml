@@ -50,6 +50,7 @@
                             android:layout_width="64dp"
                             android:layout_height="64dp"
                             android:transitionName="avatarView"
+                            app:avatarTextColor="?attr/colorOnSecondary"
                             app:bindText="@{viewModel.userInitials}"/>
 
                         <LinearLayout
