@@ -5,8 +5,8 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorSecondary">@color/colorAccent</item>
-        <item name="colorOnSecondary">@android:color/white</item>
-        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="colorOnSecondary">?android:attr/colorBackground</item>
         <item name="preferenceTheme">@style/AppTheme.SettingsTheme</item>
         <item name="materialCalendarFullscreenTheme">@style/CustomThemeOverlay_MaterialCalendar_Fullscreen</item>
         <item name="bottomSheetDialogTheme">@style/ReaderBottomSheetDialog</item>

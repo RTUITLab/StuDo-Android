@@ -56,7 +56,7 @@
                         android:id="@+id/separator1"
                         android:layout_width="0dp"
                         android:layout_height="1dp"
-                        android:background="?android:attr/colorButtonNormal"
+                        android:background="@color/colorSeparator"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/titleEdit" />
@@ -81,7 +81,7 @@
                         android:id="@+id/separator2"
                         android:layout_width="0dp"
                         android:layout_height="1dp"
-                        android:background="?android:attr/colorButtonNormal"
+                        android:background="@color/colorSeparator"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/shortDescEdit" />
@@ -107,7 +107,7 @@
                         android:id="@+id/separator3"
                         android:layout_width="0dp"
                         android:layout_height="1dp"
-                        android:background="?android:attr/colorButtonNormal"
+                        android:background="@color/colorSeparator"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/descEdit" />

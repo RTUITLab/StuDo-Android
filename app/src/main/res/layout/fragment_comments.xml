@@ -52,7 +52,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="?android:attr/colorButtonNormal"/>
+            android:background="@color/colorSeparator"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/commentRV"
@@ -64,7 +64,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="?android:attr/colorButtonNormal"/>
+            android:background="@color/colorSeparator"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

@@ -85,7 +85,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="?android:attr/colorButtonNormal"/>
+                        android:background="@color/colorSeparator"/>
 
                     <com.rtuitlab.studo.custom_views.ProfileListView
                         android:id="@+id/profileList"
