@@ -5,13 +5,15 @@
 
     <SwitchPreferenceCompat
         android:key="themeSwitch"
-        android:title="@string/dark_theme"/>
+        android:title="@string/dark_theme"
+        android:icon="@drawable/ic_theme"/>
 
     <DropDownPreference
         android:key="languagesDropdown"
         android:title="@string/language"
         android:entries="@array/languages"
         android:entryValues="@array/entry_languages"
-        app:useSimpleSummaryProvider="true"/>
+        app:useSimpleSummaryProvider="true"
+        android:icon="@drawable/ic_language"/>
 
 </PreferenceScreen>
