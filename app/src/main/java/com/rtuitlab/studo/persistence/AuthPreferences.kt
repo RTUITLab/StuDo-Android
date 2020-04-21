@@ -2,31 +2,25 @@ package com.rtuitlab.studo.persistence
 
 import android.annotation.SuppressLint
 import android.content.Context
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKeys
 import com.google.gson.Gson
 import com.rtuitlab.studo.server.general.users.models.User
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
-val encryptedPrefModule = module {
-    single { EncryptedPreferences(androidContext()) }
+val authPrefModule = module {
+    single { AuthPreferences(androidContext()) }
 }
 
 @SuppressLint("ApplySharedPref")
-class EncryptedPreferences(context: Context) {
+class AuthPreferences(context: Context) {
 
     private val userKey = "user"
     private val accessTokenKey = "accessToken"
     private val refreshTokenKey = "refreshToken"
 
-    private val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
-    private val preferences = EncryptedSharedPreferences.create(
-        "StuDoEncryptedPrefs",
-        masterKeyAlias,
-        context,
-        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+    private val preferences = context.getSharedPreferences(
+        "StuDoAuthPrefs",
+        Context.MODE_PRIVATE
     )
 
     fun storeUser(user: User) {

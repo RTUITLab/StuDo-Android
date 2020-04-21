@@ -1,7 +1,7 @@
 package com.rtuitlab.studo.account
 
 import com.auth0.android.jwt.JWT
-import com.rtuitlab.studo.persistence.EncryptedPreferences
+import com.rtuitlab.studo.persistence.AuthPreferences
 import com.rtuitlab.studo.server.auth.models.UserLoginResponse
 import com.rtuitlab.studo.server.general.users.models.User
 import org.koin.dsl.module
@@ -12,7 +12,7 @@ val accountStoreModule = module {
 }
 
 class AccountStorage(
-    private val preferences: EncryptedPreferences
+    private val preferences: AuthPreferences
 ) {
     lateinit var user: User
         private set

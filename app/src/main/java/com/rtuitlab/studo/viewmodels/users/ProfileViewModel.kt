@@ -10,7 +10,7 @@ import com.rtuitlab.studo.App
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.utils.SingleLiveEvent
 import com.rtuitlab.studo.account.AccountStorage
-import com.rtuitlab.studo.persistence.EncryptedPreferences
+import com.rtuitlab.studo.persistence.AuthPreferences
 import com.rtuitlab.studo.server.Resource
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.users.UserRepository
@@ -22,7 +22,7 @@ import kotlinx.coroutines.withContext
 class ProfileViewModel(
     app: Application,
     private val userRepo: UserRepository,
-    private val encryptedPrefs: EncryptedPreferences,
+    private val authPrefs: AuthPreferences,
     accStorage: AccountStorage
 ): AndroidViewModel(app) {
 
@@ -121,7 +121,7 @@ class ProfileViewModel(
 
     private fun fillUserData(user: User) {
         this.user = user
-        encryptedPrefs.storeUser(user)
+        authPrefs.storeUser(user)
         userInitials.set("${user.name[0]}${user.surname[0]}")
         name.set(user.name)
         surname.set(user.surname)
@@ -130,7 +130,7 @@ class ProfileViewModel(
     }
 
     fun logout() {
-        encryptedPrefs.removeUserData()
+        authPrefs.removeUserData()
     }
 
     fun clearChanges() {

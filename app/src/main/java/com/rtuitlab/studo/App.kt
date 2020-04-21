@@ -2,7 +2,7 @@ package com.rtuitlab.studo
 
 import android.app.Application
 import com.rtuitlab.studo.account.accountStoreModule
-import com.rtuitlab.studo.persistence.encryptedPrefModule
+import com.rtuitlab.studo.persistence.authPrefModule
 import com.rtuitlab.studo.persistence.settingsPrefModule
 import com.rtuitlab.studo.server.auth.authApiModule
 import com.rtuitlab.studo.server.general.ads.adsApiModule
@@ -32,7 +32,7 @@ class App : Application() {
                 userApiModule,
                 responseHandlerModule,
                 repositoriesModule,
-                encryptedPrefModule,
+                authPrefModule,
                 settingsPrefModule,
                 accountStoreModule,
                 viewModelsModule,
