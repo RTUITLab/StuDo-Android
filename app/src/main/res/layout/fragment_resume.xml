@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.rtuitlab.studo.viewmodels.resumes.ResumeViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/view_collapsing_toolbar"/>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:onRefreshListener="@{() -> viewModel.loadResume()}"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:layout_marginHorizontal="16dp"
+                    app:cardElevation="2dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="8dp">
+
+                        <TextView
+                            android:id="@+id/titleTV"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="16dp"
+                            android:text="@{viewModel.title}"
+                            style="@style/TextAppearance.MaterialComponents.Headline6"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="Sample name Sample name Sample name Sample name Sample name Sample name " />
+
+                        <TextView
+                            android:id="@+id/descTV"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@{viewModel.currentResume.component3()}"
+                            app:layout_constraintEnd_toEndOf="@+id/titleTV"
+                            app:layout_constraintStart_toStartOf="@+id/titleTV"
+                            app:layout_constraintTop_toBottomOf="@+id/titleTV"
+                            tools:text="Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description Sample description " />
+
+                        <View
+                            android:id="@+id/separator"
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="16dp"
+                            android:background="@color/colorSeparator"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/descTV" />
+
+                        <LinearLayout
+                            android:id="@+id/profilePanel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:orientation="horizontal"
+                            android:padding="8dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/separator">
+
+                            <com.rtuitlab.studo.custom_views.AvatarView
+                                android:id="@+id/avatarView"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                app:avatarTextColor="?attr/colorOnSecondary"
+                                app:bindText="@{viewModel.creatorAvatarText}"
+                                tools:avatarText="NA" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="8dp"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@{viewModel.creatorFullName}"
+                                android:textColor="?android:attr/textColorPrimary"
+                                android:textStyle="bold"
+                                tools:text="Nikita Alexeev" />
+
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </androidx.core.widget.NestedScrollView>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

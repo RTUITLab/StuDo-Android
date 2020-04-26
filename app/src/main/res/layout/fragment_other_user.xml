@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.rtuitlab.studo.viewmodels.users.OtherUserViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/view_collapsing_toolbar"/>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:onRefreshListener="@{() -> viewModel.loadUser()}">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:layout_marginHorizontal="16dp"
+                    app:cardElevation="2dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.rtuitlab.studo.custom_views.AvatarView
+                            android:id="@+id/avatarView"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            app:avatarTextColor="?attr/colorOnSecondary"
+                            app:bindText="@{viewModel.userInitials}"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/fullNameTV"
+                            style="@style/TextAppearance.MaterialComponents.Headline6"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="@{viewModel.userFullName}"
+                            app:layout_constraintBottom_toTopOf="@+id/emailTV"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/avatarView"
+                            app:layout_constraintTop_toTopOf="@+id/avatarView"
+                            tools:text="Nikita Alexeev" />
+
+                        <TextView
+                            android:id="@+id/emailTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="@{viewModel.userEmail}"
+                            android:background="?android:attr/selectableItemBackground"
+                            app:layout_constraintBottom_toBottomOf="@+id/avatarView"
+                            app:layout_constraintEnd_toEndOf="@+id/fullNameTV"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="@+id/fullNameTV"
+                            app:layout_constraintTop_toBottomOf="@+id/fullNameTV"
+                            tools:text="test@gmail.ru" />
+
+                        <View
+                            android:id="@+id/separator"
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="16dp"
+                            android:background="@color/colorSeparator"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/avatarView" />
+
+                        <TextView
+                            android:id="@+id/adsTV"
+                            style="@style/TextAppearance.MaterialComponents.Body1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:drawableStart="@drawable/ic_ad"
+                            android:drawablePadding="8dp"
+                            android:padding="8dp"
+                            android:text="@string/title_ads"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/separator" />
+
+                        <TextView
+                            android:id="@+id/resumesTV"
+                            style="@style/TextAppearance.MaterialComponents.Body1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:drawableStart="@drawable/ic_resume"
+                            android:drawablePadding="8dp"
+                            android:padding="8dp"
+                            android:text="@string/title_resumes"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/adsTV"
+                            app:layout_constraintStart_toStartOf="@+id/adsTV"
+                            app:layout_constraintTop_toBottomOf="@+id/adsTV" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </androidx.core.widget.NestedScrollView>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

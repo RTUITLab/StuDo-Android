@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profile"
+    app:startDestination="@id/profileFragment">
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.rtuitlab.studo.ui.general.users.fragments.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_accountSettingsFragment"
+            app:destination="@id/accountSettingsFragment"/>
+        <action
+            android:id="@+id/action_profileFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_ads"
+            app:destination="@id/ads" />
+        <action
+            android:id="@+id/action_profileFragment_to_resumes"
+            app:destination="@id/resumes" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountSettingsFragment"
+        android:name="com.rtuitlab.studo.ui.general.users.fragments.AccountSettingsFragment"
+        android:label="fragment_account_settings"
+        tools:layout="@layout/fragment_account_settings" >
+        <action
+            android:id="@+id/action_accountSettingsFragment_to_changeEmailDialog"
+            app:destination="@id/changeEmailDialog" />
+        <action
+            android:id="@+id/action_accountSettingsFragment_to_changePasswordDialog"
+            app:destination="@id/changePasswordDialog" />
+    </fragment>
+    <dialog
+        android:id="@+id/changeEmailDialog"
+        android:name="com.rtuitlab.studo.ui.general.users.dialogs.ChangeEmailDialog"
+        android:label="ChangeEmailDialog"
+        tools:layout="@layout/dialog_change_email"/>
+    <dialog
+        android:id="@+id/changePasswordDialog"
+        android:name="com.rtuitlab.studo.ui.general.users.dialogs.ChangePasswordDialog"
+        android:label="ChangePasswordDialog"
+        tools:layout="@layout/dialog_change_password"/>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.rtuitlab.studo.ui.general.users.fragments.SettingsFragment"
+        android:label="SettingsFragment"
+        tools:layout="@layout/fragment_settings"/>
+    <include app:graph="@navigation/ads" />
+    <include app:graph="@navigation/resumes" />
+</navigation>

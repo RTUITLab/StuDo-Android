@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.rtuitlab.studo.viewmodels.users.ProfileViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.general.users.fragments.AccountSettingsFragment">
+
+        <include layout="@layout/view_collapsing_toolbar"/>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:onRefreshListener="@{() -> viewModel.updateCurrentUser()}">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:layout_marginHorizontal="16dp"
+                    app:cardElevation="2dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.rtuitlab.studo.custom_views.AvatarView
+                            android:id="@+id/avatarView"
+                            android:layout_width="128dp"
+                            android:layout_height="128dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:transitionName="avatarView"
+                            app:avatarTextColor="?attr/colorOnSecondary"
+                            app:bindText="@{viewModel.userInitials}"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/nameInput"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/name"
+                            app:handleErrorFrom="@{viewModel.nameError}"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            app:layout_constraintBottom_toTopOf="@+id/surnameInput"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/avatarView"
+                            app:layout_constraintTop_toTopOf="@id/avatarView"
+                            app:layout_constraintHorizontal_chainStyle="packed">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:autofillHints="name"
+                                android:inputType="textCapWords"
+                                android:text="@={viewModel.name}"
+                                app:bindAfterTextChanged="@{viewModel::checkUserData}" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/surnameInput"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/surname"
+                            app:handleErrorFrom="@{viewModel.surnameError}"
+                            app:layout_constraintBottom_toBottomOf="@id/avatarView"
+                            app:layout_constraintEnd_toEndOf="@id/nameInput"
+                            app:layout_constraintStart_toStartOf="@id/nameInput"
+                            app:layout_constraintTop_toBottomOf="@+id/nameInput"
+                            app:layout_constraintHorizontal_chainStyle="packed">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:autofillHints="surname"
+                                android:inputType="textCapWords"
+                                android:text="@={viewModel.surname}"
+                                app:bindAfterTextChanged="@{viewModel::checkUserData}" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <View
+                            android:id="@+id/separator"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="16dp"
+                            android:background="@color/colorSeparator"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/avatarView" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/cardNumberInput"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:hint="@string/card_number"
+                            app:handleErrorFrom="@{viewModel.cardNumberError}"
+                            app:layout_constraintEnd_toEndOf="@id/surnameInput"
+                            app:layout_constraintStart_toStartOf="@+id/avatarView"
+                            app:layout_constraintTop_toBottomOf="@+id/separator">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:autofillHints="card number"
+                                android:inputType="textCapCharacters"
+                                android:text="@={viewModel.cardNumber}"
+                                app:bindAfterTextChanged="@{viewModel::checkUserData}" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <Button
+                            android:id="@+id/changeEmailBtn"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:text="@string/change_email"
+                            app:layout_constraintStart_toStartOf="@+id/cardNumberInput"
+                            app:layout_constraintTop_toBottomOf="@+id/cardNumberInput" />
+
+                        <Button
+                            android:id="@+id/changePasswordBtn"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="16dp"
+                            android:text="@string/change_password"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/logoutBtn"
+                            app:layout_constraintHorizontal_chainStyle="spread_inside"
+                            app:layout_constraintStart_toStartOf="@+id/changeEmailBtn"
+                            app:layout_constraintTop_toBottomOf="@+id/changeEmailBtn" />
+
+                        <Button
+                            android:id="@+id/logoutBtn"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="16dp"
+                            android:text="@string/logout"
+                            android:textColor="@color/colorLogout"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/cardNumberInput"
+                            app:layout_constraintHorizontal_chainStyle="spread_inside"
+                            app:layout_constraintStart_toEndOf="@+id/changePasswordBtn"
+                            app:layout_constraintTop_toTopOf="@+id/changePasswordBtn" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </androidx.core.widget.NestedScrollView>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/saveBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:layout_anchor="@id/swipeContainer"
+            app:layout_anchorGravity="bottom|end"
+            app:icon="@drawable/ic_save"
+            android:text="@string/save"
+            android:onClick="@{() -> viewModel.saveUserDataChanges()}"
+            app:isShow="@{viewModel.isUserDataChanged()}"/>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

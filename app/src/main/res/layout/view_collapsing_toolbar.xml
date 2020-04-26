@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.appbar.AppBarLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/appbarLayout"
+    android:layout_width="match_parent"
+    android:layout_height="128dp">
+
+    <net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout
+        android:id="@+id/collapsingToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:expandedTitleGravity="center_horizontal"
+        app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+        android:background="?android:attr/colorBackground"
+        app:contentScrim="?android:attr/colorBackground"
+        app:title="Sample text"
+        app:maxLines="2">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_collapseMode="pin"/>
+
+    </net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout>
+
+</com.google.android.material.appbar.AppBarLayout>

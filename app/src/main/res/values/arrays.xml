@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="profile_icons">
+        <item>@drawable/ic_ad</item>
+        <item>@drawable/ic_resume</item>
+        <item>@drawable/ic_favourite</item>
+        <item>@drawable/ic_organization</item>
+        <item>@drawable/ic_settings</item>
+        <item>@drawable/ic_about</item>
+    </integer-array>
+
+    <string-array name="profile_titles">
+        <item>@string/my_ads</item>
+        <item>@string/my_resumes</item>
+        <item>@string/favourites</item>
+        <item>@string/organizations</item>
+        <item>@string/settings</item>
+        <item>@string/about</item>
+    </string-array>
+
+    <string-array name="languages">
+        <item>@string/russian</item>
+        <item>@string/english</item>
+    </string-array>
+
+    <string-array name="entry_languages">
+        <item>ru</item>
+        <item>en</item>
+    </string-array>
+</resources>

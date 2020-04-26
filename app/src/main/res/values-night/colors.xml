@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#BB86FC</color>
+    <color name="colorAccent">#BB86FC</color>
+    <color name="colorSeparator">#26FFFFFF</color>
+    <color name="colorLogout">#FF6262</color>
+    <color name="colorBackground">#121212</color>
+</resources>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.rtuitlab.studo.viewmodels.ads.CreateEditAdViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:transitionName="create_shared_container"
+        tools:context=".ui.general.users.fragments.ProfileFragment">
+
+        <include layout="@layout/view_collapsing_toolbar"/>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="4dp"
+                android:layout_marginHorizontal="16dp"
+                app:cardElevation="2dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/titleEdit"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="10dp"
+                        android:layout_marginHorizontal="16dp"
+                        android:background="@android:color/transparent"
+                        android:text="@={viewModel.title}"
+                        android:hint="@string/title_hint"
+                        android:singleLine="true"
+                        android:importantForAutofill="no"
+                        android:inputType="textCapSentences"
+                        app:bindAfterTextChanged="@{viewModel::checkData}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <View
+                        android:id="@+id/separator1"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:background="@color/colorSeparator"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/titleEdit" />
+
+                    <EditText
+                        android:id="@+id/shortDescEdit"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="10dp"
+                        android:background="@android:color/transparent"
+                        android:text="@={viewModel.shortDesc}"
+                        android:hint="@string/short_desc_hint"
+                        android:singleLine="true"
+                        android:importantForAutofill="no"
+                        android:inputType="textCapSentences"
+                        app:bindAfterTextChanged="@{viewModel::checkData}"
+                        app:layout_constraintEnd_toEndOf="@+id/titleEdit"
+                        app:layout_constraintStart_toStartOf="@+id/titleEdit"
+                        app:layout_constraintTop_toBottomOf="@+id/separator1" />
+
+                    <View
+                        android:id="@+id/separator2"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:background="@color/colorSeparator"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/shortDescEdit" />
+
+                    <com.yydcdut.markdown.MarkdownEditText
+                        android:id="@+id/descEdit"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="10dp"
+                        android:background="@android:color/transparent"
+                        android:text="@={viewModel.desc}"
+                        android:gravity="top"
+                        android:hint="@string/desc"
+                        android:inputType="textMultiLine|textCapSentences"
+                        android:minLines="5"
+                        android:importantForAutofill="no"
+                        app:bindAfterTextChanged="@{viewModel::checkData}"
+                        app:layout_constraintEnd_toEndOf="@+id/shortDescEdit"
+                        app:layout_constraintStart_toStartOf="@+id/shortDescEdit"
+                        app:layout_constraintTop_toBottomOf="@+id/separator2"/>
+
+                    <View
+                        android:id="@+id/separator3"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:background="@color/colorSeparator"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/descEdit" />
+
+                    <TextView
+                        android:id="@+id/dateTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_date"
+                        android:drawablePadding="8dp"
+                        android:layout_marginTop="16dp"
+                        android:gravity="center_vertical"
+                        android:text="@{viewModel.dateText}"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        tools:text="22.09.2020 — 22.09.2020"
+                        app:layout_constraintStart_toStartOf="@+id/descEdit"
+                        app:layout_constraintTop_toBottomOf="@+id/separator3" />
+
+                    <TextView
+                        android:id="@+id/timeTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:drawableStart="@drawable/ic_time"
+                        android:drawablePadding="8dp"
+                        android:gravity="center_vertical"
+                        android:text="@{viewModel.timeText}"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        tools:text="15:00 — 19:30"
+                        app:layout_constraintStart_toStartOf="@+id/dateTV"
+                        app:layout_constraintTop_toBottomOf="@+id/dateTV" />
+
+                    <Switch
+                        android:id="@+id/timeSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:switchPadding="8dp"
+                        android:text="@string/only_date"
+                        app:layout_constraintBottom_toBottomOf="@+id/doneBtn"
+                        app:layout_constraintStart_toStartOf="@+id/timeTV"
+                        app:layout_constraintTop_toTopOf="@+id/doneBtn" />
+
+                    <Button
+                        android:id="@+id/doneBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/create"
+                        android:enabled="@{viewModel.isValid()}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/timeTV" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>
