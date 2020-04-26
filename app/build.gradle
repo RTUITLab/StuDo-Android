@@ -29,14 +29,14 @@ android {
         debug {
             minifyEnabled false
             buildConfigField "String", "API_URL",
-                    "\"https://dev.studo.rtuitlab.ru/api/\""
+                    "\"https://studo.rtuitlab.ru/api/\""
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             debuggable true
         }
         release {
             minifyEnabled false
             buildConfigField "String", "API_URL",
-                    "\"https://dev.studo.rtuitlab.ru/api/\""
+                    "\"https://studo.rtuitlab.ru/api/\""
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
