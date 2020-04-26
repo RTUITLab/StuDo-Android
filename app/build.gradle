@@ -3,6 +3,14 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+Properties properties = new Properties()
+def propertiesFile = project.rootProject.file('local.properties')
+if (propertiesFile.exists()) {
+    properties.load(propertiesFile.newDataInputStream())
+}
+def apiUrl = properties.getProperty('api.url')
+def defaultApiUrl = "https://studo.rtuitlab.ru/api/"
+
 android {
     compileSdkVersion 29
 
@@ -28,15 +36,13 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
-            buildConfigField "String", "API_URL",
-                    "\"https://dev.studo.rtuitlab.ru/api/\""
+            buildConfigField ("String", "API_URL", apiUrl != null ? "\"$apiUrl\"" : "\"$defaultApiUrl\"")
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             debuggable true
         }
         release {
             minifyEnabled false
-            buildConfigField "String", "API_URL",
-                    "\"https://dev.studo.rtuitlab.ru/api/\""
+            buildConfigField ("String", "API_URL", apiUrl != null ? "\"$apiUrl\"" : "\"$defaultApiUrl\"")
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
