@@ -113,7 +113,7 @@ class AdFragment: Fragment() {
             when(it.status) {
                 Status.SUCCESS -> {
                     swipeContainer.isRefreshing = false
-                    mainActivity().updateStatuses.isNeedToUpdateResumesList = true
+                    mainActivity().updateStatuses.isNeedToUpdateAdsList = true
                     requireActivity().onBackPressed()
                 }
                 Status.ERROR -> {
