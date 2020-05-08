@@ -14,9 +14,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.Serializable
 
-sealed class CreateEditResume : Serializable
-object CreateResume: CreateEditResume()
-data class EditResume(val resume: Resume): CreateEditResume()
+sealed class ModifyResumeType : Serializable
+object CreateResume: ModifyResumeType()
+data class EditResume(val resume: Resume): ModifyResumeType()
 
 class CreateEditResumeViewModel(
     private val resumesRepo: ResumesRepository

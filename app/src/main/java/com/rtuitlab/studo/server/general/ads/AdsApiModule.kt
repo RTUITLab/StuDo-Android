@@ -1,12 +1,6 @@
 package com.rtuitlab.studo.server.general.ads
 
-import org.koin.core.qualifier.named
-import org.koin.dsl.module
 import retrofit2.Retrofit
+import retrofit2.create
 
-val adsApiModule = module {
-    single { provideAdsApi(get(named("general"))) }
-}
-
-fun provideAdsApi(retrofit: Retrofit): AdsApi =
-    retrofit.create(AdsApi::class.java)
+fun provideAdsApi(retrofit: Retrofit): AdsApi = retrofit.create()

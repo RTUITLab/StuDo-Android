@@ -17,6 +17,7 @@
         android:theme="@style/AppTheme.Launcher">
         <activity
             android:name=".ui.auth.AuthActivity"
+            android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation"
             tools:ignore="LockedOrientationActivity" />

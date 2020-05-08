@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -18,26 +19,28 @@ import com.rtuitlab.studo.viewmodels.resumes.*
 import kotlinx.android.synthetic.main.fragment_recycler_list.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.view.*
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickListener {
 
+    companion object {
+        const val RESUMES_TYPE_KEY = "RESUMES_TYPE"
+    }
+
     private val resumesListViewModel: ResumesListViewModel by viewModel()
 
-    private var recyclerAdapter: ResumesRecyclerAdapter? = null
+    private val recyclerAdapter: ResumesRecyclerAdapter by inject()
 
-    private var resumesType: ResumesType = AllResumes
+    private val resumesType by lazy {
+        (arguments?.getSerializable(RESUMES_TYPE_KEY) as? ResumesType) ?: AllResumes
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        (arguments?.getSerializable(ResumesType::class.java.simpleName) as? ResumesType)?.let {
-            resumesType = it
-        }
-        return inflater.inflate(R.layout.fragment_recycler_list, container, false)
-    }
+    ): View = inflater.inflate(R.layout.fragment_recycler_list, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -64,7 +67,7 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
             loadResumes()
             mainActivity().updateStatuses.isNeedToUpdateResumesList = false
         } else {
-            recyclerAdapter?.data = resumesListViewModel.resumesListResource.value!!.data!!
+            recyclerAdapter.data = resumesListViewModel.resumesListResource.value!!.data!!
             checkListEmpty(resumesListViewModel.resumesListResource.value!!.data!!)
         }
 
@@ -88,7 +91,7 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
                 Status.SUCCESS -> {
                     swipeContainer.isRefreshing = false
                     checkListEmpty(it.data!!)
-                    recyclerAdapter?.data = it.data
+                    recyclerAdapter.data = it.data
                 }
                 Status.ERROR -> {
                     swipeContainer.isRefreshing = false
@@ -102,12 +105,7 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
     }
 
     private fun initRecyclerView() {
-        if (recyclerAdapter == null) {
-            recyclerAdapter = ResumesRecyclerAdapter()
-                .apply {
-                setOnResumeClickListener(this@ResumesListFragment)
-            }
-        }
+        recyclerAdapter.setOnResumeClickListener(this@ResumesListFragment)
         recyclerView.adapter = recyclerAdapter
     }
 
@@ -135,9 +133,7 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
     }
 
     private fun navigateToResume(compactResume: CompactResume) {
-        val bundle = Bundle().apply {
-            putSerializable("compactResume", compactResume)
-        }
+        val bundle = bundleOf("compactResume" to compactResume)
         findNavController().navigate(R.id.action_resumesListFragment_to_resumeFragment, bundle)
     }
 }

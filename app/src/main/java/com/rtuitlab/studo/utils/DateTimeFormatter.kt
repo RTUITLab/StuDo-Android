@@ -7,13 +7,8 @@ import android.text.SpannableStringBuilder
 import android.text.format.DateFormat
 import android.text.style.StyleSpan
 import androidx.core.text.set
-import org.koin.dsl.module
 import java.text.SimpleDateFormat
 import java.util.*
-
-val timeFormatterModule = module {
-    single { DateTimeFormatter() }
-}
 
 class DateTimeFormatter {
 

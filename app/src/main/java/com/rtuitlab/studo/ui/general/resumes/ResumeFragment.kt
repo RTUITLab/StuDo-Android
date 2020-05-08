@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.rtuitlab.studo.R
@@ -16,16 +18,20 @@ import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.resumes.models.CompactResume
 import com.rtuitlab.studo.server.general.resumes.models.Resume
 import com.rtuitlab.studo.ui.general.YesNoDialog
-import com.rtuitlab.studo.viewmodels.resumes.CreateEditResume
+import com.rtuitlab.studo.ui.general.YesNoDialog.Companion.RESULT_YES_NO_KEY
+import com.rtuitlab.studo.ui.general.resumes.CreateEditResumeFragment.Companion.MODIFY_RESUME_TYPE_KEY
 import com.rtuitlab.studo.viewmodels.resumes.EditResume
 import com.rtuitlab.studo.viewmodels.resumes.ResumeViewModel
 import kotlinx.android.synthetic.main.fragment_resume.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.lang.Exception
 
 class ResumeFragment: Fragment() {
+
+    companion object {
+        private const val DELETE_RESUME_RESULT_REQUEST_KEY = "DELETE_RESUME_RESULT_REQUEST"
+    }
 
     private val viewModel: ResumeViewModel by viewModel()
 
@@ -62,6 +68,15 @@ class ResumeFragment: Fragment() {
 
     private fun setListeners() {
         profilePanel.setOnClickListener { navigateToProfile() }
+
+        childFragmentManager.setFragmentResultListener(
+            DELETE_RESUME_RESULT_REQUEST_KEY,
+            viewLifecycleOwner
+        ) { _, bundle ->
+            if (bundle.getBoolean(RESULT_YES_NO_KEY)) {
+                viewModel.deleteResume()
+            }
+        }
     }
 
     private fun setObservers() {
@@ -135,37 +150,29 @@ class ResumeFragment: Fragment() {
 
     private fun navigateToEdit() {
         viewModel.currentResume.get()?.let {
-            val bundle = Bundle().apply {
-                putSerializable(
-                    CreateEditResume::class.java.simpleName,
-                    EditResume(it)
-                )
-            }
+            val bundle = bundleOf(MODIFY_RESUME_TYPE_KEY to EditResume(it))
             findNavController().navigate(R.id.action_resumeFragment_to_createEditResumeFragment, bundle)
         }
     }
 
     private fun navigateToProfile() {
         viewModel.currentResume.get()?.let {
-            val bundle = Bundle().apply {
-                putString("userId", it.userId)
-                putSerializable("user", it.user)
-            }
+            val bundle = bundleOf(
+                "userId" to it.userId,
+                "user" to it.user
+            )
             try {
                 findNavController().navigate(R.id.action_resumeFragment_to_other_user, bundle)
-            } catch (e: Exception) {
+            } catch (e: IllegalArgumentException) {
                 findNavController().navigate(R.id.otherUserFragment, bundle)
             }
         }
     }
 
     private fun showDeleteConfirmation() {
-        val dialog = YesNoDialog
-            .getInstance(getString(R.string.delete_resume_confirmation), object : YesNoDialog.OnYesClickListener{
-                override fun onYesClick() {
-                    viewModel.deleteResume()
-                }
-            })
-        dialog.show(childFragmentManager, null)
+        YesNoDialog.newInstance(
+            DELETE_RESUME_RESULT_REQUEST_KEY,
+            getString(R.string.delete_resume_confirmation)
+        ).show(childFragmentManager, null)
     }
 }
