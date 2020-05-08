@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -17,11 +18,11 @@ import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentOtherUserBinding
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.users.models.User
-import com.rtuitlab.studo.viewmodels.ads.AdsType
+import com.rtuitlab.studo.ui.general.ads.fragments.AdsListFragment.Companion.ADS_TYPE_KEY
+import com.rtuitlab.studo.ui.general.resumes.ResumesListFragment.Companion.RESUMES_TYPE_KEY
 import com.rtuitlab.studo.viewmodels.ads.OwnAds
 import com.rtuitlab.studo.viewmodels.ads.UserAds
 import com.rtuitlab.studo.viewmodels.resumes.OwnResumes
-import com.rtuitlab.studo.viewmodels.resumes.ResumesType
 import com.rtuitlab.studo.viewmodels.resumes.UserResumes
 import com.rtuitlab.studo.viewmodels.users.OtherUserViewModel
 import kotlinx.android.synthetic.main.fragment_other_user.*
@@ -91,22 +92,20 @@ class OtherUserFragment: Fragment() {
     }
 
     private fun navigateToAds() {
-        val bundle = Bundle().apply {
-            putSerializable(
-                AdsType::class.java.simpleName,
-                if (viewModel.isOwnProfile()) { OwnAds } else { UserAds(viewModel.userId) }
-            )
+        val adsType = when {
+            viewModel.isOwnProfile() -> OwnAds
+            else -> UserAds(viewModel.userId)
         }
+        val bundle = bundleOf(ADS_TYPE_KEY to adsType)
         findNavController().navigate(R.id.action_otherUserFragment_to_ads_nested, bundle)
     }
 
     private fun navigateToResumes() {
-        val bundle = Bundle().apply {
-            putSerializable(
-                ResumesType::class.java.simpleName,
-                if (viewModel.isOwnProfile()) { OwnResumes } else { UserResumes(viewModel.userId) }
-            )
+        val resumesType = when {
+            viewModel.isOwnProfile() -> OwnResumes
+            else -> UserResumes(viewModel.userId)
         }
+        val bundle = bundleOf(RESUMES_TYPE_KEY to resumesType)
         findNavController().navigate(R.id.action_otherUserFragment_to_resumes_nested, bundle)
     }
 

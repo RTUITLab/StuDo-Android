@@ -45,15 +45,17 @@ class CommentsViewModel(
         isValid.set(!commentText.get().isNullOrBlank())
     }
 
+    var commentIdForDeleting = ""
+
     private val _deleteCommentResource = SingleLiveEvent<Resource<String>>()
     val deleteCommentResource: LiveData<Resource<String>> = _deleteCommentResource
 
-    fun deleteComment(commentId: String) {
+    fun deleteComment() {
         viewModelScope.launch {
             _deleteCommentResource.value = Resource.loading(null)
 
             val response = withContext(Dispatchers.IO) {
-                adsRepo.deleteComment(ad.id, commentId)
+                adsRepo.deleteComment(ad.id, commentIdForDeleting)
             }
 
             _deleteCommentResource.value = response
