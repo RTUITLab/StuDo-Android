@@ -20,6 +20,7 @@ import com.rtuitlab.studo.viewmodels.ads.*
 import kotlinx.android.synthetic.main.fragment_recycler_list.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.view.*
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
@@ -30,7 +31,7 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
 
     private val viewModel: AdsListViewModel by viewModel()
 
-    private val recyclerAdapter = AdsRecyclerAdapter()
+    private val recyclerAdapter: AdsRecyclerAdapter by inject()
 
     private val adsType by lazy {
         (arguments?.getSerializable(ADS_TYPE_KEY) as? AdsType) ?: AllAds

@@ -4,12 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import com.google.gson.Gson
 import com.rtuitlab.studo.server.general.users.models.User
-import org.koin.android.ext.koin.androidContext
-import org.koin.dsl.module
-
-val authPrefModule = module {
-    single { AuthPreferences(androidContext()) }
-}
 
 @SuppressLint("ApplySharedPref")
 class AuthPreferences(context: Context) {

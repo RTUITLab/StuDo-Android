@@ -2,12 +2,6 @@ package com.rtuitlab.studo.persistence
 
 import android.content.Context
 import androidx.preference.PreferenceManager
-import org.koin.android.ext.koin.androidContext
-import org.koin.dsl.module
-
-val settingsPrefModule = module {
-    single { SettingsPreferences(androidContext()) }
-}
 
 class SettingsPreferences(context: Context) {
 
