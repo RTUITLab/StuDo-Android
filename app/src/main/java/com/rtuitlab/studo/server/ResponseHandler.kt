@@ -1,14 +1,9 @@
 package com.rtuitlab.studo.server
 
 import android.util.Log
-import org.koin.dsl.module
 import retrofit2.HttpException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
-
-val responseHandlerModule = module {
-    factory { ResponseHandler() }
-}
 
 class ResponseHandler {
     fun <T : Any> handleSuccess(data: T): Resource<T> {

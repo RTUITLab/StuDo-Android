@@ -23,12 +23,7 @@ class ResumesRecyclerAdapter: RecyclerView.Adapter<ResumesRecyclerAdapter.Resume
     set(value) {
         GlobalScope.launch(Dispatchers.Main) {
             val resumesDiffResult = withContext(Dispatchers.Default) {
-                val diffUtilCallback =
-                    ResumesListDiffUtilCallback(
-                        data,
-                        value
-                    )
-                DiffUtil.calculateDiff(diffUtilCallback)
+                DiffUtil.calculateDiff(ResumesListDiffUtilCallback(data, value))
             }
             field = value
             resumesDiffResult.dispatchUpdatesTo(this@ResumesRecyclerAdapter)
@@ -53,7 +48,7 @@ class ResumesRecyclerAdapter: RecyclerView.Adapter<ResumesRecyclerAdapter.Resume
 
         init {
             view.setOnClickListener {
-                clickListener?.onResumeClick(data[adapterPosition])
+                clickListener?.onResumeClick(data[bindingAdapterPosition])
             }
         }
 

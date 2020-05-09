@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -19,26 +20,28 @@ import com.rtuitlab.studo.viewmodels.ads.*
 import kotlinx.android.synthetic.main.fragment_recycler_list.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.view.*
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
 
+    companion object {
+        const val ADS_TYPE_KEY = "ADS_TYPE"
+    }
+
     private val viewModel: AdsListViewModel by viewModel()
 
-    private var recyclerAdapter: AdsRecyclerAdapter? = null
+    private val recyclerAdapter: AdsRecyclerAdapter by inject()
 
-    private var adsType: AdsType = AllAds
+    private val adsType by lazy {
+        (arguments?.getSerializable(ADS_TYPE_KEY) as? AdsType) ?: AllAds
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        (arguments?.getSerializable(AdsType::class.java.simpleName) as? AdsType)?.let {
-            adsType = it
-        }
-        return inflater.inflate(R.layout.fragment_recycler_list, container, false)
-    }
+    ): View = inflater.inflate(R.layout.fragment_recycler_list, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -71,7 +74,7 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
             loadAds()
             mainActivity().updateStatuses.isNeedToUpdateAdsList = false
         } else {
-            recyclerAdapter?.data = viewModel.adsListResource.value!!.data!!
+            recyclerAdapter.data = viewModel.adsListResource.value!!.data!!
             checkListEmpty(viewModel.adsListResource.value!!.data!!)
         }
 
@@ -95,7 +98,7 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
                 Status.SUCCESS -> {
                     swipeContainer.isRefreshing = false
                     checkListEmpty(it.data!!)
-                    recyclerAdapter?.data = it.data
+                    recyclerAdapter.data = it.data
                 }
                 Status.ERROR -> {
                     swipeContainer.isRefreshing = false
@@ -117,7 +120,7 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
                     }
                 }
                 Status.ERROR -> {
-                    recyclerAdapter?.handleFavouriteError(it.data!!)
+                    recyclerAdapter.handleFavouriteError(it.data!!)
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
                 Status.LOADING -> {}
@@ -126,12 +129,7 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
     }
 
     private fun initRecyclerView() {
-        if (recyclerAdapter == null) {
-            recyclerAdapter = AdsRecyclerAdapter()
-                .apply {
-                setOnAdClickListener(this@AdsListFragment)
-            }
-        }
+        recyclerAdapter.setOnAdClickListener(this@AdsListFragment)
         recyclerView.adapter = recyclerAdapter
     }
 
@@ -167,9 +165,7 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
     }
 
     private fun navigateToAd(compactAd: CompactAd) {
-        val bundle = Bundle().apply {
-            putSerializable("compactAd", compactAd)
-        }
+        val bundle = bundleOf("compactAd" to compactAd)
         findNavController().navigate(R.id.action_adsListFragment_to_adFragment, bundle)
     }
 }

@@ -4,12 +4,7 @@ import com.auth0.android.jwt.JWT
 import com.rtuitlab.studo.persistence.AuthPreferences
 import com.rtuitlab.studo.server.auth.models.UserLoginResponse
 import com.rtuitlab.studo.server.general.users.models.User
-import org.koin.dsl.module
 import java.util.*
-
-val accountStoreModule = module {
-    single { AccountStorage(get()) }
-}
 
 class AccountStorage(
     private val preferences: AuthPreferences

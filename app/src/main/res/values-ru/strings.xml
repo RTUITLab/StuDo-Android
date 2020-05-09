@@ -84,4 +84,8 @@
     <string name="empty_ads">Нет объявлений</string>
     <string name="empty_resumes">Нет резюме</string>
     <string name="empty_favourites">Нет закладок</string>
+    <string name="studo_desc">StuDo - это сервис для организации и продвижения мероприятий в университете РТУ МИРЭА</string>
+    <string name="studo_site_title">Сайт StuDo</string>
+    <string name="vk_group_title">Группа ВК</string>
+    <string name="source_code_title">Исходный код</string>
 </resources>

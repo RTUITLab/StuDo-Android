@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -14,11 +15,11 @@ import com.google.android.material.snackbar.Snackbar
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentProfileBinding
 import com.rtuitlab.studo.server.Status
-import com.rtuitlab.studo.viewmodels.ads.AdsType
+import com.rtuitlab.studo.ui.general.ads.fragments.AdsListFragment.Companion.ADS_TYPE_KEY
+import com.rtuitlab.studo.ui.general.resumes.ResumesListFragment.Companion.RESUMES_TYPE_KEY
 import com.rtuitlab.studo.viewmodels.ads.FavouritesAds
 import com.rtuitlab.studo.viewmodels.ads.OwnAds
 import com.rtuitlab.studo.viewmodels.resumes.OwnResumes
-import com.rtuitlab.studo.viewmodels.resumes.ResumesType
 import com.rtuitlab.studo.viewmodels.users.ProfileViewModel
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
@@ -75,9 +76,7 @@ class ProfileFragment : Fragment() {
                 Snackbar.make(requireView(), "WORK IN PROGRESS", Snackbar.LENGTH_SHORT).show()
             },
             onSettings = { navigateToSettings() },
-            onAbout = {
-                Snackbar.make(requireView(), "ABOUT", Snackbar.LENGTH_SHORT).show()
-            }
+            onAbout = { navigateToAbout() }
         )
     }
 
@@ -91,36 +90,25 @@ class ProfileFragment : Fragment() {
     }
 
     private fun navigateToAds() {
-        val bundle = Bundle().apply {
-            putSerializable(
-                AdsType::class.java.simpleName,
-                OwnAds
-            )
-        }
+        val bundle = bundleOf(ADS_TYPE_KEY to OwnAds)
         findNavController().navigate(R.id.action_profileFragment_to_ads, bundle)
     }
 
     private fun navigateToResumes() {
-        val bundle = Bundle().apply {
-            putSerializable(
-                ResumesType::class.java.simpleName,
-                OwnResumes
-            )
-        }
+        val bundle = bundleOf(RESUMES_TYPE_KEY to OwnResumes)
         findNavController().navigate(R.id.action_profileFragment_to_resumes, bundle)
     }
 
     private fun navigateToFavourites() {
-        val bundle = Bundle().apply {
-            putSerializable(
-                AdsType::class.java.simpleName,
-                FavouritesAds
-            )
-        }
+        val bundle = bundleOf(ADS_TYPE_KEY to FavouritesAds)
         findNavController().navigate(R.id.action_profileFragment_to_ads, bundle)
     }
 
     private fun navigateToSettings() {
         findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)
+    }
+
+    private fun navigateToAbout() {
+        findNavController().navigate(R.id.action_profileFragment_to_aboutFragment)
     }
 }

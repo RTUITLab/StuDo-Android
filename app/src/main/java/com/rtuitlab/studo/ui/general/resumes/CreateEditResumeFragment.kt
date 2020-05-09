@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -16,7 +18,7 @@ import com.rtuitlab.studo.extensions.mainActivity
 import com.rtuitlab.studo.extensions.showProgress
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.resumes.models.Resume
-import com.rtuitlab.studo.viewmodels.resumes.CreateEditResume
+import com.rtuitlab.studo.viewmodels.resumes.ModifyResumeType
 import com.rtuitlab.studo.viewmodels.resumes.CreateEditResumeViewModel
 import com.rtuitlab.studo.viewmodels.resumes.CreateResume
 import com.rtuitlab.studo.viewmodels.resumes.EditResume
@@ -27,14 +29,21 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CreateEditResumeFragment: Fragment() {
 
+    companion object {
+        const val MODIFY_RESUME_TYPE_KEY = "MODIFY_RESUME_TYPE"
+    }
+
     private val viewModel: CreateEditResumeViewModel by viewModel()
 
-    private var createEditResume: CreateEditResume =
-        CreateResume
+    private val modifyResumeType by lazy {
+        (arguments?.getSerializable(MODIFY_RESUME_TYPE_KEY) as? ModifyResumeType) ?: CreateResume
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedElementEnterTransition = MaterialContainerTransform()
+        sharedElementEnterTransition = MaterialContainerTransform().apply {
+            scrimColor = ContextCompat.getColor(requireContext(), android.R.color.transparent)
+        }
     }
 
     override fun onCreateView(
@@ -42,9 +51,6 @@ class CreateEditResumeFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        (arguments?.getSerializable(CreateEditResume::class.java.simpleName) as? CreateEditResume)?.let {
-            createEditResume = it
-        }
         val binding = DataBindingUtil.inflate<FragmentCreateEditResumeBinding>(
             inflater,
             R.layout.fragment_create_edit_resume,
@@ -58,7 +64,7 @@ class CreateEditResumeFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        when(createEditResume) {
+        when(modifyResumeType) {
             CreateResume -> {
                 collapsingToolbar.title = getString(R.string.create_resume)
                 doneBtn.setOnClickListener { viewModel.createResume() }
@@ -67,7 +73,7 @@ class CreateEditResumeFragment: Fragment() {
                 collapsingToolbar.title = getString(R.string.edit_resume)
                 doneBtn.text = getString(R.string.save)
                 doneBtn.setOnClickListener { viewModel.editResume() }
-                viewModel.fillResumeData((createEditResume as EditResume).resume)
+                viewModel.fillResumeData((modifyResumeType as EditResume).resume)
             }
         }
         mainActivity().enableNavigateButton(collapsingToolbar.toolbar)
@@ -81,19 +87,19 @@ class CreateEditResumeFragment: Fragment() {
                 Status.SUCCESS -> {
                     requireActivity().onBackPressed()
 
-                    if (createEditResume == CreateResume) {
+                    if (modifyResumeType == CreateResume) {
                         mainActivity().updateStatuses.isNeedToUpdateResumesList = true
 
                         navigateToResume(it.data!!)
-                    } else if (createEditResume is EditResume) {
+                    } else if (modifyResumeType is EditResume) {
                         mainActivity().updateStatuses.isNeedToUpdateResume = true
                         mainActivity().updateStatuses.isNeedToUpdateResumesList = true
                     }
                 }
                 Status.ERROR -> {
-                    if (createEditResume == CreateResume) {
+                    if (modifyResumeType == CreateResume) {
                         doneBtn.hideProgress(R.string.create)
-                    } else if (createEditResume is EditResume) {
+                    } else if (modifyResumeType is EditResume) {
                         doneBtn.hideProgress(R.string.save)
                     }
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
@@ -106,9 +112,7 @@ class CreateEditResumeFragment: Fragment() {
     }
 
     private fun navigateToResume(resume: Resume) {
-        val bundle = Bundle().apply {
-            putSerializable("resume", resume)
-        }
+        val bundle = bundleOf("resume" to resume)
         findNavController().navigate(R.id.action_resumesListFragment_to_resumeFragment, bundle)
     }
 }

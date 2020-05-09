@@ -2,25 +2,27 @@ package com.rtuitlab.studo.persistence
 
 import android.content.Context
 import androidx.preference.PreferenceManager
-import org.koin.android.ext.koin.androidContext
-import org.koin.dsl.module
-
-val settingsPrefModule = module {
-    single { SettingsPreferences(androidContext()) }
-}
 
 class SettingsPreferences(context: Context) {
 
-    private val themeKey = "themeSwitch"
-    private val languageKey = "languagesDropdown"
+    companion object {
+        private const val DARK_THEME_KEY = "themeSwitch"
+        private const val LANGUAGE_KEY = "languagesDropdown"
+    }
 
     private val settingPref = PreferenceManager.getDefaultSharedPreferences(context)
 
-    fun isDarkTheme(): Boolean? {
-        return if (settingPref.contains(themeKey)) {
-            settingPref.getBoolean(themeKey, true)
-        } else { null }
+    fun isDarkTheme(): Boolean {
+        if (!settingPref.contains(DARK_THEME_KEY)) {
+            settingPref.edit().putBoolean(DARK_THEME_KEY, false).apply()
+        }
+        return settingPref.getBoolean(DARK_THEME_KEY, false)
     }
 
-    fun getSelectedLanguage() = settingPref.getString(languageKey, "en") ?: "en"
+    fun getSelectedLanguage(): String {
+        if (!settingPref.contains(LANGUAGE_KEY)) {
+            settingPref.edit().putString(LANGUAGE_KEY, "ru").apply()
+        }
+        return settingPref.getString(LANGUAGE_KEY, "ru") ?: "ru"
+    }
 }

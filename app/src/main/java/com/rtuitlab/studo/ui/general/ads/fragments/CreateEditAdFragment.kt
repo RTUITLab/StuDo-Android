@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -23,7 +25,7 @@ import com.rtuitlab.studo.extensions.showProgress
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.ads.models.Ad
 import com.rtuitlab.studo.viewmodels.ads.CreateAd
-import com.rtuitlab.studo.viewmodels.ads.CreateEditAd
+import com.rtuitlab.studo.viewmodels.ads.ModifyAdType
 import com.rtuitlab.studo.viewmodels.ads.CreateEditAdViewModel
 import com.rtuitlab.studo.viewmodels.ads.EditAd
 import com.yydcdut.markdown.MarkdownProcessor
@@ -37,16 +39,23 @@ import java.util.*
 
 class CreateEditAdFragment: Fragment() {
 
+    companion object {
+        const val MODIFY_AD_TYPE_KEY = "MODIFY_AD_TYPE"
+    }
+
     private val viewModel: CreateEditAdViewModel by viewModel()
 
     private val markdownProcessor: MarkdownProcessor = getKoin().get(named("edit"))
 
-    private var createEditAd: CreateEditAd =
-        CreateAd
+    private val modifyAdType by lazy {
+        (arguments?.getSerializable(MODIFY_AD_TYPE_KEY) as? ModifyAdType) ?: CreateAd
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedElementEnterTransition = MaterialContainerTransform()
+        sharedElementEnterTransition = MaterialContainerTransform().apply {
+            scrimColor = ContextCompat.getColor(requireContext(), android.R.color.transparent)
+        }
     }
 
     override fun onCreateView(
@@ -54,9 +63,6 @@ class CreateEditAdFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        (arguments?.getSerializable(CreateEditAd::class.java.simpleName) as? CreateEditAd)?.let {
-            createEditAd = it
-        }
         val binding = DataBindingUtil.inflate<FragmentCreateEditAdBinding>(
             inflater,
             R.layout.fragment_create_edit_ad,
@@ -72,7 +78,7 @@ class CreateEditAdFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        when(createEditAd) {
+        when(modifyAdType) {
             CreateAd -> {
                 collapsingToolbar.title = getString(R.string.create_ad)
                 doneBtn.setOnClickListener { viewModel.createAd() }
@@ -81,7 +87,7 @@ class CreateEditAdFragment: Fragment() {
                 collapsingToolbar.title = getString(R.string.edit_ad)
                 doneBtn.text = getString(R.string.save)
                 doneBtn.setOnClickListener { viewModel.editAd() }
-                viewModel.fillAdData((createEditAd as EditAd).ad)
+                viewModel.fillAdData((modifyAdType as EditAd).ad)
                 if (!viewModel.isTimeEnabled) {
                     timeSwitch.isChecked = true
                 }
@@ -109,18 +115,18 @@ class CreateEditAdFragment: Fragment() {
                 Status.SUCCESS -> {
                     requireActivity().onBackPressed()
 
-                    if (createEditAd == CreateAd) {
+                    if (modifyAdType == CreateAd) {
                         mainActivity().updateStatuses.isNeedToUpdateAdsList = true
                         navigateToAd(it.data!!)
-                    } else if (createEditAd is EditAd) {
+                    } else if (modifyAdType is EditAd) {
                         mainActivity().updateStatuses.isNeedToUpdateAd = true
                         mainActivity().updateStatuses.isNeedToUpdateAdsList = true
                     }
                 }
                 Status.ERROR -> {
-                    if (createEditAd == CreateAd) {
+                    if (modifyAdType == CreateAd) {
                         doneBtn.hideProgress(R.string.create)
-                    } else if (createEditAd is EditAd) {
+                    } else if (modifyAdType is EditAd) {
                         doneBtn.hideProgress(R.string.save)
                     }
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
@@ -183,9 +189,7 @@ class CreateEditAdFragment: Fragment() {
     }
 
     private fun navigateToAd(ad: Ad) {
-        val bundle = Bundle().apply {
-            putSerializable("ad", ad)
-        }
+        val bundle = bundleOf("ad" to ad)
         findNavController().navigate(R.id.action_adsListFragment_to_adFragment, bundle)
     }
 }

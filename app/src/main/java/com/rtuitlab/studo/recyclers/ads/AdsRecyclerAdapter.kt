@@ -23,12 +23,7 @@ class AdsRecyclerAdapter: RecyclerView.Adapter<AdsRecyclerAdapter.AdHolder>() {
     set(value) {
         GlobalScope.launch(Dispatchers.Main) {
             val adsDiffResult = withContext(Dispatchers.Default) {
-                val diffUtilCallback =
-                    AdsListDiffUtilCallback(
-                        data,
-                        value
-                    )
-                DiffUtil.calculateDiff(diffUtilCallback)
+                DiffUtil.calculateDiff(AdsListDiffUtilCallback(data, value))
             }
             field = value
             adsDiffResult.dispatchUpdatesTo(this@AdsRecyclerAdapter)
@@ -62,10 +57,10 @@ class AdsRecyclerAdapter: RecyclerView.Adapter<AdsRecyclerAdapter.AdHolder>() {
 
         init {
             view.setOnClickListener {
-                clickListener?.onAdClicked(data[adapterPosition])
+                clickListener?.onAdClicked(data[bindingAdapterPosition])
             }
             favouriteIV.setOnClickListener {
-                val compactAd = data[adapterPosition]
+                val compactAd = data[bindingAdapterPosition]
                 compactAd.isFavourite = !compactAd.isFavourite
                 this.bind(compactAd)
                 clickListener?.onFavouriteToggle(compactAd)

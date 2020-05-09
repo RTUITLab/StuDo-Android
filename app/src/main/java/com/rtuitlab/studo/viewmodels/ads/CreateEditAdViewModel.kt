@@ -19,9 +19,9 @@ import kotlinx.coroutines.withContext
 import java.io.Serializable
 import java.util.*
 
-sealed class CreateEditAd : Serializable
-object CreateAd: CreateEditAd()
-data class EditAd(val ad: Ad): CreateEditAd()
+sealed class ModifyAdType : Serializable
+object CreateAd: ModifyAdType()
+data class EditAd(val ad: Ad): ModifyAdType()
 
 class CreateEditAdViewModel(
     app: Application,

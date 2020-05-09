@@ -65,8 +65,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:maxLines="1"
-                                android:textColor="?android:attr/textColorPrimary"
-                                android:textSize="24sp"
+                                style="@style/TextAppearance.AppCompat.Large"
                                 android:text="@{viewModel.user.name + &quot; &quot; + viewModel.user.surname }"
                                 tools:text="Sample text" />
 
@@ -75,7 +74,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:maxLines="1"
-                                android:textSize="16sp"
+                                style="@style/TextAppearance.AppCompat.Medium"
                                 android:text="@{viewModel.user.email}"
                                 tools:text="Sample text" />
 
