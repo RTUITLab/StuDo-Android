@@ -20,7 +20,7 @@ import com.rtuitlab.studo.viewmodels.ads.*
 import kotlinx.android.synthetic.main.fragment_recycler_list.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.view.*
-import org.koin.android.ext.android.inject
+import org.koin.android.ext.android.get
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
@@ -31,7 +31,7 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
 
     private val viewModel: AdsListViewModel by viewModel()
 
-    private val recyclerAdapter: AdsRecyclerAdapter by inject()
+    private var recyclerAdapter: AdsRecyclerAdapter? = null
 
     private val adsType by lazy {
         (arguments?.getSerializable(ADS_TYPE_KEY) as? AdsType) ?: AllAds
@@ -74,12 +74,17 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
             loadAds()
             mainActivity().updateStatuses.isNeedToUpdateAdsList = false
         } else {
-            recyclerAdapter.data = viewModel.adsListResource.value!!.data!!
+            recyclerAdapter?.data = viewModel.adsListResource.value!!.data!!
             checkListEmpty(viewModel.adsListResource.value!!.data!!)
         }
 
         setListeners()
         setObservers()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        recyclerAdapter = null
     }
 
     private fun loadAds() {
@@ -98,7 +103,7 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
                 Status.SUCCESS -> {
                     swipeContainer.isRefreshing = false
                     checkListEmpty(it.data!!)
-                    recyclerAdapter.data = it.data
+                    recyclerAdapter?.data = it.data
                 }
                 Status.ERROR -> {
                     swipeContainer.isRefreshing = false
@@ -120,7 +125,7 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
                     }
                 }
                 Status.ERROR -> {
-                    recyclerAdapter.handleFavouriteError(it.data!!)
+                    recyclerAdapter?.handleFavouriteError(it.data!!)
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
                 Status.LOADING -> {}
@@ -129,7 +134,8 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
     }
 
     private fun initRecyclerView() {
-        recyclerAdapter.setOnAdClickListener(this@AdsListFragment)
+        recyclerAdapter ?: run { recyclerAdapter = get() }
+        recyclerAdapter?.setOnAdClickListener(this@AdsListFragment)
         recyclerView.adapter = recyclerAdapter
     }
 

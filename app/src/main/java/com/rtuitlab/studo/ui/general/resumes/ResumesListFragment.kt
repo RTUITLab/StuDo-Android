@@ -19,7 +19,7 @@ import com.rtuitlab.studo.viewmodels.resumes.*
 import kotlinx.android.synthetic.main.fragment_recycler_list.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.view.*
-import org.koin.android.ext.android.inject
+import org.koin.android.ext.android.get
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickListener {
@@ -30,7 +30,7 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
 
     private val resumesListViewModel: ResumesListViewModel by viewModel()
 
-    private val recyclerAdapter: ResumesRecyclerAdapter by inject()
+    private var recyclerAdapter: ResumesRecyclerAdapter? = null
 
     private val resumesType by lazy {
         (arguments?.getSerializable(RESUMES_TYPE_KEY) as? ResumesType) ?: AllResumes
@@ -67,12 +67,17 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
             loadResumes()
             mainActivity().updateStatuses.isNeedToUpdateResumesList = false
         } else {
-            recyclerAdapter.data = resumesListViewModel.resumesListResource.value!!.data!!
+            recyclerAdapter?.data = resumesListViewModel.resumesListResource.value!!.data!!
             checkListEmpty(resumesListViewModel.resumesListResource.value!!.data!!)
         }
 
         setListeners()
         setObservers()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        recyclerAdapter = null
     }
 
     private fun loadResumes() {
@@ -91,7 +96,7 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
                 Status.SUCCESS -> {
                     swipeContainer.isRefreshing = false
                     checkListEmpty(it.data!!)
-                    recyclerAdapter.data = it.data
+                    recyclerAdapter?.data = it.data
                 }
                 Status.ERROR -> {
                     swipeContainer.isRefreshing = false
@@ -105,7 +110,8 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
     }
 
     private fun initRecyclerView() {
-        recyclerAdapter.setOnResumeClickListener(this@ResumesListFragment)
+        recyclerAdapter ?: run { recyclerAdapter = get() }
+        recyclerAdapter?.setOnResumeClickListener(this@ResumesListFragment)
         recyclerView.adapter = recyclerAdapter
     }
 
