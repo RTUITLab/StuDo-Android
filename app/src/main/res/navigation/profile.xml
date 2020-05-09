@@ -23,6 +23,9 @@
         <action
             android:id="@+id/action_profileFragment_to_resumes"
             app:destination="@id/resumes" />
+        <action
+            android:id="@+id/action_profileFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment" />
     </fragment>
     <fragment
         android:id="@+id/accountSettingsFragment"
@@ -53,4 +56,9 @@
         tools:layout="@layout/fragment_settings"/>
     <include app:graph="@navigation/ads" />
     <include app:graph="@navigation/resumes" />
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.rtuitlab.studo.ui.general.users.fragments.AboutFragment"
+        android:label="AboutFragment"
+        tools:layout="@layout/fragment_about"/>
 </navigation>

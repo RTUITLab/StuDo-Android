@@ -1,7 +1,6 @@
 package com.rtuitlab.studo.recyclers.comments
 
 import android.view.*
-import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -18,26 +17,21 @@ import kotlinx.coroutines.withContext
 import org.koin.java.KoinJavaComponent.getKoin
 
 class CommentsRecyclerAdapter(
-    startData: List<Comment> = listOf()
+    startData: List<Comment>
 ): RecyclerView.Adapter<CommentsRecyclerAdapter.CommentHolder>() {
 
     private val accStorage: AccountStorage by getKoin().inject()
 
+    private val dateTimeFormatter: DateTimeFormatter by getKoin().inject()
+
     private var clickListener: OnCommentClickListener? = null
 
-    val dateTimeFormatter: DateTimeFormatter by getKoin().inject()
-
-    private var data: List<Comment> = startData
+    private var data: List<Comment>  = startData
 
     fun updateData(newData: List<Comment>, onComplete: (() -> Unit)? = null) {
         GlobalScope.launch(Dispatchers.Main) {
             val commentsDiffResult = withContext(Dispatchers.Default) {
-                val diffUtilCallback =
-                    CommentsDiffUtilCallback(
-                        data,
-                        newData
-                    )
-                DiffUtil.calculateDiff(diffUtilCallback)
+                DiffUtil.calculateDiff(CommentsDiffUtilCallback(data, newData))
             }
             data = newData
             commentsDiffResult.dispatchUpdatesTo(this@CommentsRecyclerAdapter)
@@ -56,23 +50,14 @@ class CommentsRecyclerAdapter(
     override fun onBindViewHolder(holder: CommentHolder, position: Int) = holder.bind(position)
 
     inner class CommentHolder internal constructor(view: View):
-        RecyclerView.ViewHolder(view), PopupMenu.OnMenuItemClickListener {
+        RecyclerView.ViewHolder(view), View.OnCreateContextMenuListener {
         private val avatarView: AvatarView = view.avatarView
         private val creatorNameTV: TextView = view.creatorNameTV
         private val commentTextTV: TextView = view.commentTextTV
         private val commentDateTV: TextView = view.commentDateTV
 
         init {
-            view.setOnClickListener {
-                PopupMenu(it.context, it).apply {
-                    if (data[adapterPosition].authorId == accStorage.user.id) {
-                        inflate(R.menu.own_comment)
-                    } else {
-                        inflate(R.menu.comment)
-                    }
-                    setOnMenuItemClickListener(this@CommentHolder)
-                }.show()
-            }
+            view.setOnCreateContextMenuListener(this)
         }
 
         fun bind(position: Int) {
@@ -83,17 +68,23 @@ class CommentsRecyclerAdapter(
             this.commentDateTV.text = dateTimeFormatter.generateDateFromDateTimeForComment(data[position].commentTime)
         }
 
-        override fun onMenuItemClick(item: MenuItem?): Boolean {
-            return when(item?.itemId) {
-                R.id.action_profile -> {
-                    clickListener?.onNavigateToProfile(data[adapterPosition])
+        override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
+            val clickedComment = data[bindingAdapterPosition]
+
+            menu?.add(Menu.NONE, Menu.NONE, Menu.NONE, v?.context?.getString(R.string.user_profile))?.apply {
+                setOnMenuItemClickListener {
+                    clickListener?.onNavigateToProfile(clickedComment)
                     true
                 }
-                R.id.action_delete -> {
-                    clickListener?.onDeleteComment(data[adapterPosition])
-                    true
+            }
+
+            if (clickedComment.authorId == accStorage.user.id) {
+                menu?.add(Menu.NONE, Menu.NONE, Menu.NONE, v?.context?.getString(R.string.delete))?.apply {
+                    setOnMenuItemClickListener {
+                        clickListener?.onDeleteComment(clickedComment)
+                        true
+                    }
                 }
-                else -> false
             }
         }
     }

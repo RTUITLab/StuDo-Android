@@ -87,4 +87,12 @@
     <string name="empty_ads">No ads</string>
     <string name="empty_resumes">No resumes</string>
     <string name="empty_favourites">No favourites</string>
+    <string name="studo_desc">StuDo it\'s a service for events organization and promotion inside RTU MIREA university</string>
+    <string name="studo_site_title">StuDo site</string>
+    <string name="vk_group_title">VK group</string>
+    <string name="source_code_title">Source code</string>
+    <string name="studo_site_url" translatable="false">https://studo.rtuitlab.ru</string>
+    <string name="vk_group_url" translatable="false">https://vk.com/rtuitlab</string>
+    <string name="source_code_url" translatable="false">https://github.com/RTUITLab/StuDo-Android</string>
+    <string name="version_holder" translatable="false">v%1$s</string>
 </resources>

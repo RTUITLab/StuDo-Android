@@ -109,7 +109,6 @@ class CommentsBottomDialog: BottomSheetDialogFragment(), CommentsRecyclerAdapter
     }
 
     private fun initRecyclerView() {
-        registerForContextMenu(commentRV)
         recyclerAdapter = CommentsRecyclerAdapter(commentsMutableList.toList()).apply {
             setOnCommentClickListener(this@CommentsBottomDialog)
         }

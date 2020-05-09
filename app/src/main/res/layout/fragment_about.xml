@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_collapsing_toolbar"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:layout_marginHorizontal="16dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="16dp"
+                    android:layout_gravity="center_horizontal">
+
+                    <ImageView
+                        android:id="@+id/logo"
+                        android:layout_width="200dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/ic_logo_with_text"
+                        android:contentDescription="@string/logo"/>
+
+                    <TextView
+                        android:id="@+id/versionLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/logo"
+                        android:layout_alignTop="@id/logo"
+                        android:layout_marginTop="8dp"/>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/studo_desc"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:gravity="center"
+                    android:layout_marginHorizontal="16dp"
+                    android:paddingHorizontal="16dp"/>
+
+                <View
+                    android:id="@+id/separator"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="32dp"
+                    android:background="@color/colorSeparator"/>
+
+                <TextView
+                    android:id="@+id/siteTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/studo_site_title"
+                    style="@style/TextAppearance.MaterialComponents.Body1"
+                    android:gravity="center_vertical"
+                    android:drawableStart="@drawable/ic_site"
+                    android:drawablePadding="8dp"
+                    android:padding="8dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="?android:attr/selectableItemBackground"/>
+
+                <TextView
+                    android:id="@+id/vkTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/vk_group_title"
+                    style="@style/TextAppearance.MaterialComponents.Body1"
+                    android:gravity="center_vertical"
+                    android:drawableStart="@drawable/ic_vk_logo"
+                    android:drawablePadding="8dp"
+                    android:padding="8dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:background="?android:attr/selectableItemBackground"/>
+
+                <TextView
+                    android:id="@+id/sourceTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/source_code_title"
+                    style="@style/TextAppearance.MaterialComponents.Body1"
+                    android:gravity="center_vertical"
+                    android:drawableStart="@drawable/ic_github_logo"
+                    android:drawablePadding="8dp"
+                    android:padding="8dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="?android:attr/selectableItemBackground"/>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

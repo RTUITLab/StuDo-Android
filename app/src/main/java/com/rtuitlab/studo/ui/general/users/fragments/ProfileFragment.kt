@@ -76,9 +76,7 @@ class ProfileFragment : Fragment() {
                 Snackbar.make(requireView(), "WORK IN PROGRESS", Snackbar.LENGTH_SHORT).show()
             },
             onSettings = { navigateToSettings() },
-            onAbout = {
-                Snackbar.make(requireView(), "ABOUT", Snackbar.LENGTH_SHORT).show()
-            }
+            onAbout = { navigateToAbout() }
         )
     }
 
@@ -108,5 +106,9 @@ class ProfileFragment : Fragment() {
 
     private fun navigateToSettings() {
         findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)
+    }
+
+    private fun navigateToAbout() {
+        findNavController().navigate(R.id.action_profileFragment_to_aboutFragment)
     }
 }
