@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.transition.MaterialContainerTransform
 import com.rtuitlab.studo.R
@@ -86,7 +85,7 @@ class AccountSettingsFragment: Fragment() {
     }
 
     private fun setObservers() {
-        profileViewModel.currentUserResource.observe(viewLifecycleOwner, Observer {
+        profileViewModel.currentUserResource.observe(viewLifecycleOwner, {
             when(it.status) {
                 Status.SUCCESS -> swipeContainer.isRefreshing = false
                 Status.ERROR -> {
@@ -97,7 +96,7 @@ class AccountSettingsFragment: Fragment() {
             }
         })
 
-        profileViewModel.changesSavedResource.observe(viewLifecycleOwner, Observer {
+        profileViewModel.changesSavedResource.observe(viewLifecycleOwner, {
             when(it.status) {
                 Status.SUCCESS -> {
                     swipeContainer.isRefreshing = false
@@ -111,7 +110,7 @@ class AccountSettingsFragment: Fragment() {
             }
         })
 
-        dialogsViewModel.changeEmailResource.observe(viewLifecycleOwner, Observer {
+        dialogsViewModel.changeEmailResource.observe(viewLifecycleOwner, {
             when(it.status) {
                 Status.SUCCESS -> {
                     swipeContainer.isRefreshing = false
@@ -125,7 +124,7 @@ class AccountSettingsFragment: Fragment() {
             }
         })
 
-        dialogsViewModel.changePasswordResource.observe(viewLifecycleOwner, Observer {
+        dialogsViewModel.changePasswordResource.observe(viewLifecycleOwner, {
             when(it.status) {
                 Status.SUCCESS -> {
                     swipeContainer.isRefreshing = false

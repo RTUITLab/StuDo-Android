@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.rtuitlab.studo.R
@@ -93,7 +92,7 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
     }
 
     private fun setObservers() {
-        resumesListViewModel.resumesListResource.observe(viewLifecycleOwner, Observer {
+        resumesListViewModel.resumesListResource.observe(viewLifecycleOwner, {
             when(it.status) {
                 Status.SUCCESS -> {
                     swipeContainer.isRefreshing = false

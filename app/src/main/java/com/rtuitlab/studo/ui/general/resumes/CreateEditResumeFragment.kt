@@ -84,7 +84,7 @@ class CreateEditResumeFragment: Fragment() {
     }
 
     private fun setObservers() {
-        viewModel.resumeResource.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.resumeResource.observe(viewLifecycleOwner, {
             when(it.status) {
                 Status.SUCCESS -> {
                     requireActivity().onBackPressed()

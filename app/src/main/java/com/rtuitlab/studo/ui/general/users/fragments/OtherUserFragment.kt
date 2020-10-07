@@ -11,7 +11,6 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentOtherUserBinding
@@ -75,7 +74,7 @@ class OtherUserFragment: Fragment() {
     }
 
     private fun setObservers() {
-        viewModel.userResource.observe(viewLifecycleOwner, Observer {
+        viewModel.userResource.observe(viewLifecycleOwner, {
             when(it.status) {
                 Status.SUCCESS -> swipeContainer.isRefreshing = false
                 Status.ERROR -> {

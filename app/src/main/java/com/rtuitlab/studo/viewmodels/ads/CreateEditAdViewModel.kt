@@ -5,11 +5,11 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rtuitlab.studo.utils.DateTimeFormatter
-import com.rtuitlab.studo.utils.SingleLiveEvent
 import com.rtuitlab.studo.server.Resource
 import com.rtuitlab.studo.server.general.ads.AdsRepository
 import com.rtuitlab.studo.server.general.ads.models.Ad
+import com.rtuitlab.studo.utils.DateTimeFormatter
+import com.rtuitlab.studo.utils.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -59,8 +59,7 @@ class CreateEditAdViewModel(
         )
     }
 
-    private val _adResource =
-        SingleLiveEvent<Resource<Ad>>()
+    private val _adResource = SingleLiveEvent<Resource<Ad>>()
     val adResource: LiveData<Resource<Ad>> = _adResource
 
     fun createAd() {

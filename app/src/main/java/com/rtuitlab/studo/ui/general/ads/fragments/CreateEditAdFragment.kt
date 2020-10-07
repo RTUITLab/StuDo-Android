@@ -111,7 +111,7 @@ class CreateEditAdFragment: Fragment() {
     }
 
     private fun setObservers() {
-        viewModel.adResource.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.adResource.observe(viewLifecycleOwner, {
             when(it.status) {
                 Status.SUCCESS -> {
                     requireActivity().onBackPressed()

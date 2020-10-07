@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.rtuitlab.studo.R
@@ -55,7 +54,7 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         collapsingToolbar.title = getString(R.string.title_profile)
         setMenuListener()
-        viewModel.currentUserResource.observe(viewLifecycleOwner, Observer {
+        viewModel.currentUserResource.observe(viewLifecycleOwner, {
             if (it.status == Status.ERROR) {
                 requireContext().shortToast(it.message).show()
             }

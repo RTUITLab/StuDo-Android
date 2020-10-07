@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.setFragmentResultListener
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.rtuitlab.studo.R
@@ -77,7 +76,7 @@ class CommentsBottomDialog: BottomSheetDialogFragment(), CommentsRecyclerAdapter
     }
 
     private fun setObservers() {
-        viewModel.createCommentResource.observe(viewLifecycleOwner, Observer {
+        viewModel.createCommentResource.observe(viewLifecycleOwner, {
             when(it.status) {
                 Status.SUCCESS -> {
                     viewModel.isValid.set(true)
@@ -92,7 +91,7 @@ class CommentsBottomDialog: BottomSheetDialogFragment(), CommentsRecyclerAdapter
             }
         })
 
-        viewModel.deleteCommentResource.observe(viewLifecycleOwner, Observer {
+        viewModel.deleteCommentResource.observe(viewLifecycleOwner, {
             when(it.status) {
                 Status.SUCCESS -> deleteComment(it.data!!)
                 Status.ERROR -> requireContext().shortToast(it.message).show()

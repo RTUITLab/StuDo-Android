@@ -8,7 +8,6 @@ import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentAdBinding
@@ -89,7 +88,7 @@ class AdFragment: Fragment() {
     }
 
     private fun setObservers() {
-        adViewModel.currentAdResource.observe(viewLifecycleOwner, Observer {
+        adViewModel.currentAdResource.observe(viewLifecycleOwner, {
             when(it.status) {
                 Status.SUCCESS -> {
                     swipeContainer.isRefreshing = false
@@ -103,7 +102,7 @@ class AdFragment: Fragment() {
             }
         })
 
-        adsListViewModel.favouritesResource.observe(viewLifecycleOwner, Observer {
+        adsListViewModel.favouritesResource.observe(viewLifecycleOwner, {
             when(it.status) {
                 Status.SUCCESS -> {
                     if (it.data!!.isFavourite) {
@@ -121,7 +120,7 @@ class AdFragment: Fragment() {
             }
         })
 
-        adViewModel.deleteAdResource.observe(viewLifecycleOwner, Observer {
+        adViewModel.deleteAdResource.observe(viewLifecycleOwner, {
             when(it.status) {
                 Status.SUCCESS -> {
                     swipeContainer.isRefreshing = false

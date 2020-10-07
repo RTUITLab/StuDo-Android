@@ -8,7 +8,6 @@ import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentResumeBinding
@@ -77,7 +76,7 @@ class ResumeFragment: Fragment() {
     }
 
     private fun setObservers() {
-        viewModel.currentResumeResource.observe(viewLifecycleOwner, Observer {
+        viewModel.currentResumeResource.observe(viewLifecycleOwner, {
             when(it.status) {
                 Status.SUCCESS -> {
                     swipeContainer.isRefreshing = false
@@ -91,7 +90,7 @@ class ResumeFragment: Fragment() {
             }
         })
 
-        viewModel.deleteResumeResource.observe(viewLifecycleOwner, Observer {
+        viewModel.deleteResumeResource.observe(viewLifecycleOwner, {
             when(it.status) {
                 Status.SUCCESS -> {
                     swipeContainer.isRefreshing = false

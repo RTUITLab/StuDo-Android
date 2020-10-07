@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.github.razir.progressbutton.attachTextChangeAnimator
 import com.github.razir.progressbutton.bindProgressButton
@@ -69,7 +68,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun setObservers() {
-        viewModel.loginResource.observe(viewLifecycleOwner, Observer {
+        viewModel.loginResource.observe(viewLifecycleOwner, {
             when(it.status) {
                 Status.SUCCESS -> {
                     startActivity(Intent(requireActivity(), MainActivity::class.java))
@@ -83,7 +82,7 @@ class LoginFragment : Fragment() {
             }
         })
 
-        viewModel.resetResource.observe(viewLifecycleOwner, Observer {
+        viewModel.resetResource.observe(viewLifecycleOwner, {
             when(it.status) {
                 Status.SUCCESS -> {
                     loginBtn.hideProgress(R.string.login)

@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.github.razir.progressbutton.attachTextChangeAnimator
 import com.github.razir.progressbutton.bindProgressButton
 import com.rtuitlab.studo.R
@@ -61,7 +60,7 @@ class RegisterFragment : Fragment() {
     }
 
     private fun setObservers() {
-        viewModel.registerResource.observe(viewLifecycleOwner, Observer {
+        viewModel.registerResource.observe(viewLifecycleOwner, {
             when(it.status) {
                 Status.SUCCESS -> {
                     requireActivity().window.decorView.rootView
