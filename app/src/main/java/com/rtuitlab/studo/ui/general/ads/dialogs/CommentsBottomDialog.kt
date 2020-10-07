@@ -69,10 +69,7 @@ class CommentsBottomDialog: BottomSheetDialogFragment(), CommentsRecyclerAdapter
     private fun setListeners() {
         closeBtn.setOnClickListener { dismiss() }
 
-        childFragmentManager.setFragmentResultListener(
-            DELETE_COMMENT_RESULT_REQUEST_KEY,
-            viewLifecycleOwner
-        ) { _, bundle ->
+        setFragmentResultListener(DELETE_COMMENT_RESULT_REQUEST_KEY) { _, bundle ->
             if (bundle.getBoolean(RESULT_YES_NO_KEY)) {
                 viewModel.deleteComment()
             }
@@ -147,6 +144,6 @@ class CommentsBottomDialog: BottomSheetDialogFragment(), CommentsRecyclerAdapter
         YesNoDialog.newInstance(
             DELETE_COMMENT_RESULT_REQUEST_KEY,
             getString(R.string.delete_comment_confirmation)
-        ).show(childFragmentManager, null)
+        ).show(parentFragmentManager, null)
     }
 }

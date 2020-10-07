@@ -81,10 +81,7 @@ class AdFragment: Fragment() {
             adsListViewModel.toggleFavourite(adViewModel.compactAd)
         }
 
-        childFragmentManager.setFragmentResultListener(
-            DELETE_AD_RESULT_REQUEST_KEY,
-            viewLifecycleOwner
-        ) { _, bundle ->
+        setFragmentResultListener(DELETE_AD_RESULT_REQUEST_KEY) { _, bundle ->
             if (bundle.getBoolean(RESULT_YES_NO_KEY)) {
                 adViewModel.deleteAd()
             }
@@ -229,6 +226,6 @@ class AdFragment: Fragment() {
         YesNoDialog.newInstance(
             DELETE_AD_RESULT_REQUEST_KEY,
             getString(R.string.delete_ad_confirmation)
-        ).show(childFragmentManager, null)
+        ).show(parentFragmentManager, null)
     }
 }

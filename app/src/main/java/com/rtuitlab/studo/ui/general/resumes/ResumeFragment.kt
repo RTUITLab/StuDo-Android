@@ -69,10 +69,7 @@ class ResumeFragment: Fragment() {
     private fun setListeners() {
         profilePanel.setOnClickListener { navigateToProfile() }
 
-        childFragmentManager.setFragmentResultListener(
-            DELETE_RESUME_RESULT_REQUEST_KEY,
-            viewLifecycleOwner
-        ) { _, bundle ->
+        setFragmentResultListener(DELETE_RESUME_RESULT_REQUEST_KEY) { _, bundle ->
             if (bundle.getBoolean(RESULT_YES_NO_KEY)) {
                 viewModel.deleteResume()
             }
@@ -169,6 +166,6 @@ class ResumeFragment: Fragment() {
         YesNoDialog.newInstance(
             DELETE_RESUME_RESULT_REQUEST_KEY,
             getString(R.string.delete_resume_confirmation)
-        ).show(childFragmentManager, null)
+        ).show(parentFragmentManager, null)
     }
 }
