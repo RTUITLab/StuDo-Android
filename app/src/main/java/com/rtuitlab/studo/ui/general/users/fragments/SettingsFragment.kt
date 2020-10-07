@@ -3,15 +3,19 @@ package com.rtuitlab.studo.ui.general.users.fragments
 import android.os.Bundle
 import android.view.View
 import androidx.preference.ListPreference
+import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.SwitchPreferenceCompat
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.extensions.mainActivity
-import com.rtuitlab.studo.ui.general.MainActivity
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.view.*
 
 class SettingsFragment: PreferenceFragmentCompat() {
+
+    private val recreateOnChangeListener = Preference.OnPreferenceChangeListener { _, _ ->
+        requireActivity().recreate()
+        true
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -25,17 +29,7 @@ class SettingsFragment: PreferenceFragmentCompat() {
     }
 
     private fun setListeners() {
-        findPreference<SwitchPreferenceCompat>("themeSwitch")
-            ?.setOnPreferenceChangeListener { _, _ ->
-                requireActivity().recreate()
-                true
-            }
-
-
-        findPreference<ListPreference>("languagesDropdown")
-            ?.setOnPreferenceChangeListener { _, _ ->
-                requireActivity().recreate()
-                true
-            }
+        findPreference<ListPreference>("themeDropdown")?.onPreferenceChangeListener = recreateOnChangeListener
+        findPreference<ListPreference>("languagesDropdown")?.onPreferenceChangeListener = recreateOnChangeListener
     }
 }

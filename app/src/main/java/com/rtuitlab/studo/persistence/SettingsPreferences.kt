@@ -9,28 +9,29 @@ class SettingsPreferences(
     private val context: Context
 ) {
     companion object {
-        private const val DARK_THEME_KEY = "themeSwitch"
+        private const val THEME_KEY = "themeDropdown"
         private const val LANGUAGE_KEY = "languagesDropdown"
     }
 
     private val settingPref = PreferenceManager.getDefaultSharedPreferences(context)
 
-    fun isDarkTheme(): Boolean {
-        if (!settingPref.contains(DARK_THEME_KEY)) {
-            settingPref.edit().putBoolean(DARK_THEME_KEY, false).apply()
-        }
-        return settingPref.getBoolean(DARK_THEME_KEY, false)
+    fun getSelectedTheme(): String = settingPref.getString(THEME_KEY, null) ?:run {
+        val preferredTheme = getPreferredTheme()
+        settingPref.edit()
+            .putString(THEME_KEY, preferredTheme)
+            .apply()
+        preferredTheme
     }
 
-    fun getSelectedLanguage(): String {
-        return settingPref.getString(LANGUAGE_KEY, null) ?:run {
-            val currentSystemLang = getCurrentSystemLang()
-            settingPref.edit()
-                .putString(LANGUAGE_KEY, currentSystemLang)
-                .apply()
-            currentSystemLang
-        }
+    fun getSelectedLanguage(): String = settingPref.getString(LANGUAGE_KEY, null) ?:run {
+        val currentSystemLang = getCurrentSystemLang()
+        settingPref.edit()
+            .putString(LANGUAGE_KEY, currentSystemLang)
+            .apply()
+        currentSystemLang
     }
+
+    private fun getPreferredTheme() = context.resources.getStringArray(R.array.entry_themes).first()
 
     private fun getCurrentSystemLang(): String {
         val res = context.resources

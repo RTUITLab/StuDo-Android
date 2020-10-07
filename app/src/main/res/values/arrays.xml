@@ -27,4 +27,16 @@
         <item>ru</item>
         <item>en</item>
     </string-array>
+
+    <string-array name="themes">
+        <item>@string/system_theme_label</item>
+        <item>@string/light_theme_label</item>
+        <item>@string/dark_theme_label</item>
+    </string-array>
+
+    <string-array name="entry_themes">
+        <item>system</item>
+        <item>light</item>
+        <item>dark</item>
+    </string-array>
 </resources>

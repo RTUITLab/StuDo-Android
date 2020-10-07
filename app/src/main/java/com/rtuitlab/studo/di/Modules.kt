@@ -49,7 +49,7 @@ val responseHandlerModule = module {
 
 val viewModelsModule = module {
     viewModel { AuthViewModel(androidApplication(), get(), get()) }
-    viewModel { MainViewModel(get(), get()) }
+    viewModel { MainViewModel(androidApplication(), get(), get()) }
     viewModel { AdsListViewModel(get(), get()) }
     viewModel { AdViewModel(androidApplication(), get(), get(), get(), get((named("text")))) }
     viewModel { CreateEditAdViewModel(get(), get()) }

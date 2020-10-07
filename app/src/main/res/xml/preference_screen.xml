@@ -3,17 +3,20 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <SwitchPreferenceCompat
-        android:key="themeSwitch"
-        android:title="@string/dark_theme"
-        android:icon="@drawable/ic_theme"/>
+    <DropDownPreference
+        android:key="themeDropdown"
+        android:title="@string/theme"
+        android:icon="@drawable/ic_theme"
+        android:entries="@array/themes"
+        android:entryValues="@array/entry_themes"
+        app:useSimpleSummaryProvider="true"/>
 
     <DropDownPreference
         android:key="languagesDropdown"
         android:title="@string/language"
+        android:icon="@drawable/ic_language"
         android:entries="@array/languages"
         android:entryValues="@array/entry_languages"
-        app:useSimpleSummaryProvider="true"
-        android:icon="@drawable/ic_language"/>
+        app:useSimpleSummaryProvider="true"/>
 
 </PreferenceScreen>
