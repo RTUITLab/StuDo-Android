@@ -4,16 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import com.rtuitlab.studo.R
-import com.rtuitlab.studo.recyclers.ads.AdsRecyclerAdapter
 import com.rtuitlab.studo.extensions.mainActivity
+import com.rtuitlab.studo.extensions.shortSnackbar
+import com.rtuitlab.studo.extensions.shortToast
+import com.rtuitlab.studo.recyclers.ads.AdsRecyclerAdapter
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.ads.models.CompactAd
 import com.rtuitlab.studo.viewmodels.ads.*
@@ -45,7 +45,28 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        configScreenDependsType()
+        initRecyclerView()
 
+        if (viewModel.adsListResource.value?.status != Status.SUCCESS ||
+            mainActivity().updateStatuses.isNeedToUpdateAdsList) {
+            loadAds()
+            mainActivity().updateStatuses.isNeedToUpdateAdsList = false
+        } else {
+            recyclerAdapter?.data = viewModel.adsListResource.value!!.data!!
+            checkListEmpty(viewModel.adsListResource.value!!.data!!)
+        }
+
+        setListeners()
+        setObservers()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        recyclerAdapter = null
+    }
+
+    private fun configScreenDependsType() {
         when(adsType) {
             AllAds -> {
                 collapsingToolbar.title = getString(R.string.title_ads)
@@ -65,26 +86,6 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
                 createBtn.hide()
             }
         }
-
-
-        initRecyclerView()
-
-        if (viewModel.adsListResource.value?.status != Status.SUCCESS ||
-            mainActivity().updateStatuses.isNeedToUpdateAdsList) {
-            loadAds()
-            mainActivity().updateStatuses.isNeedToUpdateAdsList = false
-        } else {
-            recyclerAdapter?.data = viewModel.adsListResource.value!!.data!!
-            checkListEmpty(viewModel.adsListResource.value!!.data!!)
-        }
-
-        setListeners()
-        setObservers()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        recyclerAdapter = null
     }
 
     private fun loadAds() {
@@ -107,11 +108,9 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
                 }
                 Status.ERROR -> {
                     swipeContainer.isRefreshing = false
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    requireContext().shortToast(it.message).show()
                 }
-                Status.LOADING -> {
-                    swipeContainer.isRefreshing = true
-                }
+                Status.LOADING -> swipeContainer.isRefreshing = true
             }
         })
 
@@ -119,22 +118,18 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
             when(it.status) {
                 Status.SUCCESS -> {
                     if (it.data!!.isFavourite) {
-                        Snackbar.make(
-                            requireView(),
-                            getString(R.string.added_favourites),
-                            Snackbar.LENGTH_SHORT
-                        ).setAnchorView(createBtn).show()
+                        requireView().shortSnackbar(getString(R.string.added_favourites))
+                            .setAnchorView(createBtn)
+                            .show()
                     } else {
-                        Snackbar.make(
-                            requireView(),
-                            getString(R.string.removed_favourites),
-                            Snackbar.LENGTH_SHORT
-                        ).setAnchorView(createBtn).show()
+                        requireView().shortSnackbar(getString(R.string.removed_favourites))
+                            .setAnchorView(createBtn)
+                            .show()
                     }
                 }
                 Status.ERROR -> {
                     recyclerAdapter?.handleFavouriteError(it.data!!)
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    requireContext().shortToast(it.message).show()
                 }
                 Status.LOADING -> {}
             }

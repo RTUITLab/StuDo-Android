@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
@@ -15,13 +14,14 @@ import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentCreateEditResumeBinding
 import com.rtuitlab.studo.extensions.hideProgress
 import com.rtuitlab.studo.extensions.mainActivity
+import com.rtuitlab.studo.extensions.shortToast
 import com.rtuitlab.studo.extensions.showProgress
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.resumes.models.Resume
-import com.rtuitlab.studo.viewmodels.resumes.ModifyResumeType
 import com.rtuitlab.studo.viewmodels.resumes.CreateEditResumeViewModel
 import com.rtuitlab.studo.viewmodels.resumes.CreateResume
 import com.rtuitlab.studo.viewmodels.resumes.EditResume
+import com.rtuitlab.studo.viewmodels.resumes.ModifyResumeType
 import kotlinx.android.synthetic.main.fragment_create_edit_resume.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.view.*
@@ -63,7 +63,12 @@ class CreateEditResumeFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        configScreenDependsType()
+        mainActivity().enableNavigateButton(collapsingToolbar.toolbar)
+        setObservers()
+    }
 
+    private fun configScreenDependsType() {
         when(modifyResumeType) {
             CreateResume -> {
                 collapsingToolbar.title = getString(R.string.create_resume)
@@ -76,9 +81,6 @@ class CreateEditResumeFragment: Fragment() {
                 viewModel.fillResumeData((modifyResumeType as EditResume).resume)
             }
         }
-        mainActivity().enableNavigateButton(collapsingToolbar.toolbar)
-
-        setObservers()
     }
 
     private fun setObservers() {
@@ -86,27 +88,25 @@ class CreateEditResumeFragment: Fragment() {
             when(it.status) {
                 Status.SUCCESS -> {
                     requireActivity().onBackPressed()
-
-                    if (modifyResumeType == CreateResume) {
-                        mainActivity().updateStatuses.isNeedToUpdateResumesList = true
-
-                        navigateToResume(it.data!!)
-                    } else if (modifyResumeType is EditResume) {
-                        mainActivity().updateStatuses.isNeedToUpdateResume = true
-                        mainActivity().updateStatuses.isNeedToUpdateResumesList = true
+                    when(modifyResumeType) {
+                        CreateResume -> {
+                            mainActivity().updateStatuses.isNeedToUpdateResumesList = true
+                            navigateToResume(it.data!!)
+                        }
+                        is EditResume -> {
+                            mainActivity().updateStatuses.isNeedToUpdateResume = true
+                            mainActivity().updateStatuses.isNeedToUpdateResumesList = true
+                        }
                     }
                 }
                 Status.ERROR -> {
-                    if (modifyResumeType == CreateResume) {
-                        doneBtn.hideProgress(R.string.create)
-                    } else if (modifyResumeType is EditResume) {
-                        doneBtn.hideProgress(R.string.save)
+                    when(modifyResumeType) {
+                        CreateResume -> doneBtn.hideProgress(R.string.create)
+                        is EditResume -> doneBtn.hideProgress(R.string.save)
                     }
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    requireContext().shortToast(it.message).show()
                 }
-                Status.LOADING -> {
-                    doneBtn.showProgress()
-                }
+                Status.LOADING -> doneBtn.showProgress()
             }
         })
     }

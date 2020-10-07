@@ -5,17 +5,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialContainerTransform
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentAccountSettingsBinding
 import com.rtuitlab.studo.extensions.mainActivity
+import com.rtuitlab.studo.extensions.shortSnackbar
+import com.rtuitlab.studo.extensions.shortToast
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.ui.general.MainActivity
 import com.rtuitlab.studo.viewmodels.users.AccountChangesDialogsViewModel
@@ -88,16 +88,12 @@ class AccountSettingsFragment: Fragment() {
     private fun setObservers() {
         profileViewModel.currentUserResource.observe(viewLifecycleOwner, Observer {
             when(it.status) {
-                Status.SUCCESS -> {
-                    swipeContainer.isRefreshing = false
-                }
+                Status.SUCCESS -> swipeContainer.isRefreshing = false
                 Status.ERROR -> {
                     swipeContainer.isRefreshing = false
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    requireContext().shortToast(it.message).show()
                 }
-                Status.LOADING -> {
-                    swipeContainer.isRefreshing = true
-                }
+                Status.LOADING -> swipeContainer.isRefreshing = true
             }
         })
 
@@ -105,15 +101,13 @@ class AccountSettingsFragment: Fragment() {
             when(it.status) {
                 Status.SUCCESS -> {
                     swipeContainer.isRefreshing = false
-                    Snackbar.make(requireView(), getString(R.string.changes_saved), Snackbar.LENGTH_SHORT).show()
+                    requireView().shortSnackbar(getString(R.string.changes_saved)).show()
                 }
                 Status.ERROR -> {
                     swipeContainer.isRefreshing = false
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    requireContext().shortToast(it.message).show()
                 }
-                Status.LOADING -> {
-                    swipeContainer.isRefreshing = true
-                }
+                Status.LOADING -> swipeContainer.isRefreshing = true
             }
         })
 
@@ -121,15 +115,13 @@ class AccountSettingsFragment: Fragment() {
             when(it.status) {
                 Status.SUCCESS -> {
                     swipeContainer.isRefreshing = false
-                    Snackbar.make(requireView(), getString(R.string.new_email_verification), Snackbar.LENGTH_SHORT).show()
+                    requireView().shortSnackbar(getString(R.string.new_email_verification)).show()
                 }
                 Status.ERROR -> {
                     swipeContainer.isRefreshing = false
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    requireContext().shortToast(it.message).show()
                 }
-                Status.LOADING -> {
-                    swipeContainer.isRefreshing = true
-                }
+                Status.LOADING -> swipeContainer.isRefreshing = true
             }
         })
 
@@ -137,15 +129,13 @@ class AccountSettingsFragment: Fragment() {
             when(it.status) {
                 Status.SUCCESS -> {
                     swipeContainer.isRefreshing = false
-                    Snackbar.make(requireView(), getString(R.string.password_changed), Snackbar.LENGTH_SHORT).show()
+                    requireView().shortSnackbar(getString(R.string.password_changed)).show()
                 }
                 Status.ERROR -> {
                     swipeContainer.isRefreshing = false
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    requireContext().shortToast(it.message).show()
                 }
-                Status.LOADING -> {
-                    swipeContainer.isRefreshing = true
-                }
+                Status.LOADING -> swipeContainer.isRefreshing = true
             }
         })
     }

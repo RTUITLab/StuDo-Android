@@ -4,6 +4,8 @@
     <item android:drawable="?android:attr/colorBackground"/>
 
     <item android:drawable="@drawable/ic_logo"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:height="300dp"
+        android:width="300dp"/>
 
 </layer-list>

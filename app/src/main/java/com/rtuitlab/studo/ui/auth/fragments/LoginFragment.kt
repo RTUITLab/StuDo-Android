@@ -2,20 +2,20 @@ package com.rtuitlab.studo.ui.auth.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.github.razir.progressbutton.attachTextChangeAnimator
 import com.github.razir.progressbutton.bindProgressButton
-import com.google.android.material.snackbar.Snackbar
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentLoginBinding
 import com.rtuitlab.studo.extensions.hideProgress
+import com.rtuitlab.studo.extensions.longSnackbar
+import com.rtuitlab.studo.extensions.shortToast
 import com.rtuitlab.studo.extensions.showProgress
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.ui.general.MainActivity
@@ -77,11 +77,9 @@ class LoginFragment : Fragment() {
                 }
                 Status.ERROR -> {
                     loginBtn.hideProgress(R.string.login)
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    requireContext().shortToast(it.message).show()
                 }
-                Status.LOADING -> {
-                    loginBtn.showProgress()
-                }
+                Status.LOADING -> loginBtn.showProgress()
             }
         })
 
@@ -89,15 +87,13 @@ class LoginFragment : Fragment() {
             when(it.status) {
                 Status.SUCCESS -> {
                     loginBtn.hideProgress(R.string.login)
-                    Snackbar.make(requireView(), getString(R.string.check_email_to_reset), Snackbar.LENGTH_LONG).show()
+                    requireView().longSnackbar(getString(R.string.check_email_to_reset)).show()
                 }
                 Status.ERROR -> {
                     loginBtn.hideProgress(R.string.login)
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    requireContext().shortToast(it.message).show()
                 }
-                Status.LOADING -> {
-                    loginBtn.showProgress()
-                }
+                Status.LOADING -> loginBtn.showProgress()
             }
         })
     }

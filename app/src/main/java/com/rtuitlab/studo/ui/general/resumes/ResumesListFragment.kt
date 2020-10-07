@@ -1,18 +1,18 @@
 package com.rtuitlab.studo.ui.general.resumes
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.rtuitlab.studo.R
-import com.rtuitlab.studo.recyclers.resumes.ResumesRecyclerAdapter
 import com.rtuitlab.studo.extensions.mainActivity
+import com.rtuitlab.studo.extensions.shortToast
+import com.rtuitlab.studo.recyclers.resumes.ResumesRecyclerAdapter
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.resumes.models.CompactResume
 import com.rtuitlab.studo.viewmodels.resumes.*
@@ -44,22 +44,7 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        when(resumesType) {
-            AllResumes -> {
-                collapsingToolbar.title = getString(R.string.title_resumes)
-            }
-            is OwnResumes -> {
-                collapsingToolbar.title = getString(R.string.my_resumes)
-                mainActivity().enableNavigateButton(collapsingToolbar.toolbar)
-            }
-            is UserResumes -> {
-                collapsingToolbar.title = getString(R.string.user_resumes)
-                mainActivity().enableNavigateButton(collapsingToolbar.toolbar)
-                createBtn.hide()
-            }
-        }
-
+        configScreenDependsType()
         initRecyclerView()
 
         if (resumesListViewModel.resumesListResource.value?.status != Status.SUCCESS ||
@@ -78,6 +63,23 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
     override fun onDestroyView() {
         super.onDestroyView()
         recyclerAdapter = null
+    }
+
+    private fun configScreenDependsType() {
+        when(resumesType) {
+            AllResumes -> {
+                collapsingToolbar.title = getString(R.string.title_resumes)
+            }
+            is OwnResumes -> {
+                collapsingToolbar.title = getString(R.string.my_resumes)
+                mainActivity().enableNavigateButton(collapsingToolbar.toolbar)
+            }
+            is UserResumes -> {
+                collapsingToolbar.title = getString(R.string.user_resumes)
+                mainActivity().enableNavigateButton(collapsingToolbar.toolbar)
+                createBtn.hide()
+            }
+        }
     }
 
     private fun loadResumes() {
@@ -100,11 +102,9 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
                 }
                 Status.ERROR -> {
                     swipeContainer.isRefreshing = false
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    requireContext().shortToast(it.message).show()
                 }
-                Status.LOADING -> {
-                    swipeContainer.isRefreshing = true
-                }
+                Status.LOADING -> swipeContainer.isRefreshing = true
             }
         })
     }

@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -16,6 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentOtherUserBinding
+import com.rtuitlab.studo.extensions.shortToast
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.users.models.User
 import com.rtuitlab.studo.ui.general.ads.fragments.AdsListFragment.Companion.ADS_TYPE_KEY
@@ -77,16 +77,12 @@ class OtherUserFragment: Fragment() {
     private fun setObservers() {
         viewModel.userResource.observe(viewLifecycleOwner, Observer {
             when(it.status) {
-                Status.SUCCESS -> {
-                    swipeContainer.isRefreshing = false
-                }
+                Status.SUCCESS -> swipeContainer.isRefreshing = false
                 Status.ERROR -> {
                     swipeContainer.isRefreshing = false
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    requireContext().shortToast(it.message).show()
                 }
-                Status.LOADING -> {
-                    swipeContainer.isRefreshing = true
-                }
+                Status.LOADING -> swipeContainer.isRefreshing = true
             }
         })
     }

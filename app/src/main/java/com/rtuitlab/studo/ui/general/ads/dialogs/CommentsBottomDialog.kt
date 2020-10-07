@@ -1,8 +1,9 @@
 package com.rtuitlab.studo.ui.general.ads.dialogs
 
 import android.os.Bundle
-import android.view.*
-import android.widget.Toast
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.setFragmentResultListener
@@ -10,8 +11,9 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.rtuitlab.studo.R
-import com.rtuitlab.studo.recyclers.comments.CommentsRecyclerAdapter
 import com.rtuitlab.studo.databinding.FragmentCommentsBinding
+import com.rtuitlab.studo.extensions.shortToast
+import com.rtuitlab.studo.recyclers.comments.CommentsRecyclerAdapter
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.ads.models.Ad
 import com.rtuitlab.studo.server.general.ads.models.Comment
@@ -87,22 +89,16 @@ class CommentsBottomDialog: BottomSheetDialogFragment(), CommentsRecyclerAdapter
                 }
                 Status.ERROR -> {
                     viewModel.isValid.set(true)
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    requireContext().shortToast(it.message).show()
                 }
-                Status.LOADING -> {
-                    viewModel.isValid.set(false)
-                }
+                Status.LOADING -> viewModel.isValid.set(false)
             }
         })
 
         viewModel.deleteCommentResource.observe(viewLifecycleOwner, Observer {
             when(it.status) {
-                Status.SUCCESS -> {
-                    deleteComment(it.data!!)
-                }
-                Status.ERROR -> {
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                }
+                Status.SUCCESS -> deleteComment(it.data!!)
+                Status.ERROR -> requireContext().shortToast(it.message).show()
                 Status.LOADING -> {}
             }
         })

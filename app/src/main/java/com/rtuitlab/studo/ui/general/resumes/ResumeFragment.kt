@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -14,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentResumeBinding
 import com.rtuitlab.studo.extensions.mainActivity
+import com.rtuitlab.studo.extensions.shortToast
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.resumes.models.CompactResume
 import com.rtuitlab.studo.server.general.resumes.models.Resume
@@ -88,11 +88,9 @@ class ResumeFragment: Fragment() {
                 }
                 Status.ERROR -> {
                     swipeContainer.isRefreshing = false
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    requireContext().shortToast(it.message).show()
                 }
-                Status.LOADING -> {
-                    swipeContainer.isRefreshing = true
-                }
+                Status.LOADING -> swipeContainer.isRefreshing = true
             }
         })
 
@@ -105,11 +103,9 @@ class ResumeFragment: Fragment() {
                 }
                 Status.ERROR -> {
                     swipeContainer.isRefreshing = false
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    requireContext().shortToast(it.message).show()
                 }
-                Status.LOADING -> {
-                    swipeContainer.isRefreshing = true
-                }
+                Status.LOADING -> swipeContainer.isRefreshing = true
             }
         })
     }

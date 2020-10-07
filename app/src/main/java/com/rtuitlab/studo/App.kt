@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.res.Configuration
 import com.rtuitlab.studo.di.*
 import com.rtuitlab.studo.utils.RuntimeLocaleChanger
-import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin

@@ -3,12 +3,10 @@ package com.rtuitlab.studo.viewmodels
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import com.rtuitlab.studo.App
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.account.AccountStorage
 import com.rtuitlab.studo.persistence.SettingsPreferences
-import java.lang.RuntimeException
 
 class MainViewModel(
     app: Application,

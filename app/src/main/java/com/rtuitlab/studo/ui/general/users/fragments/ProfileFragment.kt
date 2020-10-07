@@ -1,19 +1,19 @@
 package com.rtuitlab.studo.ui.general.users.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentProfileBinding
+import com.rtuitlab.studo.extensions.shortSnackbar
+import com.rtuitlab.studo.extensions.shortToast
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.ui.general.ads.fragments.AdsListFragment.Companion.ADS_TYPE_KEY
 import com.rtuitlab.studo.ui.general.resumes.ResumesListFragment.Companion.RESUMES_TYPE_KEY
@@ -56,11 +56,8 @@ class ProfileFragment : Fragment() {
         collapsingToolbar.title = getString(R.string.title_profile)
         setMenuListener()
         viewModel.currentUserResource.observe(viewLifecycleOwner, Observer {
-            when(it.status) {
-                Status.ERROR -> {
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                }
-                else -> {}
+            if (it.status == Status.ERROR) {
+                requireContext().shortToast(it.message).show()
             }
         })
     }
@@ -73,7 +70,7 @@ class ProfileFragment : Fragment() {
             onResumes = { navigateToResumes() },
             onFavourites = { navigateToFavourites() },
             onOrganizations = {
-                Snackbar.make(requireView(), "WORK IN PROGRESS", Snackbar.LENGTH_SHORT).show()
+                requireView().shortSnackbar("WORK IN PROGRESS").show()
             },
             onSettings = { navigateToSettings() },
             onAbout = { navigateToAbout() }

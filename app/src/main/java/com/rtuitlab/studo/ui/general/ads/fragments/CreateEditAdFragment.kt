@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
@@ -15,19 +14,20 @@ import com.github.razir.progressbutton.bindProgressButton
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.transition.MaterialContainerTransform
-import com.rtuitlab.studo.utils.DateRangeValidator
 import com.rtuitlab.studo.R
-import com.rtuitlab.studo.ui.general.ads.dialogs.TimeRangeDialog
 import com.rtuitlab.studo.databinding.FragmentCreateEditAdBinding
 import com.rtuitlab.studo.extensions.hideProgress
 import com.rtuitlab.studo.extensions.mainActivity
+import com.rtuitlab.studo.extensions.shortToast
 import com.rtuitlab.studo.extensions.showProgress
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.ads.models.Ad
+import com.rtuitlab.studo.ui.general.ads.dialogs.TimeRangeDialog
+import com.rtuitlab.studo.utils.DateRangeValidator
 import com.rtuitlab.studo.viewmodels.ads.CreateAd
-import com.rtuitlab.studo.viewmodels.ads.ModifyAdType
 import com.rtuitlab.studo.viewmodels.ads.CreateEditAdViewModel
 import com.rtuitlab.studo.viewmodels.ads.EditAd
+import com.rtuitlab.studo.viewmodels.ads.ModifyAdType
 import com.yydcdut.markdown.MarkdownProcessor
 import kotlinx.android.synthetic.main.fragment_create_edit_ad.*
 import kotlinx.android.synthetic.main.view_collapsing_toolbar.*
@@ -77,7 +77,16 @@ class CreateEditAdFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        configScreenDependsType()
+        mainActivity().enableNavigateButton(collapsingToolbar.toolbar)
+        markdownProcessor.live(descEdit)
+        checkSwitch(timeSwitch.isChecked)
+        checkDateAndTimeSet()
+        setListeners()
+        setObservers()
+    }
 
+    private fun configScreenDependsType() {
         when(modifyAdType) {
             CreateAd -> {
                 collapsingToolbar.title = getString(R.string.create_ad)
@@ -93,15 +102,6 @@ class CreateEditAdFragment: Fragment() {
                 }
             }
         }
-        mainActivity().enableNavigateButton(collapsingToolbar.toolbar)
-
-        markdownProcessor.live(descEdit)
-
-        checkSwitch(timeSwitch.isChecked)
-        checkDateAndTimeSet()
-
-        setListeners()
-        setObservers()
     }
 
     private fun setListeners() {
@@ -115,22 +115,23 @@ class CreateEditAdFragment: Fragment() {
             when(it.status) {
                 Status.SUCCESS -> {
                     requireActivity().onBackPressed()
-
-                    if (modifyAdType == CreateAd) {
-                        mainActivity().updateStatuses.isNeedToUpdateAdsList = true
-                        navigateToAd(it.data!!)
-                    } else if (modifyAdType is EditAd) {
-                        mainActivity().updateStatuses.isNeedToUpdateAd = true
-                        mainActivity().updateStatuses.isNeedToUpdateAdsList = true
+                    when(modifyAdType) {
+                        CreateAd -> {
+                            mainActivity().updateStatuses.isNeedToUpdateAdsList = true
+                            navigateToAd(it.data!!)
+                        }
+                        is EditAd -> {
+                            mainActivity().updateStatuses.isNeedToUpdateAd = true
+                            mainActivity().updateStatuses.isNeedToUpdateAdsList = true
+                        }
                     }
                 }
                 Status.ERROR -> {
-                    if (modifyAdType == CreateAd) {
-                        doneBtn.hideProgress(R.string.create)
-                    } else if (modifyAdType is EditAd) {
-                        doneBtn.hideProgress(R.string.save)
+                    when(modifyAdType) {
+                        CreateAd -> doneBtn.hideProgress(R.string.create)
+                        is EditAd -> doneBtn.hideProgress(R.string.save)
                     }
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    requireContext().shortToast(it.message).show()
                 }
                 Status.LOADING -> {
                     doneBtn.showProgress()

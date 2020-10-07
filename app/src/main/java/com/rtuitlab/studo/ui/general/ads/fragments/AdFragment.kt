@@ -1,18 +1,20 @@
 package com.rtuitlab.studo.ui.general.ads.fragments
 
 import android.os.Bundle
-import android.view.*
-import android.widget.Toast
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import com.rtuitlab.studo.R
 import com.rtuitlab.studo.databinding.FragmentAdBinding
 import com.rtuitlab.studo.extensions.mainActivity
+import com.rtuitlab.studo.extensions.shortSnackbar
+import com.rtuitlab.studo.extensions.shortToast
 import com.rtuitlab.studo.server.Status
 import com.rtuitlab.studo.server.general.ads.models.Ad
 import com.rtuitlab.studo.server.general.ads.models.CompactAd
@@ -98,11 +100,9 @@ class AdFragment: Fragment() {
                 }
                 Status.ERROR -> {
                     swipeContainer.isRefreshing = false
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    requireContext().shortToast(it.message).show()
                 }
-                Status.LOADING -> {
-                    swipeContainer.isRefreshing = true
-                }
+                Status.LOADING -> swipeContainer.isRefreshing = true
             }
         })
 
@@ -110,15 +110,15 @@ class AdFragment: Fragment() {
             when(it.status) {
                 Status.SUCCESS -> {
                     if (it.data!!.isFavourite) {
-                        Snackbar.make(requireView(), getString(R.string.added_favourites), Snackbar.LENGTH_SHORT).show()
+                        requireView().shortSnackbar(getString(R.string.removed_favourites)).show()
                     } else {
-                        Snackbar.make(requireView(), getString(R.string.removed_favourites), Snackbar.LENGTH_SHORT).show()
+                        requireView().shortSnackbar(getString(R.string.removed_favourites)).show()
                     }
                 }
                 Status.ERROR -> {
                     adViewModel.compactAd.apply { isFavourite = !isFavourite }
                     setFavouriteButtonDrawable()
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    requireContext().shortToast(it.message).show()
                 }
                 Status.LOADING -> {}
             }
@@ -133,10 +133,9 @@ class AdFragment: Fragment() {
                 }
                 Status.ERROR -> {
                     swipeContainer.isRefreshing = false
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    requireContext().shortToast(it.message).show()
                 }
-                Status.LOADING -> {
-                    swipeContainer.isRefreshing = true}
+                Status.LOADING -> swipeContainer.isRefreshing = true
             }
         })
     }
@@ -222,7 +221,7 @@ class AdFragment: Fragment() {
                 }
             }
         } else { // Organization`s ad
-            Snackbar.make(requireView(), "Organizations in progress", Snackbar.LENGTH_SHORT).show()
+            requireView().shortSnackbar("Organizations in progress").show()
         }
     }
 

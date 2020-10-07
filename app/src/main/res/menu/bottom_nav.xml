@@ -9,7 +9,6 @@
         android:icon="@drawable/ic_resume"
         android:title="@string/title_resumes" />
     <item
-        android:id="@+id/profile"
         android:icon="@drawable/ic_profile"
         android:title="@string/title_profile" />
 </menu>
