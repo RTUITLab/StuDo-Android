@@ -52,7 +52,7 @@ val viewModelsModule = module {
     viewModel { MainViewModel(get(), get()) }
     viewModel { AdsListViewModel(get(), get()) }
     viewModel { AdViewModel(androidApplication(), get(), get(), get(), get((named("text")))) }
-    viewModel { CreateEditAdViewModel(androidApplication(), get(), get()) }
+    viewModel { CreateEditAdViewModel(get(), get()) }
     viewModel { CommentsViewModel(get()) }
     viewModel { ResumesListViewModel(get(), get()) }
     viewModel { ResumeViewModel(get(), get()) }

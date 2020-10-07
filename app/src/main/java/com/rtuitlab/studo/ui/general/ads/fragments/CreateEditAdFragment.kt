@@ -98,6 +98,7 @@ class CreateEditAdFragment: Fragment() {
         markdownProcessor.live(descEdit)
 
         checkSwitch(timeSwitch.isChecked)
+        checkDateAndTimeSet()
 
         setListeners()
         setObservers()
@@ -136,6 +137,15 @@ class CreateEditAdFragment: Fragment() {
                 }
             }
         })
+    }
+
+    private fun checkDateAndTimeSet() {
+        if (!viewModel.isDateSet) {
+            viewModel.dateText.set(getString(R.string.not_selected))
+        }
+        if (!viewModel.isTimeSet) {
+            viewModel.timeText.set(getString(R.string.not_selected))
+        }
     }
 
     private fun checkSwitch(isChecked: Boolean) {

@@ -1,10 +1,13 @@
 package com.rtuitlab.studo.persistence
 
 import android.content.Context
+import android.os.Build
 import androidx.preference.PreferenceManager
+import com.rtuitlab.studo.R
 
-class SettingsPreferences(context: Context) {
-
+class SettingsPreferences(
+    private val context: Context
+) {
     companion object {
         private const val DARK_THEME_KEY = "themeSwitch"
         private const val LANGUAGE_KEY = "languagesDropdown"
@@ -20,9 +23,26 @@ class SettingsPreferences(context: Context) {
     }
 
     fun getSelectedLanguage(): String {
-        if (!settingPref.contains(LANGUAGE_KEY)) {
-            settingPref.edit().putString(LANGUAGE_KEY, "ru").apply()
+        return settingPref.getString(LANGUAGE_KEY, null) ?:run {
+            val currentSystemLang = getCurrentSystemLang()
+            settingPref.edit()
+                .putString(LANGUAGE_KEY, currentSystemLang)
+                .apply()
+            currentSystemLang
         }
-        return settingPref.getString(LANGUAGE_KEY, "ru") ?: "ru"
+    }
+
+    private fun getCurrentSystemLang(): String {
+        val res = context.resources
+        val config = res.configuration
+
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            config.locales.getFirstMatch(
+                res.getStringArray(R.array.entry_languages)
+            )?.language ?: "en"
+        } else {
+            @Suppress("DEPRECATION")
+            config.locale.language
+        }
     }
 }

@@ -1,14 +1,11 @@
 package com.rtuitlab.studo.viewmodels.ads
 
-import android.app.Application
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rtuitlab.studo.App
 import com.rtuitlab.studo.utils.DateTimeFormatter
-import com.rtuitlab.studo.R
 import com.rtuitlab.studo.utils.SingleLiveEvent
 import com.rtuitlab.studo.server.Resource
 import com.rtuitlab.studo.server.general.ads.AdsRepository
@@ -24,10 +21,9 @@ object CreateAd: ModifyAdType()
 data class EditAd(val ad: Ad): ModifyAdType()
 
 class CreateEditAdViewModel(
-    app: Application,
     private val dateTimeFormatter: DateTimeFormatter,
     private val adsRepo: AdsRepository
-): AndroidViewModel(app) {
+): ViewModel() {
 
     private var adId = ""
 
@@ -35,8 +31,13 @@ class CreateEditAdViewModel(
     val shortDesc = ObservableField("")
     val desc = ObservableField("")
 
-    val dateText = ObservableField(getApplication<App>().getString(R.string.not_selected))
-    val timeText = ObservableField(getApplication<App>().getString(R.string.not_selected))
+    val dateText = ObservableField("")
+    var isDateSet = false
+        private set
+
+    val timeText = ObservableField("")
+    var isTimeSet = false
+        private set
 
     private var beginDate: Long = 0
     private var endDate: Long = 0
@@ -54,10 +55,7 @@ class CreateEditAdViewModel(
             !title.get().isNullOrBlank() &&
                     !shortDesc.get().isNullOrBlank() &&
                     !desc.get().isNullOrBlank() &&
-                    dateText.get() != getApplication<App>().getString(R.string.not_selected) && (
-                    !isTimeEnabled ||
-                    timeText.get() != getApplication<App>().getString(R.string.not_selected) && isTimeEnabled
-                    )
+                    isDateSet && (!isTimeEnabled || isTimeEnabled && isTimeSet)
         )
     }
 
@@ -107,9 +105,11 @@ class CreateEditAdViewModel(
         endDate = dateTimeFormatter.generateTimestampFromDateTime(ad.endTime)
 
         dateText.set(dateTimeFormatter.generateDateRangeFromTimestamps(beginDate, endDate))
+        isDateSet = true
 
         if (!ad.beginTime.contains("00:00:00.000")) {
             timeText.set(dateTimeFormatter.generateTimeRangeFromTimestamps(beginDate, endDate))
+            isTimeSet = true
             isTimeEnabled = true
         }
     }
@@ -143,6 +143,7 @@ class CreateEditAdViewModel(
         endDate = endDateCalendar.timeInMillis
 
         dateText.set(dateTimeFormatter.generateDateRangeFromTimestamps(beginDate, endDate))
+        isDateSet = true
 
         checkData()
     }
@@ -169,6 +170,7 @@ class CreateEditAdViewModel(
         endDate = endDateCalendar.timeInMillis
 
         timeText.set(dateTimeFormatter.generateTimeRangeFromTimestamps(beginDate, endDate))
+        isTimeSet = true
 
         checkData()
     }
@@ -177,7 +179,7 @@ class CreateEditAdViewModel(
         val startPickerDate = Calendar.getInstance()
         val endPickerDate = Calendar.getInstance()
 
-        if (dateText.get() == getApplication<App>().getString(R.string.not_selected)) {
+        if (!isDateSet) {
             startPickerDate.add(Calendar.DAY_OF_MONTH, 1)
             endPickerDate.add(Calendar.DAY_OF_MONTH, 2)
         } else {
@@ -192,7 +194,7 @@ class CreateEditAdViewModel(
         val beginCalendar = Calendar.getInstance()
         val endCalendar = Calendar.getInstance()
 
-        if (timeText.get() == getApplication<App>().getString(R.string.not_selected)) {
+        if (!isTimeSet) {
             beginCalendar.set(Calendar.HOUR_OF_DAY, 9)
             beginCalendar.set(Calendar.MINUTE, 0)
             endCalendar.set(Calendar.HOUR_OF_DAY, 16)
