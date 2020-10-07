@@ -119,9 +119,17 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
             when(it.status) {
                 Status.SUCCESS -> {
                     if (it.data!!.isFavourite) {
-                        Snackbar.make(requireView(), getString(R.string.added_favourites), Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(
+                            requireView(),
+                            getString(R.string.added_favourites),
+                            Snackbar.LENGTH_SHORT
+                        ).setAnchorView(createBtn).show()
                     } else {
-                        Snackbar.make(requireView(), getString(R.string.removed_favourites), Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(
+                            requireView(),
+                            getString(R.string.removed_favourites),
+                            Snackbar.LENGTH_SHORT
+                        ).setAnchorView(createBtn).show()
                     }
                 }
                 Status.ERROR -> {
