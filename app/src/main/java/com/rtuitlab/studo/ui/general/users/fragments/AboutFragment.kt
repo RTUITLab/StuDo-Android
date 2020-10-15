@@ -26,7 +26,7 @@ class AboutFragment: Fragment() {
         collapsingToolbar.title = getString(R.string.about)
         mainActivity().enableNavigateButton(collapsingToolbar.toolbar)
 
-        versionLabel.text = getString(R.string.version_holder, BuildConfig.APP_VERSION_CODE)
+        versionLabel.text = getString(R.string.version_holder, BuildConfig.VERSION_NAME)
 
         setListeners()
     }
