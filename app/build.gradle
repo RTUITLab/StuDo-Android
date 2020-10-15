@@ -39,7 +39,8 @@ android {
             debuggable true
         }
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             buildConfigField (
                     "String", "API_URL",
                     apiUrl != null ? "\"$apiUrl\"" : "\"$defaultApiUrl\""
