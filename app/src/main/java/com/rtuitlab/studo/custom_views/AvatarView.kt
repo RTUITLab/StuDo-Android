@@ -1,3 +1,5 @@
+@file:Suppress("MemberVisibilityCanBePrivate")
+
 package com.rtuitlab.studo.custom_views
 
 import android.content.Context
