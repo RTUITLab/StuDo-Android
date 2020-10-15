@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.github.razir.progressbutton.attachTextChangeAnimator
 import com.github.razir.progressbutton.bindProgressButton
 import kotlinx.android.synthetic.main.fragment_register.*
@@ -55,7 +56,7 @@ class RegisterFragment : Fragment() {
 
     private fun setListeners() {
         loginLink.setOnClickListener {
-            requireActivity().onBackPressed()
+            findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
         }
     }
 
