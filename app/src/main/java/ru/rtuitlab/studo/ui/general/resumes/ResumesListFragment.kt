@@ -127,18 +127,15 @@ class ResumesListFragment : Fragment(), ResumesRecyclerAdapter.OnResumeClickList
         navigateToResume(compactResume)
     }
 
-    private fun navigateToCreateResume() {
-        val extras = FragmentNavigatorExtras(createBtn to "create_shared_container")
-        findNavController().navigate(
-            R.id.action_resumesListFragment_to_createEditResumeFragment,
-            null,
-            null,
-            extras
-        )
-    }
+    private fun navigateToCreateResume() = findNavController().navigate(
+        R.id.action_resumesListFragment_to_createEditResumeFragment,
+        null,
+        null,
+        FragmentNavigatorExtras(createBtn to "create_shared_container")
+    )
 
-    private fun navigateToResume(compactResume: CompactResume) {
-        val bundle = bundleOf("compactResume" to compactResume)
-        findNavController().navigate(R.id.action_resumesListFragment_to_resumeFragment, bundle)
-    }
+    private fun navigateToResume(compactResume: CompactResume) = findNavController().navigate(
+        R.id.action_resumesListFragment_to_resumeFragment,
+        bundleOf("compactResume" to compactResume)
+    )
 }

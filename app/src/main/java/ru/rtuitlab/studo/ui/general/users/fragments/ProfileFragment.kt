@@ -76,35 +76,33 @@ class ProfileFragment : Fragment() {
         )
     }
 
-    private fun navigateToProfile() {
-        val extras = FragmentNavigatorExtras(
-            avatarView to "avatarView"
-        )
-        findNavController().navigate(
-            R.id.action_profileFragment_to_accountSettingsFragment, null, null, extras
-        )
-    }
+    private fun navigateToProfile() = findNavController().navigate(
+        R.id.action_profileFragment_to_accountSettingsFragment,
+        null,
+        null,
+        FragmentNavigatorExtras(avatarView to "avatarView")
+    )
 
-    private fun navigateToAds() {
-        val bundle = bundleOf(ADS_TYPE_KEY to OwnAds)
-        findNavController().navigate(R.id.action_profileFragment_to_ads, bundle)
-    }
+    private fun navigateToAds() = findNavController().navigate(
+        R.id.action_profileFragment_to_ads,
+        bundleOf(ADS_TYPE_KEY to OwnAds)
+    )
 
-    private fun navigateToResumes() {
-        val bundle = bundleOf(RESUMES_TYPE_KEY to OwnResumes)
-        findNavController().navigate(R.id.action_profileFragment_to_resumes, bundle)
-    }
+    private fun navigateToResumes() = findNavController().navigate(
+        R.id.action_profileFragment_to_resumes,
+        bundleOf(RESUMES_TYPE_KEY to OwnResumes)
+    )
 
-    private fun navigateToFavourites() {
-        val bundle = bundleOf(ADS_TYPE_KEY to FavouritesAds)
-        findNavController().navigate(R.id.action_profileFragment_to_ads, bundle)
-    }
+    private fun navigateToFavourites() = findNavController().navigate(
+        R.id.action_profileFragment_to_ads,
+        bundleOf(ADS_TYPE_KEY to FavouritesAds)
+    )
 
-    private fun navigateToSettings() {
-        findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)
-    }
+    private fun navigateToSettings() = findNavController().navigate(
+        R.id.action_profileFragment_to_settingsFragment
+    )
 
-    private fun navigateToAbout() {
-        findNavController().navigate(R.id.action_profileFragment_to_aboutFragment)
-    }
+    private fun navigateToAbout() = findNavController().navigate(
+        R.id.action_profileFragment_to_aboutFragment
+    )
 }

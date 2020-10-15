@@ -191,20 +191,26 @@ class AdFragment: Fragment() {
 
     private fun navigateToEdit() {
         adViewModel.currentAd.get()?.let {
-            val bundle = bundleOf(MODIFY_AD_TYPE_KEY to EditAd(it))
-            findNavController().navigate(R.id.action_adFragment_to_createEditAdFragment, bundle)
+            findNavController().navigate(
+                R.id.action_adFragment_to_createEditAdFragment,
+                bundleOf(MODIFY_AD_TYPE_KEY to EditAd(it))
+            )
         }
     }
 
     private fun navigateToComments() {
         adViewModel.currentAd.get()?.let {
-            val bundle = bundleOf("ad" to it)
-            findNavController().navigate(R.id.action_adFragment_to_commentsBottomDialog, bundle)
+            findNavController().navigate(
+                R.id.action_adFragment_to_commentsBottomDialog,
+                bundleOf("ad" to it)
+            )
         }
     }
 
     private fun navigateToProfile() {
-        if (adViewModel.currentAd.get()?.organizationId == null) { // User`s ad
+        adViewModel.currentAd.get()?.organizationId?.let { // Organization`s ad
+            requireView().shortSnackbar("Organizations in progress").show()
+        } ?: run { // User`s ad
             adViewModel.currentAd.get()?.let {
                 val bundle = bundleOf(
                     "userId" to it.userId,
@@ -216,8 +222,6 @@ class AdFragment: Fragment() {
                     findNavController().navigate(R.id.otherUserFragment, bundle)
                 }
             }
-        } else { // Organization`s ad
-            requireView().shortSnackbar("Organizations in progress").show()
         }
     }
 

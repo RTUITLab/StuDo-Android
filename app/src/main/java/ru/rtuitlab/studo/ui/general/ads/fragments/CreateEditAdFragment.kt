@@ -199,8 +199,8 @@ class CreateEditAdFragment: Fragment() {
         dialog.show(childFragmentManager, null)
     }
 
-    private fun navigateToAd(ad: Ad) {
-        val bundle = bundleOf("ad" to ad)
-        findNavController().navigate(R.id.action_adsListFragment_to_adFragment, bundle)
-    }
+    private fun navigateToAd(ad: Ad) = findNavController().navigate(
+        R.id.action_adsListFragment_to_adFragment,
+        bundleOf("ad" to ad)
+    )
 }

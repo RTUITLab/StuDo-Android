@@ -91,8 +91,10 @@ class OtherUserFragment: Fragment() {
             viewModel.isOwnProfile() -> OwnAds
             else -> UserAds(viewModel.userId)
         }
-        val bundle = bundleOf(ADS_TYPE_KEY to adsType)
-        findNavController().navigate(R.id.action_otherUserFragment_to_ads_nested, bundle)
+        findNavController().navigate(
+            R.id.action_otherUserFragment_to_ads_nested,
+            bundleOf(ADS_TYPE_KEY to adsType)
+        )
     }
 
     private fun navigateToResumes() {
@@ -100,8 +102,10 @@ class OtherUserFragment: Fragment() {
             viewModel.isOwnProfile() -> OwnResumes
             else -> UserResumes(viewModel.userId)
         }
-        val bundle = bundleOf(RESUMES_TYPE_KEY to resumesType)
-        findNavController().navigate(R.id.action_otherUserFragment_to_resumes_nested, bundle)
+        findNavController().navigate(
+            R.id.action_otherUserFragment_to_resumes_nested,
+            bundleOf(RESUMES_TYPE_KEY to resumesType)
+        )
     }
 
     private fun extractArguments() {

@@ -111,8 +111,8 @@ class CreateEditResumeFragment: Fragment() {
         })
     }
 
-    private fun navigateToResume(resume: Resume) {
-        val bundle = bundleOf("resume" to resume)
-        findNavController().navigate(R.id.action_resumesListFragment_to_resumeFragment, bundle)
-    }
+    private fun navigateToResume(resume: Resume) = findNavController().navigate(
+        R.id.action_resumesListFragment_to_resumeFragment,
+        bundleOf("resume" to resume)
+    )
 }

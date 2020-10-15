@@ -162,18 +162,15 @@ class AdsListFragment : Fragment(), AdsRecyclerAdapter.OnAdClickListener {
         viewModel.toggleFavourite(compactAd)
     }
 
-    private fun navigateToCreateAd() {
-        val extras = FragmentNavigatorExtras(createBtn to "create_shared_container")
-        findNavController().navigate(
-            R.id.action_adsListFragment_to_createEditAdFragment,
-            null,
-            null,
-            extras
-        )
-    }
+    private fun navigateToCreateAd() = findNavController().navigate(
+        R.id.action_adsListFragment_to_createEditAdFragment,
+        null,
+        null,
+        FragmentNavigatorExtras(createBtn to "create_shared_container")
+    )
 
-    private fun navigateToAd(compactAd: CompactAd) {
-        val bundle = bundleOf("compactAd" to compactAd)
-        findNavController().navigate(R.id.action_adsListFragment_to_adFragment, bundle)
-    }
+    private fun navigateToAd(compactAd: CompactAd) = findNavController().navigate(
+        R.id.action_adsListFragment_to_adFragment,
+        bundleOf("compactAd" to compactAd)
+    )
 }
