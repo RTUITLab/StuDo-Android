@@ -106,7 +106,7 @@ class AdFragment: Fragment() {
             when(it.status) {
                 Status.SUCCESS -> {
                     if (it.data!!.isFavourite) {
-                        requireView().shortSnackbar(getString(R.string.removed_favourites)).show()
+                        requireView().shortSnackbar(getString(R.string.added_favourites)).show()
                     } else {
                         requireView().shortSnackbar(getString(R.string.removed_favourites)).show()
                     }
