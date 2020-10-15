@@ -21,7 +21,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.rtuitlab.studo"
+        applicationId "ru.rtuitlab.studo"
         minSdkVersion 24
         targetSdkVersion 29
         versionCode 1

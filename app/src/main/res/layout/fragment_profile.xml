@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.rtuitlab.studo.viewmodels.users.ProfileViewModel" />
+            type="ru.rtuitlab.studo.viewmodels.users.ProfileViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -45,7 +45,7 @@
                         android:clickable="true"
                         android:focusable="true">
 
-                        <com.rtuitlab.studo.custom_views.AvatarView
+                        <ru.rtuitlab.studo.custom_views.AvatarView
                             android:id="@+id/avatarView"
                             android:layout_width="64dp"
                             android:layout_height="64dp"
@@ -87,7 +87,7 @@
                         android:layout_height="1dp"
                         android:background="@color/colorSeparator"/>
 
-                    <com.rtuitlab.studo.custom_views.ProfileListView
+                    <ru.rtuitlab.studo.custom_views.ProfileListView
                         android:id="@+id/profileList"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

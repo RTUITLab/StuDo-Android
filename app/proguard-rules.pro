@@ -23,9 +23,9 @@
 ##---------------Begin: proguard configuration for Gson  ----------
 
 # Application classes that will be serialized/deserialized over Gson
--keep class com.rtuitlab.studo.server.auth.models.* { <fields>; }
--keep class com.rtuitlab.studo.server.general.ads.models.* { <fields>; }
--keep class com.rtuitlab.studo.server.general.resumes.models.* { <fields>; }
--keep class com.rtuitlab.studo.server.general.users.models.* { <fields>; }
+-keep class ru.rtuitlab.studo.server.auth.models.* { <fields>; }
+-keep class ru.rtuitlab.studo.server.general.ads.models.* { <fields>; }
+-keep class ru.rtuitlab.studo.server.general.resumes.models.* { <fields>; }
+-keep class ru.rtuitlab.studo.server.general.users.models.* { <fields>; }
 
 ##---------------End: proguard configuration for Gson  ----------

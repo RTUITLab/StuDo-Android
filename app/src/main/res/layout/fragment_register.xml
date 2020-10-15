@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.rtuitlab.studo.viewmodels.auth.AuthViewModel" />
+            type="ru.rtuitlab.studo.viewmodels.auth.AuthViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

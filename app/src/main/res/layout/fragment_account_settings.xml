@@ -8,7 +8,7 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="com.rtuitlab.studo.viewmodels.users.ProfileViewModel" />
+            type="ru.rtuitlab.studo.viewmodels.users.ProfileViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -41,7 +41,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <com.rtuitlab.studo.custom_views.AvatarView
+                        <ru.rtuitlab.studo.custom_views.AvatarView
                             android:id="@+id/avatarView"
                             android:layout_width="128dp"
                             android:layout_height="128dp"

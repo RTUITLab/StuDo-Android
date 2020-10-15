@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.rtuitlab.studo.ui.auth.fragments.LoginFragment"
+        android:name="ru.rtuitlab.studo.ui.auth.fragments.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -24,12 +24,12 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.rtuitlab.studo.ui.auth.fragments.RegisterFragment"
+        android:name="ru.rtuitlab.studo.ui.auth.fragments.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" />
     <dialog
         android:id="@+id/resetPasswordDialog"
-        android:name="com.rtuitlab.studo.ui.auth.dialogs.ResetPasswordDialog"
+        android:name="ru.rtuitlab.studo.ui.auth.dialogs.ResetPasswordDialog"
         android:label="ResetPasswordDialog"
         tools:layout="@layout/dialog_reset_password"/>
 </navigation>
