@@ -8,44 +8,43 @@ import ru.rtuitlab.studo.server.general.users.models.User
 @SuppressLint("ApplySharedPref")
 class AuthPreferences(context: Context) {
 
-    private val userKey = "user"
-    private val accessTokenKey = "accessToken"
-    private val refreshTokenKey = "refreshToken"
+    companion object {
+        private const val USER_KEY = "user"
+        private const val ACCESS_TOKEN_KEY = "accessToken"
+        private const val REFRESH_TOKEN_KEY = "refreshToken"
+        const val PREFERENCES_KEY = "StuDoAuthPrefs"
+    }
 
     private val preferences = context.getSharedPreferences(
-        "StuDoAuthPrefs",
+        PREFERENCES_KEY,
         Context.MODE_PRIVATE
     )
 
     fun storeUser(user: User) {
         val userJSON = Gson().toJson(user)
-        preferences.edit().putString(userKey, userJSON).commit()
+        preferences.edit().putString(USER_KEY, userJSON).commit()
     }
 
     fun getUser(): User? {
-        val userJSON = preferences.getString(userKey, null)
+        val userJSON = preferences.getString(USER_KEY, null)
         return userJSON?.let {
             Gson().fromJson(userJSON, User::class.java)
         } ?:run { null }
     }
 
     fun storeAccessToken(accessToken: String) {
-        preferences.edit().putString(accessTokenKey, accessToken).commit()
+        preferences.edit().putString(ACCESS_TOKEN_KEY, accessToken).commit()
     }
 
-    fun getAccessToken(): String? {
-        return preferences.getString(accessTokenKey, null)
-    }
+    fun getAccessToken() = preferences.getString(ACCESS_TOKEN_KEY, null)
 
     fun storeRefreshToken(refreshToken: String) {
-        preferences.edit().putString(refreshTokenKey, refreshToken).commit()
+        preferences.edit().putString(REFRESH_TOKEN_KEY, refreshToken).commit()
     }
 
-    fun getRefreshToken(): String? {
-        return preferences.getString(refreshTokenKey, null)
-    }
+    fun getRefreshToken() = preferences.getString(REFRESH_TOKEN_KEY, null)
 
     fun removeUserData() {
-        preferences.edit().remove(userKey).remove(accessTokenKey).commit()
+        preferences.edit().remove(USER_KEY).remove(ACCESS_TOKEN_KEY).commit()
     }
 }
