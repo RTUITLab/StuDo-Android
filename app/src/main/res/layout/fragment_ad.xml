@@ -8,7 +8,7 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="com.rtuitlab.studo.viewmodels.ads.AdViewModel" />
+            type="ru.rtuitlab.studo.viewmodels.ads.AdViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -71,9 +71,9 @@
                             android:layout_marginTop="16dp"
                             android:contentDescription="@string/date"
                             android:src="@drawable/ic_date"
-                            android:tint="@android:color/darker_gray"
                             app:layout_constraintStart_toStartOf="@+id/descTV"
-                            app:layout_constraintTop_toBottomOf="@+id/descTV" />
+                            app:layout_constraintTop_toBottomOf="@+id/descTV"
+                            app:tint="@android:color/darker_gray" />
 
                         <TextView
                             android:id="@+id/dateTV"
@@ -109,7 +109,7 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/separator">
 
-                            <com.rtuitlab.studo.custom_views.AvatarView
+                            <ru.rtuitlab.studo.custom_views.AvatarView
                                 android:id="@+id/avatarView"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"

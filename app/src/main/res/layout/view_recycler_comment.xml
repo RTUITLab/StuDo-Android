@@ -11,7 +11,7 @@
     android:clickable="true"
     android:focusable="true">
 
-    <com.rtuitlab.studo.custom_views.AvatarView
+    <ru.rtuitlab.studo.custom_views.AvatarView
         android:id="@+id/avatarView"
         android:layout_width="32dp"
         android:layout_height="32dp"

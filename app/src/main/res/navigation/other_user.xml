@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/otherUserFragment"
-        android:name="com.rtuitlab.studo.ui.general.users.fragments.OtherUserFragment"
+        android:name="ru.rtuitlab.studo.ui.general.users.fragments.OtherUserFragment"
         android:label="OtherUserFragment"
         tools:layout="@layout/fragment_other_user">
         <action
@@ -24,7 +24,7 @@
 
         <fragment
             android:id="@+id/adsListFragmentNested"
-            android:name="com.rtuitlab.studo.ui.general.ads.fragments.AdsListFragment"
+            android:name="ru.rtuitlab.studo.ui.general.ads.fragments.AdsListFragment"
             android:label="AdsListFragment"
             tools:layout="@layout/fragment_recycler_list" >
             <action
@@ -36,7 +36,7 @@
         </fragment>
         <fragment
             android:id="@+id/adFragment"
-            android:name="com.rtuitlab.studo.ui.general.ads.fragments.AdFragment"
+            android:name="ru.rtuitlab.studo.ui.general.ads.fragments.AdFragment"
             android:label="AdFragment"
             tools:layout="@layout/fragment_ad">
             <action
@@ -48,12 +48,12 @@
         </fragment>
         <fragment
             android:id="@+id/createEditAdFragment"
-            android:name="com.rtuitlab.studo.ui.general.ads.fragments.CreateEditAdFragment"
+            android:name="ru.rtuitlab.studo.ui.general.ads.fragments.CreateEditAdFragment"
             android:label="CreateEditAdFragment"
             tools:layout="@layout/fragment_create_edit_ad"/>
         <dialog
             android:id="@+id/commentsBottomDialog"
-            android:name="com.rtuitlab.studo.ui.general.ads.dialogs.CommentsBottomDialog"
+            android:name="ru.rtuitlab.studo.ui.general.ads.dialogs.CommentsBottomDialog"
             android:label="CommentsBottomDialog"
             tools:layout="@layout/fragment_comments"/>
     </navigation>
@@ -64,7 +64,7 @@
 
         <fragment
             android:id="@+id/resumesListFragmentNested"
-            android:name="com.rtuitlab.studo.ui.general.resumes.ResumesListFragment"
+            android:name="ru.rtuitlab.studo.ui.general.resumes.ResumesListFragment"
             android:label="ResumesListFragment"
             tools:layout="@layout/fragment_recycler_list">
             <action
@@ -76,12 +76,12 @@
         </fragment>
         <fragment
             android:id="@+id/createEditResumeFragment"
-            android:name="com.rtuitlab.studo.ui.general.resumes.CreateEditResumeFragment"
+            android:name="ru.rtuitlab.studo.ui.general.resumes.CreateEditResumeFragment"
             android:label="CreateEditResumeFragment"
             tools:layout="@layout/fragment_create_edit_resume"/>
         <fragment
             android:id="@+id/resumeFragment"
-            android:name="com.rtuitlab.studo.ui.general.resumes.ResumeFragment"
+            android:name="ru.rtuitlab.studo.ui.general.resumes.ResumeFragment"
             android:label="ResumeFragment"
             tools:layout="@layout/fragment_resume">
             <action

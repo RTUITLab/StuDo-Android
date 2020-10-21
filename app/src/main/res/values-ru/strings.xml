@@ -47,7 +47,6 @@
     <string name="comments">Комментарии</string>
     <string name="date">Дата</string>
     <string name="ad">Объявление</string>
-    <string name="dark_theme">Темная тема</string>
     <string name="language">Язык</string>
     <string name="russian">Русский</string>
     <string name="english">Английский</string>
@@ -88,4 +87,8 @@
     <string name="studo_site_title">Сайт StuDo</string>
     <string name="vk_group_title">Группа ВК</string>
     <string name="source_code_title">Исходный код</string>
+    <string name="system_theme_label">Системная</string>
+    <string name="light_theme_label">Светлая</string>
+    <string name="dark_theme_label">Тёмная</string>
+    <string name="theme">Тема</string>
 </resources>

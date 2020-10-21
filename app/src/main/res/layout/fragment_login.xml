@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.rtuitlab.studo.viewmodels.auth.AuthViewModel" />
+            type="ru.rtuitlab.studo.viewmodels.auth.AuthViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -38,7 +38,8 @@
                     android:src="@drawable/login_bar"
                     android:scaleType="fitStart"
                     android:adjustViewBounds="true"
-                    app:layout_collapseMode="parallax"/>
+                    app:layout_collapseMode="parallax"
+                    android:contentDescription="@string/auth_bar" />
 
                 <View
                     android:layout_width="match_parent"
