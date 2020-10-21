@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/resumesListFragment"
-        android:name="com.rtuitlab.studo.ui.general.resumes.ResumesListFragment"
+        android:name="ru.rtuitlab.studo.ui.general.resumes.ResumesListFragment"
         android:label="ResumesListFragment"
         tools:layout="@layout/fragment_recycler_list">
         <action
@@ -20,12 +20,12 @@
     </fragment>
     <fragment
         android:id="@+id/createEditResumeFragment"
-        android:name="com.rtuitlab.studo.ui.general.resumes.CreateEditResumeFragment"
+        android:name="ru.rtuitlab.studo.ui.general.resumes.CreateEditResumeFragment"
         android:label="CreateEditResumeFragment"
         tools:layout="@layout/fragment_create_edit_resume"/>
     <fragment
         android:id="@+id/resumeFragment"
-        android:name="com.rtuitlab.studo.ui.general.resumes.ResumeFragment"
+        android:name="ru.rtuitlab.studo.ui.general.resumes.ResumeFragment"
         android:label="ResumeFragment"
         tools:layout="@layout/fragment_resume">
         <action

@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.rtuitlab.studo.viewmodels.users.OtherUserViewModel" />
+            type="ru.rtuitlab.studo.viewmodels.users.OtherUserViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -38,7 +38,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <com.rtuitlab.studo.custom_views.AvatarView
+                        <ru.rtuitlab.studo.custom_views.AvatarView
                             android:id="@+id/avatarView"
                             android:layout_width="50dp"
                             android:layout_height="50dp"

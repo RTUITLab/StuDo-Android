@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.rtuitlab.studo.viewmodels.resumes.CreateEditResumeViewModel" />
+            type="ru.rtuitlab.studo.viewmodels.resumes.CreateEditResumeViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

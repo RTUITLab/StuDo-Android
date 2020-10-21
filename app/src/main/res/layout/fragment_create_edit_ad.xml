@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.rtuitlab.studo.viewmodels.ads.CreateEditAdViewModel" />
+            type="ru.rtuitlab.studo.viewmodels.ads.CreateEditAdViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -144,12 +144,12 @@
                         app:layout_constraintStart_toStartOf="@+id/dateTV"
                         app:layout_constraintTop_toBottomOf="@+id/dateTV" />
 
-                    <Switch
+                    <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/timeSwitch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:switchPadding="8dp"
                         android:text="@string/only_date"
+                        app:switchPadding="8dp"
                         app:layout_constraintBottom_toBottomOf="@+id/doneBtn"
                         app:layout_constraintStart_toStartOf="@+id/timeTV"
                         app:layout_constraintTop_toTopOf="@+id/doneBtn" />

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.rtuitlab.studo.ui.auth.fragments.LoginFragment"
+        android:name="ru.rtuitlab.studo.ui.auth.fragments.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -16,20 +16,29 @@
             app:enterAnim="@anim/fade_in_delayed"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in_delayed"
-            app:popUpTo="@id/registerFragment"
-            app:popUpToInclusive="true" />
+            app:popExitAnim="@anim/fade_out" />
         <action
             android:id="@+id/action_loginFragment_to_resetPasswordDialog"
             app:destination="@id/resetPasswordDialog" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.rtuitlab.studo.ui.auth.fragments.RegisterFragment"
+        android:name="ru.rtuitlab.studo.ui.auth.fragments.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" />
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/fade_in_delayed"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in_delayed"
+            app:popExitAnim="@anim/fade_out"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <dialog
         android:id="@+id/resetPasswordDialog"
-        android:name="com.rtuitlab.studo.ui.auth.dialogs.ResetPasswordDialog"
+        android:name="ru.rtuitlab.studo.ui.auth.dialogs.ResetPasswordDialog"
         android:label="ResetPasswordDialog"
         tools:layout="@layout/dialog_reset_password"/>
 </navigation>

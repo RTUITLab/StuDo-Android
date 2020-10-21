@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.rtuitlab.studo.viewmodels.ads.CommentsViewModel" />
+            type="ru.rtuitlab.studo.viewmodels.ads.CommentsViewModel" />
     </data>
 
     <LinearLayout
