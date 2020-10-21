@@ -1,11 +1,12 @@
 # StuDo
 
 ![Release](https://img.shields.io/badge/Release-v0.2.0-informational.svg?style=flat)
-![Android 6.0+](https://img.shields.io/badge/Android-6.0%2B-informational.svg)
+![Android version](https://img.shields.io/badge/Android-7.0%2B-informational.svg)
 
 Android app for [StuDo](https://studo.rtuitlab.ru) –– the service for event organization and promotion inside RTU university
 
 ## APK download
+* [Download on Google Play](https://play.google.com/store/apps/details?id=ru.rtuitlab.studo)
 * [Download on GitHub](https://github.com/RTUITLab/StuDo-Android/releases)
 
 ## Building
